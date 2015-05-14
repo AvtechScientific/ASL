@@ -31,7 +31,7 @@ ASL is distributed under the free GNU Affero General Public License (AGPLv3) wit
 2. Copy sample ASL configuration file: `cp ../../../../../ASL/test/input_data/asl.ini .`
 3. Copy the .stl input file: `cp ../../../../../ASL/test/input_data/locomotive.stl .`
 4. Run: `./locomotive_in_tunnel`
-5. Post-processing: [step by step example](https://github.com/AvtechScientific/ASL/wiki/User-Guide#Post-processing).
+5. Post-processing: [step by step example](https://github.com/AvtechScientific/ASL/wiki/User-Guide#post-processing).
 
 ### Writing your own code using ASL
 
@@ -48,4 +48,4 @@ All .stl files were obtained from [GrabCAD](https://grabcad.com/) and are subjec
 
 ## Further information
 
-For more information, please visit [ASL website](http://asl.org.il).
+For more information, please visit <http://asl.org.il>.
