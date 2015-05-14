@@ -1,0 +1,62 @@
+/*
+ * Advanced Simulation Library <http://asl.org.il>
+ * 
+ * Copyright 2015 Avtech Scientific <http://avtechscientific.com>
+ *
+ *
+ * This file is part of Advanced Simulation Library (ASL).
+ *
+ * ASL is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, version 3 of the License.
+ *
+ * ASL is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with ASL. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+
+/**
+	\class asl::LBGK
+
+	The class realizes the Lattice-Boltzmann algorithm for the compressible and incompressible flows.
+	This realization is valid for 2D as well as for 3D cases. The 2D realization
+	uses D2Q9 (asl::d2q9) lattice, and 3D one uses D3Q15 (asl::d3q15) and D3Q19 (asl::d3q19) lattice. The kinetic eqaution is:
+	\f[ f_i(\vec r+\vec a_i,t+1)=(1-\omega)f_i(\vec r,t)+\omega f^{eq}_i, \f]
+
+	In the compressible case the equilibrium distribution functions are difined as follows:
+	\f[ f^{eq}=\rho \left( 1+\frac{\vec a_i\cdot \vec v_i}{a_s^2}+ \frac{(\vec a_i \cdot \vec v)^2}{2a_s^4}-\frac{{\vec v}^2}{2a_s^2} \right),\f]
+	where
+	\f[ \rho=\sum_i w_i f_i,\;\;\; \vec v= \frac{1}{\rho}\left(\sum_i w_i\vec a_i f_i +\frac{1}{\omega}F\delta_t\right),\f]
+	\f[ a_s\equiv\sum_i w_i a_{ix}a_{ix}. \f]
+	The local pressure is defined by the following expression:
+	\f[ p = a_s^2 \rho. \f]
+
+	In the case of incompressible flow the equilibrium distribution function is defined as follows:
+	\f[ f^{eq}=p + p_0\left(\frac{\vec a_i\cdot \vec v_i}{a_s^2}+ \frac{(\vec a_i \cdot \vec v)^2}{2a_s^4}-\frac{{\vec v}^2}{2a_s^2} \right),\f]
+	where
+	\f[ p=\sum_i w_i f_i,\;\;\; \vec v= \frac{1}{p_0}\left(\sum_i w_i\vec a_i f_i +\frac{1}{\omega}F\delta_t\right),\f]
+	\f[ a_s\equiv\sum_i w_i a_{ix}a_{ix}. \f]
+	The local pressure is defined by the following expression:
+	\f[ p_0 = a_s^2 \rho_0. \f] 
+	it is assumed that \f$ p_0 \f$ value is 1.
+
+
+	The expression for the relaxation parameter is same for compressible and incompressible cases:
+	\f[ w=\frac{2}{6\nu+1}, \f] 
+	where \f$\nu\f$ is the kinematic viscosity. 
+	
+	see:X. He and L.S. Luo, "Lattice {B}oltzmann Model for the Incompressible Navier-Stokes Equation", J. Stat. Phys., v.88(1997), p.927-944, doi = {10.1023/B:JOSS.0000015179.12689.e4}
+
+	The class contains a noninertial force defined by the expression:
+	\f[ F = - 2 \left[\vec \Omega, \vec v\right]. \f]
+	
+	 
+*/
+
+

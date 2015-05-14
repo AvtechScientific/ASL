@@ -1,0 +1,47 @@
+project(asl)
+
+# After switching to 3.1 - remove FindOpenCL.cmake from the distribution
+# since it is supported by the cmake itself.
+cmake_minimum_required(VERSION 2.8.9 FATAL_ERROR)
+
+# Set version number
+set(ASL_VERSION_MAJOR 0)
+set(ASL_VERSION_MINOR 1)
+set(ASL_VERSION_PATCH 0)
+set(ASL_VERSION ${ASL_VERSION_MAJOR}.${ASL_VERSION_MINOR}.${ASL_VERSION_PATCH})
+
+# Add definitions
+include(DefineOptions.cmake)
+include(DefineFunctions.cmake)
+
+# Configure Doxyfile
+configure_file(
+	"${PROJECT_SOURCE_DIR}/doc/Developer-Guide/Doxyfile.in"
+	"${PROJECT_BINARY_DIR}/doc/Developer-Guide/Doxyfile"
+)
+
+# Enable supplied cmake Modules
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+
+# Find dependencies
+find_package(OpenCL 1.1 REQUIRED)
+# ToDo: check - system component might be not needed any longer on new versions of Boost
+find_package(Boost 1.49 REQUIRED COMPONENTS program_options filesystem system)
+find_package(VTK 5.8 REQUIRED)
+
+include_directories(SYSTEM ${OpenCL_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS} ${VTK_INCLUDE_DIRS})
+
+set(CMAKE_CXX_FLAGS "-Wall -O3 -std=c++11")
+
+add_subdirectory(src)
+add_subdirectory(test)
+
+# Packaging
+set(CPACK_GENERATOR "TGZ")
+set(CPACK_SOURCE_GENERATOR "TGZ")
+set(CPACK_PACKAGE_VERSION_MAJOR ${ASL_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${ASL_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${ASL_VERSION_PATCH})
+set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
+set(CPACK_RESOURCE_FILE_README "${PROJECT_SOURCE_DIR}/README.md")
+include(CPack)
