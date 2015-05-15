@@ -8,7 +8,7 @@ __Advanced Simulation Library (ASL)__ is a free and open source multiphysics sim
 ASL is distributed under the free GNU Affero General Public License (AGPLv3) with an optional [commercial license](http://asl.org.il/licensing). Professional support and consulting services are provided by [Avtech Scientific](http://avtechscientific.com), whose team created and continues to extend the library. The company offers [advanced R&D solutions and services](http://avtechscientific.com/services) and is involved in diverse academic and industrial [collaborative projects](http://avtechscientific.com/projects) dealing with complex multidisciplinary problems.
 
 
-## Quick start
+## Quick Start
 
 ### Installation
 
@@ -22,7 +22,7 @@ ASL is distributed under the free GNU Affero General Public License (AGPLv3) wit
 	- and extract the [ASL source code archive](https://github.com/AvtechScientific/ASL/archive/master.zip)
 	- or "git it": `git clone https://github.com/AvtechScientific/ASL.git`
 3. Create a build directory: `mkdir build-asl; cd build-asl`
-4. Run cmake: `cmake -G "Unix Makefiles" ../ASL`
+4. Use [cmake generator](http://www.cmake.org/cmake/help/v3.2/manual/cmake-generators.7.html) to produce Makefiles: `cmake -G "Unix Makefiles" ../ASL` or project files for your IDE (Visual Studio, Xcode, Eclipse, etc.): `cmake -G "Visual Studio 10" ../ASL`
 5. Run make (as root if installing into default destination `/usr/local`): `make install`
 
 ### Running an example
