@@ -148,7 +148,6 @@ asl::SPDistanceFunction generateGeometry(asl::Block & block, Parameters &params)
 		           -generateDFCylinder(params.rIn.v(), orientation*lHole, centerHole)) &
 					generateDFPlane(orientation, apexCone-orientation*params.lCone.v()*.5);
 
-//	return asl::normalize((tubeGeometry) | asl::generateDFInBlock(block, 0), params.dx.v());
 	return asl::normalize(tubeGeometry, params.dx.v());
 }
 
