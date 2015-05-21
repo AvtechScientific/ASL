@@ -1,0 +1,42 @@
+digraph asl {
+	bgcolor=white;
+	node[fontsize=10, fontname="FreeSans.ttf"];
+	compound=true;
+	concentrate=true;
+	subgraph clusterASL 
+	{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightblue;
+		label = "ASL";
+		Utilities
+		DataObjects
+		DataProcessingModule
+		NumericalModule
+		GeometryModule
+		IOModule
+	}
+	subgraph clusterProg 
+	{
+		node [style=filled,color=lightgrey];
+		color=black;
+		label = "Typical ASL program";
+		
+		InputFileDefinitions
+		InputFileDefinitions->DataStructure
+		InputFileDefinitions->DataInitialization
+		InputFileDefinitions->NumericalAlgorithm
+		DataStructure->DataOutput
+		InputFileDefinitions->DataOutput
+		
+	
+	}
+	Utilities->InputFileDefinitions;
+	DataObjects->DataStructure;
+	NumericalModule->NumericalAlgorithm;
+	DataProcessingModule->NumericalAlgorithm;
+	IOModule->DataOutput;
+	DataProcessingModule->DataOutput;
+}
+
+

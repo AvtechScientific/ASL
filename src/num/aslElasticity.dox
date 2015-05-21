@@ -1,0 +1,146 @@
+/*
+ * Advanced Simulation Library <http://asl.org.il>
+ * 
+ * Copyright 2015 Avtech Scientific <http://avtechscientific.com>
+ *
+ *
+ * This file is part of Advanced Simulation Library (ASL).
+ *
+ * ASL is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, version 3 of the License.
+ *
+ * ASL is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with ASL. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+
+/**
+ \defgroup Elasticity Elasticity
+ \ingroup Physics
+
+\section Theory Theory
+
+Equation of motion:\anchor eq_mothion
+\f[
+\rho\ddot u_j =\nabla_i \sigma_{ij}, 
+\f]
+
+where \f$ \vec u \f$ is the displacement vector, \f$ \sigma_{i,j} \f$ is the Cauchy stress 
+tensor. The strain-displacement equation is:
+\f[
+\varepsilon_{ij}=\frac{1}{2}\left( \nabla_i u_j + \nabla_j u_i \right)
+\f]
+strain tensor is related to the stress tensor by the following equation:\anchor eq_strain_stress
+\f[
+\sigma_{ij}=C_{ijkl}\varepsilon_{kl},
+\f]
+where \f$ C_{ijkl} \f$ is the stiffness tensor which has the following properties:
+\f[
+C_{ijkl}=C_{klij}=C_{jikl}=C_{ijlk}
+\f]
+
+There are several different tensors used in the elasticity theory:
+- Deformation gradient tensor 
+\f[ 
+F_{ij} = \nabla_j u_i + \delta_{ij}
+\f]
+- Finite strain tensor 
+\f[ 
+E_{ij}=\frac{1}{2}\left( \nabla_i u_j + \nabla_j u_i + \nabla_i u_k \nabla_j u_k \right)
+\f]
+- Right Cauchy-Green deformation tensor
+\f[ 
+C_{ij}= F_{ki}F_{kj}= \left( \nabla_i u_j + \nabla_j u_i + \nabla_i u_k \nabla_j u_k + \delta_{ij} \right)	
+\f]
+
+
+\subsection IsotropicHomogenious Isotropic and homogeneous media
+
+In the case of isotropic homogeneous media the stiffness tensor is defined by 
+two modules: \f$ K \f$  is the bulk modulus (or incompressibility) and \f$ \mu \f$ is the 
+shear modulus (or rigidity). The corresponding expression is:
+\f[
+C_{ijkl}=K \delta_{ij}\delta_{kl}+\mu\left(\delta_{ik}\delta_{jl}+
+				      \delta_{il}\delta_{jk}-
+				      \frac{2}{3}\delta_{ij}\delta_{kl}\right)
+\f]
+\ref eq_strain_stress "Stress-strain relation" can be rewritten as follows:\anchor eq_strain_stress_isotrop
+\f[
+\sigma_{ij}=\lambda\delta_{ij}\varepsilon_{kk}+2\mu\varepsilon_{ij},
+\f]
+where \f$ \lambda\equiv K-2/3\mu \f$ is Lam\'e's first parameter.
+
+The media can be parametrized by \f$ v_p \f$ and \f$ v_s \f$ velocities:
+\f[
+v_p=\sqrt{(\lambda+2\mu)/\rho},\;\; v_s=\sqrt{\mu/\rho}.
+\f]
+
+
+\ref eq_mothion "Equation of motion" can be simplified for an isotropic case: \anchor eq_mothion_isot
+\f[
+\rho\ddot u_j =\nabla_j \lambda \nabla_k u_k+ \nabla_k \mu \nabla_k u_j+ 
+					      \nabla_k \mu \nabla_j u_k, 
+\f]
+
+In a homogeneous case it takes: \anchor eq_mothion_isot_hom
+\f[
+\rho\ddot u_j =(\lambda+\mu)\nabla_j  \nabla_k u_k+ \mu \Delta u_j
+\f]
+This equation is solved by following classes:
+asl::FDElasticity, asl::FDElasticity2
+
+
+The potential energy density is:
+\f[
+U=\frac{1}{2}\sigma_{ij}\varepsilon_{ij}
+\f]
+
+\subsection BoundarConditions Boundary Conditions
+
+Free surface BC with surface orientations \f$ \vec n \f$ is:
+\f[
+\sigma_{ij} n_j = F_i
+\f]
+For the isotropic and inhomogeneous case substitution of the \ref eq_strain_stress_isotrop "strain-stress relation"
+results:
+\f[
+\lambda n_i\nabla_k u_k+\mu n_j \left( \nabla_i u_j + \nabla_j u_i \right) = F_i,
+ \f]
+
+\subsection Units Units
+
+\f[[\rho]=kg/m^3 \f]
+\f[[\sigma_{ij}]=\frac{kg}{ms^2}=Pa\f]
+\f[[\mu]=[K]=[\lambda]=Pa\f]
+\f[\left[\frac{\mu}{\rho}\right]=
+  \left[\frac{K}{\rho}\right]=
+  \left[\frac{\lambda}{\rho}\right]=\frac{m^2}{s^2}\f]
+
+*/
+
+/**
+ \class asl::FDElasticityIncompressibleStatic
+
+	\f[ \rho\ddot u_j =(K+\mu/3)\nabla_j  \nabla_k u_k+ \mu \Delta u_j \f]
+	where 
+	- \f$K\f$ is the bulk modulus, 
+	- \f$\mu\f$ is the shear modulus, 
+	- \f$\vec u\f$ is a displacement vector field
+
+	This implementation is aided to improve stability for incompressible materials.
+	Let us reformulate the elasticity equation by the following way:
+	\f[ \rho\ddot u_j =\mu (\Delta u_j - \nabla_j p),  \f]
+	\f[ p = -\frac{K+\mu/3}{\mu} \nabla_k u_k. \f]
+	The second equation leads to an instability for low values of the Poisson ration (for nearly incompressible materials).
+	Therefore the last equation we would like to replace by a relaxation one:
+	\f[ \dot p = - w\left( \frac{K+\mu/3}{\mu} \nabla_k u_k + p\right), \f]
+	where \f$ w \f$ is a relaxation parameter.
+*/
+

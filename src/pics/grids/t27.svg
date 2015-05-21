@@ -1,0 +1,1290 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.44+devel"
+   sodipodi:docname="t27.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   sodipodi:docbase="D:\My Documents\igorwork\lel\lel0\include\pic\grid"
+   inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+   inkscape:export-xdpi="36"
+   inkscape:export-ydpi="36"
+   sodipodi:modified="TRUE">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient3048">
+      <stop
+         style="stop-color:white;stop-opacity:1;"
+         offset="0"
+         id="stop3050" />
+      <stop
+         id="stop3060"
+         offset="1"
+         style="stop-color:#fae800;stop-opacity:1;" />
+      <stop
+         style="stop-color:#f3e712;stop-opacity:0;"
+         offset="1"
+         id="stop3052" />
+    </linearGradient>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3058"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3064"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3068"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3072"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3076"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient2193"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient2201"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient2209"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient2217"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient2220"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3270"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3272"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3274"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3276"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3278"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3280"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3282"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3284"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3286"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3288"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3450"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3452"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3454"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3456"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3458"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3460"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3462"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3464"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3466"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3048"
+       id="radialGradient3468"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect"
+       cx="173.74623"
+       cy="147.2655"
+       fx="173.74623"
+       fy="147.2655"
+       r="52.380627" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.61875035"
+     inkscape:cx="-65.310144"
+     inkscape:cy="573.74699"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     showguides="true"
+     inkscape:window-width="1280"
+     inkscape:window-height="975"
+     inkscape:window-x="-4"
+     inkscape:window-y="-4" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g3414"
+       transform="matrix(0.88,0,0,0.88,496.0039,-551.063)"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36">
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="path3326"
+         d="M -285.36816,688.87796 L 113.56183,688.87796"
+         style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="path3328"
+         d="M -285.36816,1089.2559 L 113.56183,1089.2559"
+         style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="path3330"
+         d="M -285.36944,691.25206 L -285.36944,1089.2572"
+         style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:1.99743807;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="path3332"
+         d="M 114.63059,691.22516 L 114.63059,1089.2571"
+         style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:1.99750543;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="path3334"
+         d="M -285.88166,889.76939 L 113.04833,889.76939"
+         style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="path3336"
+         d="M -85.881537,690.74251 L -85.881537,1089.7693"
+         style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         transform="matrix(0.98995,0,0,0.98995,-238.3682,524.4704)"
+         d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+         sodipodi:ry="50.507626"
+         sodipodi:rx="50.507626"
+         sodipodi:cy="167.46855"
+         sodipodi:cx="153.54318"
+         id="path3338"
+         style="opacity:0.81666667;fill:url(#radialGradient3450);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:type="arc"
+         style="opacity:0.81666667;fill:url(#radialGradient3452);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path3340"
+         sodipodi:cx="153.54318"
+         sodipodi:cy="167.46855"
+         sodipodi:rx="50.507626"
+         sodipodi:ry="50.507626"
+         d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+         transform="matrix(0.98995,0,0,0.98995,-238.3682,524.4704)"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         transform="matrix(0.98995,0,0,0.98995,-238.3682,924.4704)"
+         d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+         sodipodi:ry="50.507626"
+         sodipodi:rx="50.507626"
+         sodipodi:cy="167.46855"
+         sodipodi:cx="153.54318"
+         id="path3342"
+         style="opacity:0.81666667;fill:url(#radialGradient3454);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         transform="matrix(0.98995,0,0,0.98995,-438.3682,724.4704)"
+         d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+         sodipodi:ry="50.507626"
+         sodipodi:rx="50.507626"
+         sodipodi:cy="167.46855"
+         sodipodi:cx="153.54318"
+         id="path3344"
+         style="opacity:0.81666667;fill:url(#radialGradient3456);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         transform="matrix(0.98995,0,0,0.98995,-38.36816,724.4704)"
+         d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+         sodipodi:ry="50.507626"
+         sodipodi:rx="50.507626"
+         sodipodi:cy="167.46855"
+         sodipodi:cx="153.54318"
+         id="path3346"
+         style="opacity:0.81666667;fill:url(#radialGradient3458);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         transform="matrix(0.98995,0,0,0.98995,-238.3682,724.4704)"
+         d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+         sodipodi:ry="50.507626"
+         sodipodi:rx="50.507626"
+         sodipodi:cy="167.46855"
+         sodipodi:cx="153.54318"
+         id="path3348"
+         style="opacity:0.81666667;fill:url(#radialGradient3460);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <text
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="text3350"
+         y="899.76764"
+         x="-86.8955"
+         style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="899.76764"
+           x="-86.8955"
+           id="tspan3352"
+           sodipodi:role="line">4</tspan></text>
+      <text
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="text3354"
+         y="899.00592"
+         x="109.86231"
+         style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="899.00592"
+           x="109.86231"
+           id="tspan3356"
+           sodipodi:role="line">10</tspan></text>
+      <text
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="text3358"
+         y="700.25592"
+         x="-85.863518"
+         style="font-size:42.18331528px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="700.25592"
+           x="-85.863517"
+           id="tspan3360"
+           sodipodi:role="line">18</tspan></text>
+      <text
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="text3362"
+         y="899.00592"
+         x="-296.79785"
+         style="font-size:40px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="899.00592"
+           x="-296.79785"
+           id="tspan3364"
+           sodipodi:role="line">9</tspan></text>
+      <text
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="text3366"
+         y="1098.8887"
+         x="-85.547844"
+         style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="1098.8887"
+           x="-85.547844"
+           id="tspan3368"
+           sodipodi:role="line">17</tspan></text>
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         transform="matrix(0.98995,0,0,0.98995,-38.36826,524.4704)"
+         d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+         sodipodi:ry="50.507626"
+         sodipodi:rx="50.507626"
+         sodipodi:cy="167.46855"
+         sodipodi:cx="153.54318"
+         id="path3370"
+         style="opacity:0.81666667;fill:url(#radialGradient3462);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <text
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="text3372"
+         y="696.00586"
+         x="113.86225"
+         style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="696.00586"
+           x="113.86225"
+           id="tspan3374"
+           sodipodi:role="line">23</tspan></text>
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         transform="matrix(0.98995,0,0,0.98995,-438.3682,524.4704)"
+         d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+         sodipodi:ry="50.507626"
+         sodipodi:rx="50.507626"
+         sodipodi:cy="167.46855"
+         sodipodi:cx="153.54318"
+         id="path3376"
+         style="opacity:0.81666667;fill:url(#radialGradient3464);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <text
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="text3378"
+         y="696.00586"
+         x="-290.13776"
+         style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="696.00586"
+           x="-290.13776"
+           id="tspan3380"
+           sodipodi:role="line">25</tspan></text>
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         transform="matrix(0.98995,0,0,0.98995,-438.3682,924.4704)"
+         d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+         sodipodi:ry="50.507626"
+         sodipodi:rx="50.507626"
+         sodipodi:cy="167.46855"
+         sodipodi:cx="153.54318"
+         id="path3382"
+         style="opacity:0.81666667;fill:url(#radialGradient3466);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <text
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="text3384"
+         y="1104.0059"
+         x="-287.13776"
+         style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="1104.0059"
+           x="-281.59088"
+           id="tspan3386"
+           sodipodi:role="line">26 </tspan></text>
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         transform="matrix(0.98995,0,0,0.98995,-38.36816,924.4704)"
+         d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+         sodipodi:ry="50.507626"
+         sodipodi:rx="50.507626"
+         sodipodi:cy="167.46855"
+         sodipodi:cx="153.54318"
+         id="path3388"
+         style="opacity:0.81666667;fill:url(#radialGradient3468);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <text
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="text3390"
+         y="1101.0059"
+         x="113.86225"
+         style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="1101.0059"
+           x="113.86225"
+           id="tspan3392"
+           sodipodi:role="line">24</tspan></text>
+    </g>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 151,100.98425 L 549.92999,100.98425"
+       id="path2228"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 151,501.36218 L 549.92999,501.36218"
+       id="path2226"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:1.99743807;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 150.99872,103.35835 L 150.99872,501.36346"
+       id="path2224"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:1.99750543;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 550.99875,103.33145 L 550.99875,501.36343"
+       id="path2222"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 150.4865,301.87568 L 549.41649,301.87568"
+       id="path3080"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 350.48662,102.8488 L 350.48662,501.87556"
+       id="path3078"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36" />
+    <path
+       sodipodi:type="arc"
+       style="opacity:0.81666667;fill:url(#radialGradient3058);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path2160"
+       sodipodi:cx="153.54318"
+       sodipodi:cy="167.46855"
+       sodipodi:rx="50.507626"
+       sodipodi:ry="50.507626"
+       d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+       transform="matrix(0.98995,0,0,0.98995,198,-63.42333)"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36" />
+    <path
+       inkscape:export-ydpi="36"
+       inkscape:export-xdpi="36"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       transform="matrix(0.98995,0,0,0.98995,198,-63.42333)"
+       d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+       sodipodi:ry="50.507626"
+       sodipodi:rx="50.507626"
+       sodipodi:cy="167.46855"
+       sodipodi:cx="153.54318"
+       id="path3200"
+       style="opacity:0.81666667;fill:url(#radialGradient3058);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       sodipodi:type="arc" />
+    <path
+       sodipodi:type="arc"
+       style="opacity:0.81666667;fill:url(#radialGradient3064);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path3062"
+       sodipodi:cx="153.54318"
+       sodipodi:cy="167.46855"
+       sodipodi:rx="50.507626"
+       sodipodi:ry="50.507626"
+       d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+       transform="matrix(0.98995,0,0,0.98995,198,336.5767)"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36" />
+    <path
+       sodipodi:type="arc"
+       style="opacity:0.81666667;fill:url(#radialGradient3068);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path3066"
+       sodipodi:cx="153.54318"
+       sodipodi:cy="167.46855"
+       sodipodi:rx="50.507626"
+       sodipodi:ry="50.507626"
+       d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+       transform="matrix(0.98995,0,0,0.98995,-2.000049,136.5767)"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36" />
+    <path
+       sodipodi:type="arc"
+       style="opacity:0.81666667;fill:url(#radialGradient3072);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path3070"
+       sodipodi:cx="153.54318"
+       sodipodi:cy="167.46855"
+       sodipodi:rx="50.507626"
+       sodipodi:ry="50.507626"
+       d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+       transform="matrix(0.98995,0,0,0.98995,398,136.5767)"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36" />
+    <path
+       sodipodi:type="arc"
+       style="opacity:0.81666667;fill:url(#radialGradient3076);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path3074"
+       sodipodi:cx="153.54318"
+       sodipodi:cy="167.46855"
+       sodipodi:rx="50.507626"
+       sodipodi:ry="50.507626"
+       d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+       transform="matrix(0.98995,0,0,0.98995,198,136.5767)"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="349.47266"
+       y="311.8739"
+       id="text3967"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36"><tspan
+         sodipodi:role="line"
+         id="tspan3969"
+         x="349.47266"
+         y="311.8739">0</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="546.23047"
+       y="311.11218"
+       id="text3971"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36"><tspan
+         sodipodi:role="line"
+         id="tspan3973"
+         x="546.23047"
+         y="311.11218">2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:42.18331528px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="350.50464"
+       y="112.36218"
+       id="text3975"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36"><tspan
+         sodipodi:role="line"
+         id="tspan3977"
+         x="350.50464"
+         y="112.36218">3</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="139.57031"
+       y="311.11218"
+       id="text3979"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36"><tspan
+         sodipodi:role="line"
+         id="tspan3981"
+         x="139.57031"
+         y="311.11218">5</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="350.82031"
+       y="510.995"
+       id="text3983"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36"><tspan
+         sodipodi:role="line"
+         id="tspan3985"
+         x="350.82031"
+         y="510.995">6</tspan></text>
+    <path
+       sodipodi:type="arc"
+       style="opacity:0.81666667;fill:url(#radialGradient2193);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path2187"
+       sodipodi:cx="153.54318"
+       sodipodi:cy="167.46855"
+       sodipodi:rx="50.507626"
+       sodipodi:ry="50.507626"
+       d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+       transform="matrix(0.98995,0,0,0.98995,397.9999,-63.42333)"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="550.23041"
+       y="108.11217"
+       id="text2189"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36"><tspan
+         sodipodi:role="line"
+         id="tspan2191"
+         x="550.23041"
+         y="108.11217">11</tspan></text>
+    <path
+       sodipodi:type="arc"
+       style="opacity:0.81666667;fill:url(#radialGradient2201);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path2195"
+       sodipodi:cx="153.54318"
+       sodipodi:cy="167.46855"
+       sodipodi:rx="50.507626"
+       sodipodi:ry="50.507626"
+       d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+       transform="matrix(0.98995,0,0,0.98995,-2.000049,-63.42333)"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="146.23039"
+       y="108.11217"
+       id="text2197"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36"><tspan
+         sodipodi:role="line"
+         id="tspan2199"
+         x="146.23039"
+         y="108.11217">14</tspan></text>
+    <path
+       sodipodi:type="arc"
+       style="opacity:0.81666667;fill:url(#radialGradient2209);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path2203"
+       sodipodi:cx="153.54318"
+       sodipodi:cy="167.46855"
+       sodipodi:rx="50.507626"
+       sodipodi:ry="50.507626"
+       d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+       transform="matrix(0.98995,0,0,0.98995,-2.000049,336.5767)"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="149.23039"
+       y="516.11218"
+       id="text2205"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36"><tspan
+         sodipodi:role="line"
+         id="tspan2207"
+         x="154.77727"
+         y="516.11218">13 </tspan></text>
+    <path
+       sodipodi:type="arc"
+       style="opacity:0.81666667;fill:url(#radialGradient2220);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path2211"
+       sodipodi:cx="153.54318"
+       sodipodi:cy="167.46855"
+       sodipodi:rx="50.507626"
+       sodipodi:ry="50.507626"
+       d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+       transform="matrix(0.98995,0,0,0.98995,398,336.5767)"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="550.23041"
+       y="513.11218"
+       id="text2213"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36"><tspan
+         sodipodi:role="line"
+         id="tspan2215"
+         x="550.23041"
+         y="513.11218">12</tspan></text>
+    <g
+       id="g3290"
+       transform="matrix(1.119999,0,0,1.119999,-20.6141,-556.2671)"
+       inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t27.png"
+       inkscape:export-xdpi="36"
+       inkscape:export-ydpi="36">
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="path3202"
+         d="M 69.405457,627.75591 L 468.33545,627.75591"
+         style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="path3204"
+         d="M 69.405457,1028.1338 L 468.33545,1028.1338"
+         style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="path3206"
+         d="M 69.404177,630.13001 L 69.404177,1028.1351"
+         style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:1.99743807;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="path3208"
+         d="M 469.40421,630.10311 L 469.40421,1028.1351"
+         style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:1.99750543;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="path3210"
+         d="M 68.891957,828.64734 L 467.82195,828.64734"
+         style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="path3212"
+         d="M 268.89208,629.62046 L 268.89208,1028.6472"
+         style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         transform="matrix(0.98995,0,0,0.98995,116.4055,463.3483)"
+         d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+         sodipodi:ry="50.507626"
+         sodipodi:rx="50.507626"
+         sodipodi:cy="167.46855"
+         sodipodi:cx="153.54318"
+         id="path3214"
+         style="opacity:0.81666667;fill:url(#radialGradient3270);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:type="arc"
+         style="opacity:0.81666667;fill:url(#radialGradient3272);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path3216"
+         sodipodi:cx="153.54318"
+         sodipodi:cy="167.46855"
+         sodipodi:rx="50.507626"
+         sodipodi:ry="50.507626"
+         d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+         transform="matrix(0.98995,0,0,0.98995,116.4055,463.3483)"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         transform="matrix(0.98995,0,0,0.98995,116.4055,863.3484)"
+         d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+         sodipodi:ry="50.507626"
+         sodipodi:rx="50.507626"
+         sodipodi:cy="167.46855"
+         sodipodi:cx="153.54318"
+         id="path3218"
+         style="opacity:0.81666667;fill:url(#radialGradient3274);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         transform="matrix(0.98995,0,0,0.98995,-83.59459,663.3484)"
+         d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+         sodipodi:ry="50.507626"
+         sodipodi:rx="50.507626"
+         sodipodi:cy="167.46855"
+         sodipodi:cx="153.54318"
+         id="path3220"
+         style="opacity:0.81666667;fill:url(#radialGradient3276);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         transform="matrix(0.98995,0,0,0.98995,316.4055,663.3484)"
+         d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+         sodipodi:ry="50.507626"
+         sodipodi:rx="50.507626"
+         sodipodi:cy="167.46855"
+         sodipodi:cx="153.54318"
+         id="path3222"
+         style="opacity:0.81666667;fill:url(#radialGradient3278);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         transform="matrix(0.98995,0,0,0.98995,116.4055,663.3484)"
+         d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+         sodipodi:ry="50.507626"
+         sodipodi:rx="50.507626"
+         sodipodi:cy="167.46855"
+         sodipodi:cx="153.54318"
+         id="path3224"
+         style="opacity:0.81666667;fill:url(#radialGradient3280);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <text
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="text3226"
+         y="838.64557"
+         x="267.87811"
+         style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="838.64557"
+           x="267.87811"
+           id="tspan3228"
+           sodipodi:role="line">1</tspan></text>
+      <text
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="text3230"
+         y="837.88385"
+         x="464.63593"
+         style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="837.88385"
+           x="464.63593"
+           id="tspan3232"
+           sodipodi:role="line">7</tspan></text>
+      <text
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="text3234"
+         y="639.13385"
+         x="268.9101"
+         style="font-size:42.18331528px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="639.13385"
+           x="268.9101"
+           id="tspan3236"
+           sodipodi:role="line">15</tspan></text>
+      <text
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="text3238"
+         y="837.88385"
+         x="57.975769"
+         style="font-size:40px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="837.88385"
+           x="57.975769"
+           id="tspan3240"
+           sodipodi:role="line">8</tspan></text>
+      <text
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="text3242"
+         y="1037.7666"
+         x="269.22577"
+         style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="1037.7666"
+           x="269.22577"
+           id="tspan3244"
+           sodipodi:role="line">16</tspan></text>
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         transform="matrix(0.98995,0,0,0.98995,316.4054,463.3483)"
+         d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+         sodipodi:ry="50.507626"
+         sodipodi:rx="50.507626"
+         sodipodi:cy="167.46855"
+         sodipodi:cx="153.54318"
+         id="path3246"
+         style="opacity:0.81666667;fill:url(#radialGradient3282);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <text
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="text3248"
+         y="634.88385"
+         x="468.63586"
+         style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="634.88385"
+           x="468.63586"
+           id="tspan3250"
+           sodipodi:role="line">19</tspan></text>
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         transform="matrix(0.98995,0,0,0.98995,-83.59459,463.3483)"
+         d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+         sodipodi:ry="50.507626"
+         sodipodi:rx="50.507626"
+         sodipodi:cy="167.46855"
+         sodipodi:cx="153.54318"
+         id="path3252"
+         style="opacity:0.81666667;fill:url(#radialGradient3284);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <text
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="text3254"
+         y="634.88385"
+         x="64.635849"
+         style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="634.88385"
+           x="64.635849"
+           id="tspan3256"
+           sodipodi:role="line">21</tspan></text>
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         transform="matrix(0.98995,0,0,0.98995,-83.59459,863.3484)"
+         d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+         sodipodi:ry="50.507626"
+         sodipodi:rx="50.507626"
+         sodipodi:cy="167.46855"
+         sodipodi:cx="153.54318"
+         id="path3258"
+         style="opacity:0.81666667;fill:url(#radialGradient3286);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <text
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="text3260"
+         y="1042.8838"
+         x="67.635849"
+         style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="1042.8838"
+           x="73.182724"
+           id="tspan3262"
+           sodipodi:role="line">22 </tspan></text>
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         transform="matrix(0.98995,0,0,0.98995,316.4055,863.3484)"
+         d="M 204.05081 167.46855 A 50.507626 50.507626 0 1 1  103.03556,167.46855 A 50.507626 50.507626 0 1 1  204.05081 167.46855 z"
+         sodipodi:ry="50.507626"
+         sodipodi:rx="50.507626"
+         sodipodi:cy="167.46855"
+         sodipodi:cx="153.54318"
+         id="path3264"
+         style="opacity:0.81666667;fill:url(#radialGradient3288);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.74600005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <text
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="D:\My Documents\igorwork\lel\lel0\include\pic\grid\t9.png"
+         id="text3266"
+         y="1039.8838"
+         x="468.63586"
+         style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="1039.8838"
+           x="468.63586"
+           id="tspan3268"
+           sodipodi:role="line">20</tspan></text>
+    </g>
+  </g>
+</svg>
