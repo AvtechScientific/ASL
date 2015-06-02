@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 2.8.9 FATAL_ERROR)
 # Set version number
 set(ASL_VERSION_MAJOR 0)
 set(ASL_VERSION_MINOR 1)
-set(ASL_VERSION_PATCH 0)
+set(ASL_VERSION_PATCH 1)
 set(ASL_VERSION ${ASL_VERSION_MAJOR}.${ASL_VERSION_MINOR}.${ASL_VERSION_PATCH})
 
 # Add definitions
