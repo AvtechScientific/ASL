@@ -1,6 +1,6 @@
 # ASL
 
-__Advanced Simulation Library (ASL)__ is a free and open source multiphysics simulation software package (and a tool for solving Partial Differential Equations). Its computational engine is based, among others, on the [Lattice Boltzmann methods](http://en.wikipedia.org/wiki/Lattice_Boltzmann_methods) and is written in [OpenCL](http://en.wikipedia.org/wiki/OpenCL) which enable [extraordinarily efficient deployment](http://asl.org.il/benchmarks) on a variety of massively parallel architectures, ranging from inexpensive FPGAs, DSPs and GPUs up to heterogeneous clusters and supercomputers. The engine is hidden entirely behind C++ classes, so that no OpenCL knowledge is required from the application programmers. ASL can be utilized to model various coupled physical and chemical phenomena, especially in the field of CFD.
+__Advanced Simulation Library (ASL)__ is a free and open source multiphysics simulation software package. Its computational engine is based, among others, on the [Lattice Boltzmann Methods](http://en.wikipedia.org/wiki/Lattice_Boltzmann_methods) and is written in [OpenCL](http://en.wikipedia.org/wiki/OpenCL) which enable [extraordinarily efficient deployment](http://asl.org.il/benchmarks) on a variety of massively parallel architectures, ranging from inexpensive FPGAs, DSPs and GPUs up to heterogeneous clusters and supercomputers. The engine is hidden entirely behind C++ classes, so that no OpenCL knowledge is required from application programmers. ASL can be utilized to model various coupled physical and chemical phenomena and employed in a multitude of fields: computational fluid dynamics, virtual sensing, industrial process data validation and reconciliation, image-guided surgery, computer-aided engineering, high-performance scientific computing, etc..
 
 
 ## License
@@ -18,9 +18,7 @@ ASL is distributed under the free GNU Affero General Public License (AGPLv3) wit
 	- [boost](http://www.boost.org) (Boost Software License)
 	- [VTK](http://vtk.org) (BSD License)
 	- optional: [matio](https://sourceforge.net/projects/matio) (BSD License)
-2. Download
-	- and extract the [ASL source code archive](https://github.com/AvtechScientific/ASL/archive/master.zip)
-	- or "git it": `git clone https://github.com/AvtechScientific/ASL.git`
+2. Download and extract the [ASL source code archive](https://github.com/AvtechScientific/ASL/releases/latest).
 3. Create a build directory: `mkdir build-asl; cd build-asl`
 4. Use [cmake generator](http://www.cmake.org/cmake/help/v3.2/manual/cmake-generators.7.html) to produce Makefiles: `cmake -G "Unix Makefiles" ../ASL` or project files for your IDE (Visual Studio, Xcode, Eclipse, etc.): `cmake -G "Visual Studio 10" ../ASL`
 5. Run make (as root if installing into default destination `/usr/local`): `make install`
