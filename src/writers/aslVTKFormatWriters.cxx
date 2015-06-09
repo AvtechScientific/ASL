@@ -113,7 +113,7 @@ namespace asl
 	void WriterVTKXML::write()
 	{
 		vtkSmartPointer<vtkXMLImageDataWriter> writer(vtkSmartPointer<vtkXMLImageDataWriter>::New());
-		writer->SetInput(makeVTKData(*block, scalarFields, vectorFields).GetPointer());
+		writer->SetInputData(makeVTKData(*block, scalarFields, vectorFields).GetPointer());
 		writer->SetFileName((file + "_" + numToStr(numOfWrites) + ".vti").c_str());
 		writer->SetDataModeToAppended();
 		writer->EncodeAppendedDataOff();		
@@ -136,7 +136,7 @@ namespace asl
 		for (unsigned int i(0); i < nComp; ++i)
 			names[i] += "-" + numToStr(i);
 		
-		writer->SetInput(castVTKData(data, names).GetPointer());
+		writer->SetInputData(castVTKData(data, names).GetPointer());
 		writer->SetFileName(fileName.c_str());
 		writer->SetDataModeToAppended();
 		writer->EncodeAppendedDataOff();		

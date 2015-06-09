@@ -2,12 +2,12 @@ project(asl)
 
 # After switching to 3.1 - remove FindOpenCL.cmake from the distribution
 # since it is supported by the cmake itself.
-cmake_minimum_required(VERSION 2.8.9 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.0.2 FATAL_ERROR)
 
 # Set version number
 set(ASL_VERSION_MAJOR 0)
 set(ASL_VERSION_MINOR 1)
-set(ASL_VERSION_PATCH 1)
+set(ASL_VERSION_PATCH 2)
 set(ASL_VERSION ${ASL_VERSION_MAJOR}.${ASL_VERSION_MINOR}.${ASL_VERSION_PATCH})
 
 # Add definitions
@@ -26,10 +26,11 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 # Find dependencies
 find_package(OpenCL 1.1 REQUIRED)
 # ToDo: check - system component might be not needed any longer on new versions of Boost
-find_package(Boost 1.49 REQUIRED COMPONENTS program_options filesystem system)
-find_package(VTK 5.8 REQUIRED)
+find_package(Boost 1.55 REQUIRED COMPONENTS program_options filesystem system)
+find_package(VTK 6.1 COMPONENTS vtkRenderingCore vtkImagingCore vtkFiltersCore vtkIOCore vtkIOLegacy vtkIOXML vtkIOMINC vtkCommonCore vtkViewsCore vtkftgl vtksys vtkDICOMParser vtkexpat vtkzlib NO_MODULE)
+include(${VTK_USE_FILE})
 
-include_directories(SYSTEM ${OpenCL_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS} ${VTK_INCLUDE_DIRS})
+include_directories(SYSTEM ${OpenCL_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 set(CMAKE_CXX_FLAGS "-Wall -O3 -std=c++11")
 

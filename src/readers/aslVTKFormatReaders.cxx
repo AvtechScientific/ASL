@@ -137,7 +137,7 @@ namespace asl
 		modeller->SetOutputScalarTypeToFloat();
 		modeller->CappingOff();
 		modeller->SetCapValue(dx*3.6);
-		modeller->SetInput(surf);
+		modeller->SetInputData(surf);
 		modeller->ComputeModelBounds(surf);
 		modeller->SetMaximumDistance(dx*1.8*2.);
 		double b[6];
@@ -160,7 +160,7 @@ namespace asl
 		modeller->SetOutputScalarTypeToFloat();
 		modeller->CappingOff();
 		modeller->SetCapValue(b.dx*3.6);
-		modeller->SetInput(surf);
+		modeller->SetInputData(surf);
 		modeller->SetMaximumDistance(b.dx*1.8*2.);
 		double bound[6];
 		auto bp(b.getBPosition()); 
@@ -193,7 +193,7 @@ namespace asl
 		modeller->SetOutputScalarTypeToFloat();
 		modeller->CappingOff();
 		modeller->SetCapValue(dx*3.6);
-		modeller->SetInput(surf);
+		modeller->SetInputData(surf);
 		modeller->ComputeModelBounds(surf);
 		modeller->SetMaximumDistance(dx*1.8*2.);
 		double b[6];
