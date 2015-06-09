@@ -36,7 +36,7 @@ PROJECT_NAME           = ASL
 #
 # Configured with CMake
 
-PROJECT_NUMBER         = @ASL_VERSION_MAJOR@.@ASL_VERSION_MINOR@
+PROJECT_NUMBER         = @ASL_VERSION@
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer

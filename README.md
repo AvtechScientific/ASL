@@ -5,7 +5,7 @@ __Advanced Simulation Library (ASL)__ is a free and open source multiphysics sim
 
 ## License
 
-ASL is distributed under the free GNU Affero General Public License (AGPLv3) with an optional [commercial license](http://asl.org.il/licensing). Professional support and consulting services are provided by [Avtech Scientific](http://avtechscientific.com), whose team created and continues to extend the library. The company offers [advanced R&D solutions and services](http://avtechscientific.com/services) and is involved in diverse academic and industrial [collaborative projects](http://avtechscientific.com/projects) dealing with complex multidisciplinary problems.
+ASL is distributed under the free GNU Affero General Public License (AGPLv3) with an optional [commercial license](http://asl.org.il/licensing). Professional support and consulting services are provided by [Avtech Scientific](http://avtechscientific.com), whose team created and continues to extend the library. The company offers [innovative R&D solutions and services](http://avtechscientific.com/services) and is involved in diverse academic and industrial [collaborative projects](http://avtechscientific.com/projects) dealing with complex multidisciplinary problems.
 
 
 ## Quick Start
