@@ -27,6 +27,7 @@ set(aslCommon_SOURCES
 )
 
 add_library(aslCommon ${aslCommon_SOURCES})
+set_target_properties(aslCommon PROPERTIES VERSION ${ASL_VERSION} SOVERSION ${ASL_VERSION_MAJOR})
 target_link_libraries(aslCommon ${Boost_LIBRARIES})
 INSTALL_SUBLIB(aslCommon aslCommon_PUBLIC_HEADERS)
 
@@ -55,6 +56,7 @@ set(asl_SOURCES
 )
 
 add_library(asl ${asl_SOURCES})
+set_target_properties(asl PROPERTIES VERSION ${ASL_VERSION} SOVERSION ${ASL_VERSION_MAJOR})
 target_link_libraries(asl aslCommon aslacl asldata aslmath ${Boost_LIBRARIES})
 INSTALL_SUBLIB(asl asl_PUBLIC_HEADERS)
 
@@ -77,6 +79,7 @@ set(aslvtk_SOURCES
 )
 
 add_library(aslvtk ${aslvtk_SOURCES})
+set_target_properties(aslvtk PROPERTIES VERSION ${ASL_VERSION} SOVERSION ${ASL_VERSION_MAJOR})
 target_link_libraries(aslvtk ${VTK_LIBRARIES} ${OpenCL_LIBRARIES})
 INSTALL_SUBLIB(aslvtk aslvtk_PUBLIC_HEADERS)
 
@@ -100,6 +103,7 @@ if (WITH_MATIO)
 	)
 
 	add_library(aslmatio ${aslmatio_SOURCES})
+	set_target_properties(aslmatio PROPERTIES VERSION ${ASL_VERSION} SOVERSION ${ASL_VERSION_MAJOR})
 	target_link_libraries(aslmatio ${MATIO_LIBRARIES})
 	INSTALL_SUBLIB(aslmatio aslmatio_PUBLIC_HEADERS)
 endif (WITH_MATIO)
