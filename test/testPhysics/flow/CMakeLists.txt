@@ -6,7 +6,7 @@ target_link_libraries(flow aslnum aslvtk asl)
 set_property(TARGET flow PROPERTY RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/flow)
 
 add_executable(flow2 flow2.cc)
-target_link_libraries(flow2aslnum aslvtk asl)
+target_link_libraries(flow2 aslnum aslvtk asl)
 set_property(TARGET flow2 PROPERTY RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/flow2)
 
 add_executable(flow3 flow3.cc)
