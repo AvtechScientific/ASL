@@ -23,4 +23,5 @@ set(asldata_SOURCES
 )
 
 add_library(asldata ${asldata_SOURCES})
+set_target_properties(asldata PROPERTIES VERSION ${ASL_VERSION} SOVERSION ${ASL_VERSION_MAJOR})
 INSTALL_SUBLIB(asldata asldata_PUBLIC_HEADERS)
