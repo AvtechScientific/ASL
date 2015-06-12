@@ -4,7 +4,7 @@ add_executable(testVectorOfElements testVectorOfElements.cc)
 target_link_libraries(testVectorOfElements aslacl)
 
 add_executable(testMatrixOfElements testMatrixOfElements.cc)
-target_link_libraries(testMatrixOfElements aslacl aslmath asl asldata)
+target_link_libraries(testMatrixOfElements aslacl aslmath asldata asl)
 
 add_executable(testPerformance testPerformance.cc)
 target_link_libraries(testPerformance aslacl)

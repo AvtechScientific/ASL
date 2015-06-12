@@ -38,4 +38,5 @@ set(aslmath_SOURCES
 )
 
 add_library(aslmath ${aslmath_SOURCES})
+set_target_properties(aslmath PROPERTIES VERSION ${ASL_VERSION} SOVERSION ${ASL_VERSION_MAJOR})
 INSTALL_SUBLIB(aslmath aslmath_PUBLIC_HEADERS)

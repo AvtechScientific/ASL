@@ -7,8 +7,15 @@ cmake_minimum_required(VERSION 3.0.2 FATAL_ERROR)
 # Set version number
 set(ASL_VERSION_MAJOR 0)
 set(ASL_VERSION_MINOR 1)
-set(ASL_VERSION_PATCH 2)
+set(ASL_VERSION_PATCH 3)
+
 set(ASL_VERSION ${ASL_VERSION_MAJOR}.${ASL_VERSION_MINOR}.${ASL_VERSION_PATCH})
+
+if (CMAKE_VERSION VERSION_LESS 3.1.0)
+	set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
+else()
+	set(CMAKE_CXX_STANDARD 11)
+endif()
 
 # Add definitions
 include(DefineOptions.cmake)
@@ -31,8 +38,6 @@ find_package(VTK 6.1 COMPONENTS vtkRenderingCore vtkImagingCore vtkFiltersCore v
 include(${VTK_USE_FILE})
 
 include_directories(SYSTEM ${OpenCL_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
-
-set(CMAKE_CXX_FLAGS "-Wall -O3 -std=c++11")
 
 add_subdirectory(src)
 add_subdirectory(test)
