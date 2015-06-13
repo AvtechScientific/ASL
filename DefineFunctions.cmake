@@ -19,7 +19,7 @@ function(INSTALL_SUBLIB _SUBLIB _SUBLIB_PUBLIC_HEADERS)
 		install(FILES
 			${header}
 			DESTINATION
-			include/${PROJECT_NAME}/${directories}
+			include/asl/${directories}
 		)
 	endforeach()
 endfunction(INSTALL_SUBLIB)

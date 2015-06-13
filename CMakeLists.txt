@@ -1,4 +1,4 @@
-project(asl)
+project(ASL)
 
 # After switching to 3.1 - remove FindOpenCL.cmake from the distribution
 # since it is supported by the cmake itself.
