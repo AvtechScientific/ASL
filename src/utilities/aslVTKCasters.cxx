@@ -20,6 +20,7 @@
  *
  */
 
+
 #include "aslVTKCasters.h"
 
 #include <data/aslBlocks.h>
@@ -47,7 +48,7 @@ namespace asl
 	template <typename T> void combineArrays(T* d1, unsigned int size, T* dTarget, unsigned int nComponents=1);
 	template <typename T> void combineArrays(T* d1, T* d2, unsigned int size, T* dTarget,unsigned int nComponents=2);	
 	template <typename T> void combineArrays(T* d1, T* d2, T* d3, unsigned int size, T* dTarget,unsigned int nComponents=3);
-	template <typename TO, typename TI> TO* combineArraysX(TI* d0, TI* d1, TI* d2, TI* d3, unsigned int size);
+	template <typename TO, typename TI> TO* combineArrays(TI* d0, TI* d1, TI* d2, TI* d3, unsigned int size);
 
 	template <typename T> void combineArrays(T* d1,
 	                                         unsigned int size,
@@ -136,7 +137,7 @@ namespace asl
 	BOOST_PP_SEQ_FOR_EACH(BOOST_TT_rep_expression, ~, BOOST_TT_acl_types)
 	#undef BOOST_TT_rep_expression
 
-	template <typename TO, typename TI> TO* combineArraysX(TI* d0, TI* d1, TI* d2, TI* d3, unsigned int size)
+	template <typename TO, typename TI> TO* combineArrays(TI* d0, TI* d1, TI* d2, TI* d3, unsigned int size)
 	{
 		TO* d(new TO[size*4]);
 		for(unsigned int i(0); i < size; ++i)
@@ -149,7 +150,7 @@ namespace asl
 		return d;
 	}
 
-	template vtkIdType* combineArraysX<vtkIdType, unsigned int>(unsigned int* d0,
+	template vtkIdType* combineArrays<vtkIdType, unsigned int>(unsigned int* d0,
 	                                                           unsigned int* d1,
 	                                                           unsigned int* d2,
 	                                                           unsigned int* d3,
@@ -290,7 +291,7 @@ namespace asl
 		vtkSmartPointer<vtkIdTypeArray> vtkArray(vtkSmartPointer<vtkIdTypeArray>::New());
 		vtkArray->SetName(name.c_str());
 		vtkArray->SetNumberOfComponents(1);
-		vtkArray->SetArray(combineArraysX<vtkIdType, unsigned int>(d0, d1, d2, d3, np), 4 * np, 0);
+		vtkArray->SetArray(combineArrays<vtkIdType, unsigned int>(d0, d1, d2, d3, np), 4 * np, 0);
 		return vtkArray;
 	}
 
@@ -321,38 +322,6 @@ namespace asl
 		return NULL;
 	}	
 
-	void updateVTKDataArray(acl::Element source,
-	                        vtkSmartPointer<vtkDataArray> vtkData)
-	{
-		if (!isMemBlock(source))
-			errorMessage ("updateVTKDataArray(): provided element is not a MemBlock type");
-
-		if (source->getTypeID() == acl::TYPE_DOUBLE)
-		{
-			double* d((double*)vtkData->GetVoidPointer(0));
-			copy(source, d);
-		}
-		if (source->getTypeID() == acl::TYPE_FLOAT)
-		{
-			float* d((float*)vtkData->GetVoidPointer(0));
-			copy(source, d);
-		}
-		if (source->getTypeID() == acl::TYPE_INT)
-		{
-			int* d =((int*)vtkData->GetVoidPointer(0));
-			copy(source, d);
-		}
-		vtkData->Modified();
-	}
-	
-	void updateVTKDataArray(acl::Element source,
-	                        const std::string &name,
-	                        vtkSmartPointer<vtkImageData> vtkData)
-	{
-		auto da(vtkData->GetPointData()->GetScalars(name.c_str()));
-		updateVTKDataArray(source, da);	
-	}
-	
 
 	vtkSmartPointer<vtkImageData> castVTKData(const Block & b)
 	{
@@ -642,3 +611,4 @@ namespace asl
 	
 		
 } // asl
+
