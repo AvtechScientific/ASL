@@ -1,4 +1,4 @@
-project(asl)
+project(ASL)
 
 # After switching to 3.1 - remove FindOpenCL.cmake from the distribution
 # since it is supported by the cmake itself.
@@ -7,14 +7,15 @@ cmake_minimum_required(VERSION 3.0.2 FATAL_ERROR)
 # Set version number
 set(ASL_VERSION_MAJOR 0)
 set(ASL_VERSION_MINOR 1)
-set(ASL_VERSION_PATCH 3)
+set(ASL_VERSION_PATCH 4)
 
 set(ASL_VERSION ${ASL_VERSION_MAJOR}.${ASL_VERSION_MINOR}.${ASL_VERSION_PATCH})
 
 if (CMAKE_VERSION VERSION_LESS 3.1.0)
-	set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
+	set(CMAKE_CXX_FLAGS "-fpermissive -std=c++11 ${CMAKE_CXX_FLAGS}")
 else()
 	set(CMAKE_CXX_STANDARD 11)
+	set(CMAKE_CXX_FLAGS "-fpermissive ${CMAKE_CXX_FLAGS}")
 endif()
 
 # Add definitions
