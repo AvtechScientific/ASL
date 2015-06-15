@@ -4,9 +4,9 @@ function(INSTALL_SUBLIB _SUBLIB _SUBLIB_PUBLIC_HEADERS)
 	# ToDo: add COMPONENT headers
 	install(TARGETS
 		${_SUBLIB}
-		RUNTIME DESTINATION bin
-		LIBRARY DESTINATION lib${LIB_SUFFIX}
-		ARCHIVE DESTINATION lib${LIB_SUFFIX}
+		RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+		LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+		ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 	)
 
 	# Install public headers preserving the source tree structure
@@ -19,7 +19,7 @@ function(INSTALL_SUBLIB _SUBLIB _SUBLIB_PUBLIC_HEADERS)
 		install(FILES
 			${header}
 			DESTINATION
-			include/asl/${directories}
+			${CMAKE_INSTALL_INCLUDEDIR}/asl/${directories}
 		)
 	endforeach()
 endfunction(INSTALL_SUBLIB)

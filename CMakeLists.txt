@@ -21,12 +21,7 @@ endif()
 # Add definitions
 include(DefineOptions.cmake)
 include(DefineFunctions.cmake)
-
-# Configure Doxyfile
-configure_file(
-	"${PROJECT_SOURCE_DIR}/doc/Developer-Guide/Doxyfile.in"
-	"${PROJECT_BINARY_DIR}/doc/Developer-Guide/Doxyfile"
-)
+include(GNUInstallDirs)
 
 # Enable supplied cmake Modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
@@ -42,6 +37,7 @@ include_directories(SYSTEM ${OpenCL_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 add_subdirectory(src)
 add_subdirectory(test)
+add_subdirectory(doc)
 
 # Packaging
 set(CPACK_GENERATOR "TGZ")
