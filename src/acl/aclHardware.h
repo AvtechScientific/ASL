@@ -132,15 +132,24 @@ namespace acl
 		public:
 			/// OpenCL related initializations are done here.
 			/// Context, Device list, Command Queue are set up.
+			/// Default computation queue is set to the first found device.
 			Hardware();
+			/// Sets default computation queue
+			/// identified by \p platform and \p device.
+			/// Warns if requested combination is not found.
+			void setDefaultQueue(const std::string & platform = "",
+					     const std::string & device = "");
+// remove it after merging asl.ini with parameters.ini?
 			void loadConfiguration(const std::string & fileName = "asl.ini");
 			std::vector<CommandQueue> queues;
 			CommandQueue defaultQueue;
 			std::string getDevicesInfo();
+			std::string getDefaultDeviceInfo();
 		private:
+			// Sets defaultDeviceInfo based on current defaultQueue
+			void setDefaultDeviceInfo();
 			std::string devicesInfo;
-			std::string defaultPlatform;
-			std::string defaultDevice;
+			std::string defaultDeviceInfo;
 	};
 
 
