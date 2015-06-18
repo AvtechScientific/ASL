@@ -349,8 +349,9 @@ namespace asl
 			if (vm.count("devices"))
 			{
 				cout << programName + " " + programVersion + "\n\n"
-					 << acl::hardware.getDevicesInfo()
-					 << endl;
+					<< acl::hardware.getDefaultDeviceInfo() << "\n\n"
+					<< acl::hardware.getDevicesInfo()
+					<< endl;
 				exit(0);
 			}
 

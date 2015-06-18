@@ -48,8 +48,7 @@ namespace acl
 
 
 	Hardware::Hardware():
-		devicesInfo("\n\n# List of all available devices\n"),
-		defaultDeviceInfo("")
+		devicesInfo("")
 	{
 		// Scan all available platforms and their devices
 		vector<cl::Platform> platforms;
@@ -67,8 +66,8 @@ namespace acl
 			{
 				status = platforms[i].getDevices(CL_DEVICE_TYPE_ALL, &devices);
 				errorMessage(status, "Platform::getDevices()");
-				devicesInfo += "# Platform: " + platforms[i].getInfo<CL_PLATFORM_VENDOR>()
-					    + "\n# Number of devices: " + numToStr(devices.size()) + "\n";
+				devicesInfo += "Platform: " + platforms[i].getInfo<CL_PLATFORM_VENDOR>()
+					    + "\nNumber of devices: " + numToStr(devices.size()) + "\n";
 
 				cps[0] = CL_CONTEXT_PLATFORM;
 				cps[1] = (cl_context_properties)(platforms[i])();
@@ -84,14 +83,13 @@ namespace acl
 					queues.push_back(CommandQueue(new cl::CommandQueue(context, devices[j], 0, &status)));
 					errorMessage(status, "CommandQueue::CommandQueue()");
 					
-					devicesInfo += "# \t" + devices[j].getInfo<CL_DEVICE_NAME>() + "\n";
+					devicesInfo += "\t" + devices[j].getInfo<CL_DEVICE_NAME>() + "\n";
 				}
 			}
 		}
 
 		// Set first found queue as default queue
 		defaultQueue = queues.front();
-		setDefaultDeviceInfo();
 	}
 
 
@@ -107,7 +105,6 @@ namespace acl
 			{
 				// Choose requested device on requested platform
 				defaultQueue = queues.back();
-				setDefaultDeviceInfo();
 			}
 		}
 
@@ -116,31 +113,23 @@ namespace acl
 		{
 			// Choose first available device
 			defaultQueue = queues.front();
-			setDefaultDeviceInfo();
-			warningMessage("Requested device not found! Using:\n" + defaultDeviceInfo);
+			warningMessage("Requested device not found! Using:\n" + getDefaultDeviceInfo());
 		}
-	}
-
-
-	void Hardware::setDefaultDeviceInfo()
-	{
-		defaultDeviceInfo = "# Default computation device";
-		defaultDeviceInfo += "\nplatform = " + getPlatformVendor(defaultQueue)
-							+ "\ndevice = " + getDeviceName(defaultQueue);
 	}
 
 
 	std::string Hardware::getDefaultDeviceInfo()
 	{
+		string defaultDeviceInfo("\nplatform = " + getPlatformVendor(defaultQueue)
+								+ "\ndevice = " + getDeviceName(defaultQueue));
 		return defaultDeviceInfo;
 	}
-
 
 	void Hardware::loadConfiguration(const string & fileName)
 	{
 /*		ParametersManager parametersManager;
-		Parameter<string> platform("", "platform", "Default platform", "");
-		Parameter<string> device("", "device", "Default device", "");
+		Parameter<string> platform("", "platform", "Default computation platform", "");
+		Parameter<string> device("", "device", "Default computation device", "");
 		parametersManager.load(fileName);
 
 		defaultPlatform = platform.v();

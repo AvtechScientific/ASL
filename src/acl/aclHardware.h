@@ -146,10 +146,7 @@ namespace acl
 			std::string getDevicesInfo();
 			std::string getDefaultDeviceInfo();
 		private:
-			// Sets defaultDeviceInfo based on current defaultQueue
-			void setDefaultDeviceInfo();
 			std::string devicesInfo;
-			std::string defaultDeviceInfo;
 	};
 
 
