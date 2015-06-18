@@ -399,7 +399,7 @@ namespace asl
 		{
 			ifstream ifs(configFile);
 			if (!ifs)
-				errorMessage("ParametersManager::load() - Can not open configuration file: " + configFile);
+				errorMessage("Can not open configuration file: " + configFile);
 
 			parsed_options parsed = parse_config_file(ifs, configurationOptions, true);
 			store(parsed, vm);
