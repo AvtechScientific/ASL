@@ -125,6 +125,7 @@ namespace acl
 		return defaultDeviceInfo;
 	}
 
+
 	void Hardware::loadConfiguration(const string & fileName)
 	{
 /*		ParametersManager parametersManager;
