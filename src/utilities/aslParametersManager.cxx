@@ -221,7 +221,6 @@ namespace asl
 									"platform", "Default computation platform", "");
 		Parameter<string> device(acl::getDeviceName(acl::hardware.defaultQueue),
 									"device", "Default computation device", "");
-		// ToDo: if the above doesn't work use add();
 	}
 
 

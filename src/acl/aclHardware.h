@@ -139,8 +139,6 @@ namespace acl
 			/// Warns if requested combination is not found.
 			void setDefaultQueue(const std::string & platform = "",
 					     const std::string & device = "");
-// remove it after merging asl.ini with parameters.ini?
-			void loadConfiguration(const std::string & fileName = "asl.ini");
 			std::vector<CommandQueue> queues;
 			CommandQueue defaultQueue;
 			std::string getDevicesInfo();

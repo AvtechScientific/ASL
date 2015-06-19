@@ -126,19 +126,6 @@ namespace acl
 	}
 
 
-	void Hardware::loadConfiguration(const string & fileName)
-	{
-/*		ParametersManager parametersManager;
-		Parameter<string> platform("", "platform", "Default computation platform", "");
-		Parameter<string> device("", "device", "Default computation device", "");
-		parametersManager.load(fileName);
-
-		defaultPlatform = platform.v();
-		defaultDevice = device.v();
-*/	
-	}
-
-
 	string Hardware::getDevicesInfo()
 	{
 		return devicesInfo;
