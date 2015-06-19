@@ -338,7 +338,7 @@ namespace asl
 			("devices,d", "display available devices and exit")
 			("folder,f", value<string>()->default_value("Default"),
 			 "path to the working folder that contains configuration file - parameters.ini")
-			("parameters,p", value<string>()->default_value("."),
+			("parameters,p",
 			 "generate default configuration file parameters.ini, write it to the provided path and exit")
 			("check,c", "check configuration for consistency and exit");
 
