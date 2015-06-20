@@ -210,6 +210,8 @@ namespace asl
 	ParametersManager::ParametersManager():
 		configurationOptions("Configuration options"),
 		parametersFileStr(""),
+		platform(""),
+		device(""),
 		folder(""),
 		folderWithSlash(""),
 		programName(""),
@@ -217,10 +219,10 @@ namespace asl
 	{
 		enable();
 		// Add platform and device parameters with default values
-		Parameter<string> platform(acl::getPlatformVendor(acl::hardware.defaultQueue),
-									"platform", "Default computation platform", "");
-		Parameter<string> device(acl::getDeviceName(acl::hardware.defaultQueue),
-									"device", "Default computation device", "");
+		add(platform, acl::getPlatformVendor(acl::hardware.defaultQueue),
+		    "platform", "Default computation platform");
+		add(device, acl::getDeviceName(acl::hardware.defaultQueue),
+		    "device", "Default computation device");
 	}
 
 
@@ -335,17 +337,17 @@ namespace asl
 		genericOptions.add_options()
 			("help,h", "display this help and exit")
 			("version,v", "display version and exit")
-			("devices,d", "display available devices and exit")
+			("devices,d", "display all available devices and exit")
 			("folder,f", value<string>()->default_value("Default"),
 			 "path to the working folder that contains configuration file - parameters.ini")
-			("parameters,p",
+			("parameters,p", value<string>(),
 			 "generate default configuration file parameters.ini, write it to the provided path and exit")
 			("check,c", "check configuration for consistency and exit");
 
 		positional_options_description positional;
-		positional.add("folder", 1);
 
 		options_description allOptions;
+		positional.add("folder", 1);
 
 		allOptions.add(genericOptions).add(configurationOptions);
 
@@ -371,7 +373,7 @@ namespace asl
 			if (vm.count("devices"))
 			{
 				cout << programName + " " + programVersion + "\n\n"
-					<< "Default computation device:"
+					<< "Default computation device:\n"
 					<< acl::hardware.getDefaultDeviceInfo() << "\n\n"
 					<< "List of all available platforms and their devices:\n"
 					<< acl::hardware.getDevicesInfo()

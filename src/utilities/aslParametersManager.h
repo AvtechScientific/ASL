@@ -109,6 +109,8 @@ namespace asl
 
 		private:
 			boost::program_options::options_description configurationOptions;
+			UValue<std::string> platform;
+			UValue<std::string> device;
 			std::string folder;
 			std::string folderWithSlash;
 			std::string programName;

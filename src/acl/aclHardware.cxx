@@ -120,7 +120,7 @@ namespace acl
 
 	std::string Hardware::getDefaultDeviceInfo()
 	{
-		string defaultDeviceInfo("\nplatform = " + getPlatformVendor(defaultQueue)
+		string defaultDeviceInfo("platform = " + getPlatformVendor(defaultQueue)
 								+ "\ndevice = " + getDeviceName(defaultQueue));
 		return defaultDeviceInfo;
 	}
