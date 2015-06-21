@@ -85,7 +85,7 @@ int main()
 	std::cout<<"Flow: Data initialization...";
 
 
-	auto object(asl::readSurf("train1.stl", bl));
+	auto object(asl::readSurface("train1.stl", bl));
 	
 	asl::Block block(object->getInternalBlock());
 
@@ -99,9 +99,9 @@ int main()
 	
 	std::cout<<"Flow: Numerics initialization...";
 
-	asl::SPLBGK lbgk(new asl::LBGK(block, 
-				               acl::generateVEConstant(FlT(nuNum.v())),  
-	        			       &asl::d3q15()));
+	asl::SPLBGK lbgk(new asl::LBGK(block,
+	                               acl::generateVEConstant(FlT(nuNum.v())),
+	                               &asl::d3q15()));
 	
 	lbgk->init();
 	asl::SPLBGKUtilities lbgkUtil(new asl::LBGKUtilities(lbgk));

@@ -82,10 +82,10 @@ int main()
 	
 	Param nuNum(nu.v()*dt.v()/dx.v()/dx.v());
 	
-	std::cout<<"Flow: Data initialization...";
+	std::cout << "Flow: Data initialization...";
 
 
-	auto object(asl::readSurf("locomotive.stl", bl));
+	auto object(asl::readSurface("locomotive.stl", bl));
 	
 	asl::Block block(object->getInternalBlock());
 
@@ -95,9 +95,9 @@ int main()
 	auto forceField(asl::generateDataContainerACL_SP<FlT>(block, 3, 1u));
 	asl::initData(forceField, makeAVec(0.,0.,0.));
 	
-	std::cout<<"Finished"<<endl;
+	std::cout << "Finished" << endl;
 	
-	std::cout<<"Flow: Numerics initialization...";
+	std::cout << "Flow: Numerics initialization...";
 
 	asl::SPLBGK lbgk(new asl::LBGKTurbulence(block, 
 	                                         acl::generateVEConstant(FlT(nu.v())),  

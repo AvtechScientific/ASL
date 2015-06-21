@@ -60,7 +60,7 @@ int main()
 	std::cout<<"Flow: Data initialization...";
 
 
-	auto object(asl::readSurf("bus.stl", dx.v(), 1.5,.25,0.,1.,3.,1.));
+	auto object(asl::readSurface("bus.stl", dx.v(), 1.5,.25,0.,1.,3.,1.));
 	
 	asl::Block block(object->getInternalBlock());
 

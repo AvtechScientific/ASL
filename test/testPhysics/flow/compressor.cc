@@ -80,7 +80,7 @@ int main()
 	std::cout<<"Compressor: Data initialization...";
 
 
-	auto compressorMap(asl::readSurf("axial-compressor.stl", bl));
+	auto compressorMap(asl::readSurface("axial-compressor.stl", bl));
 	
 	asl::Block block(compressorMap->getInternalBlock());
 
@@ -88,7 +88,7 @@ int main()
 	asl::initData(comprCaseMap, generateCase(block));
 
 	
-	std::cout<<"Finished"<<endl;
+	std::cout << "Finished" << endl;
 	
 	std::cout<<"Compressor: Numerics initialization...";
 

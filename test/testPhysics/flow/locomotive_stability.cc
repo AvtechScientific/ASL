@@ -83,7 +83,7 @@ int main()
 	std::cout<<"Flow: Data initialization...";
 
 
-	auto object(asl::readSurf("locomotive.stl", dx.v(), .5,1.,0.,1.,2.,4.));
+	auto object(asl::readSurface("locomotive.stl", dx.v(), .5,1.,0.,1.,2.,4.));
 	
 	asl::Block block(object->getInternalBlock());
 

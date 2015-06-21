@@ -129,9 +129,9 @@ namespace asl
 		return data;
 	}
 
-	SPDataWithGhostNodesACLData surfToData(vtkDataSet* surf, 
-	                                       double dx, 
-	                                       acl::CommandQueue queue)
+	SPDataWithGhostNodesACLData surfaceToData(vtkDataSet* surf,
+	                                          double dx,
+	                                          acl::CommandQueue queue)
 	{
 		vtkSmartPointer<vtkImplicitModeller> modeller(vtkSmartPointer<vtkImplicitModeller>::New());
 		modeller->SetOutputScalarTypeToFloat();
@@ -152,9 +152,9 @@ namespace asl
 		return data;
 	}
 
-	SPDataWithGhostNodesACLData surfToData(vtkDataSet* surf, 
-	                                       Block & b,
-	                                       acl::CommandQueue queue)
+	SPDataWithGhostNodesACLData surfaceToData(vtkDataSet* surf,
+	                                          Block & b,
+	                                          acl::CommandQueue queue)
 	{
 		vtkSmartPointer<vtkImplicitModeller> modeller(vtkSmartPointer<vtkImplicitModeller>::New());
 		modeller->SetOutputScalarTypeToFloat();
@@ -182,12 +182,12 @@ namespace asl
 		return data;
 	}
 
-	SPDataWithGhostNodesACLData surfToData(vtkDataSet* surf, 
-	                                       double dx,
-	                                       double offset_X0, double offset_XE, 
-	                              		   double offset_Y0, double offset_YE, 
-	                                	   double offset_Z0, double offset_ZE,
-	                                       acl::CommandQueue queue)
+	SPDataWithGhostNodesACLData surfaceToData(vtkDataSet* surf,
+	                                          double dx,
+	                                          double offset_X0, double offset_XE,
+	                                          double offset_Y0, double offset_YE,
+	                                          double offset_Z0, double offset_ZE,
+	                                          acl::CommandQueue queue)
 	{
 		vtkSmartPointer<vtkImplicitModeller> modeller(vtkSmartPointer<vtkImplicitModeller>::New());
 		modeller->SetOutputScalarTypeToFloat();
@@ -216,98 +216,145 @@ namespace asl
 	}
 
 	
-	SPDataWithGhostNodesACLData readSurfVTKXML(const string & fileName,
-	                                           double dx,
-	                                           acl::CommandQueue queue)
+	SPDataWithGhostNodesACLData readSurfaceVTKXML(const string & fileName,
+	                                              double dx,
+	                                              acl::CommandQueue queue)
 	{
 		vtkSmartPointer<vtkXMLPolyDataReader> reader(vtkSmartPointer<vtkXMLPolyDataReader>::New());
 		if (!reader->CanReadFile(fileName.c_str()))
-			errorMessage("SurfVTKXML reader: The input file is corrupted or file name is wrong: " + fileName);
+			errorMessage("SurfaceVTKXML reader: The input file is corrupted or file name is wrong: " + fileName);
 		reader->SetFileName(fileName.c_str());
 		reader->Update();
 
-		return surfToData(reader->GetOutput(),dx,queue);
+		return surfaceToData(reader->GetOutput(),dx,queue);
 	}
 
-	SPDataWithGhostNodesACLData readSurfVTKXML(const string & fileName,
+	SPDataWithGhostNodesACLData readSurfaceVTKXML(const string & fileName,
+	                                              Block & b,
+	                                              acl::CommandQueue queue)
+	{
+		vtkSmartPointer<vtkXMLPolyDataReader> reader(vtkSmartPointer<vtkXMLPolyDataReader>::New());
+		if (!reader->CanReadFile(fileName.c_str()))
+			errorMessage("SurfaceVTKXML reader: The input file is corrupted or file name is wrong: " + fileName);
+		reader->SetFileName(fileName.c_str());
+		reader->Update();
+
+		return surfaceToData(reader->GetOutput(),b,queue);
+	}
+
+	SPDataWithGhostNodesACLData readSurfaceVTKXML(const string & fileName,
+	                                              double dx,
+	                                              double offset_X0, double offset_XE,
+	                                              double offset_Y0, double offset_YE,
+	                                              double offset_Z0, double offset_ZE,
+	                                              acl::CommandQueue queue)
+	{
+		vtkSmartPointer<vtkXMLPolyDataReader> reader(vtkSmartPointer<vtkXMLPolyDataReader>::New());
+		if (!reader->CanReadFile(fileName.c_str()))
+			errorMessage("SurfaceVTKXML reader: The input file is corrupted or file name is wrong: " + fileName);
+		reader->SetFileName(fileName.c_str());
+		reader->Update();
+
+		return surfaceToData(reader->GetOutput(),
+		                     dx,
+		                     offset_X0, offset_XE,
+		                     offset_Y0, offset_YE,
+		                     offset_Z0, offset_ZE,
+		                     queue);
+	}
+	
+	SPDataWithGhostNodesACLData readSurfaceSTL(const string & fileName,
+	                                           double dx,
+	                                           acl::CommandQueue queue)
+	{
+		vtkSmartPointer<vtkSTLReader> reader(vtkSmartPointer<vtkSTLReader>::New());
+		reader->SetFileName(fileName.c_str());
+		reader->Update();
+		
+		return surfaceToData(reader->GetOutput(),dx,queue);
+	}
+	
+	SPDataWithGhostNodesACLData readSurfaceSTL(const string & fileName,
 	                                           Block & b,
 	                                           acl::CommandQueue queue)
 	{
-		vtkSmartPointer<vtkXMLPolyDataReader> reader(vtkSmartPointer<vtkXMLPolyDataReader>::New());
-		if (!reader->CanReadFile(fileName.c_str()))
-			errorMessage("SurfVTKXML reader: The input file is corrupted or file name is wrong: " + fileName);
+		vtkSmartPointer<vtkSTLReader> reader(vtkSmartPointer<vtkSTLReader>::New());
 		reader->SetFileName(fileName.c_str());
 		reader->Update();
-
-		return surfToData(reader->GetOutput(),b,queue);
+		
+		return surfaceToData(reader->GetOutput(),b,queue);
 	}
 
-	SPDataWithGhostNodesACLData readSurfVTKXML(const string & fileName,
+	SPDataWithGhostNodesACLData readSurfaceSTL(const string & fileName,
 	                                           double dx,
-	                                           double offset_X0, double offset_XE, 
-	                                           double offset_Y0, double offset_YE, 
+	                                           double offset_X0, double offset_XE,
+	                                           double offset_Y0, double offset_YE,
 	                                           double offset_Z0, double offset_ZE,
 	                                           acl::CommandQueue queue)
 	{
-		vtkSmartPointer<vtkXMLPolyDataReader> reader(vtkSmartPointer<vtkXMLPolyDataReader>::New());
-		if (!reader->CanReadFile(fileName.c_str()))
-			errorMessage("SurfVTKXML reader: The input file is corrupted or file name is wrong: " + fileName);
-		reader->SetFileName(fileName.c_str());
-		reader->Update();
-
-		return surfToData(reader->GetOutput(),
-		                  dx,
-	                      offset_X0, offset_XE, 
-	                      offset_Y0, offset_YE, 
-	                      offset_Z0, offset_ZE,
-		                  queue);
-	}
-	
-	SPDataWithGhostNodesACLData readSurfSTL(const string & fileName,
-	                                        double dx,
-	                                        acl::CommandQueue queue)
-	{
 		vtkSmartPointer<vtkSTLReader> reader(vtkSmartPointer<vtkSTLReader>::New());
 		reader->SetFileName(fileName.c_str());
 		reader->Update();
 		
-		return surfToData(reader->GetOutput(),dx,queue);
+		return surfaceToData(reader->GetOutput(),
+		                     dx,
+		                     offset_X0, offset_XE,
+		                     offset_Y0, offset_YE,
+		                     offset_Z0, offset_ZE,
+		                     queue);
 	}
 	
-	SPDataWithGhostNodesACLData readSurfSTL(const string & fileName,
+	SPDataWithGhostNodesACLData readSurface(const string & fileName,
+	                                        double dx,
+	                                        acl::CommandQueue queue)
+	{
+		string fileExtension;
+		path pathToFile(fileName);
+		fileExtension = pathToFile.extension().string();
+
+		SPDataWithGhostNodesACLData data;
+
+		if (fileExtension == ".vtp")
+			data = readSurfaceVTKXML(fileName, dx, queue);
+
+		if (fileExtension == ".stl")
+			data = readSurfaceSTL(fileName, dx, queue);
+		
+		if (data.get() == 0)
+			errorMessage("Reader: file format not supported");
+
+		return data;		
+	}
+	
+	SPDataWithGhostNodesACLData readSurface(const string & fileName,
 	                                        Block & b,
 	                                        acl::CommandQueue queue)
 	{
-		vtkSmartPointer<vtkSTLReader> reader(vtkSmartPointer<vtkSTLReader>::New());
-		reader->SetFileName(fileName.c_str());
-		reader->Update();
+		string fileExtension;
+		path pathToFile(fileName);
+		fileExtension = pathToFile.extension().string();
+
+		SPDataWithGhostNodesACLData data;
+
+		if (fileExtension == ".vtp")
+			data = readSurfaceVTKXML(fileName, b, queue);
+
+		if (fileExtension == ".stl")
+			data = readSurfaceSTL(fileName, b, queue);
 		
-		return surfToData(reader->GetOutput(),b,queue);
+		if (data.get() == 0)
+			errorMessage("Reader: file format not supported");
+
+		return data;		
 	}
 
-	SPDataWithGhostNodesACLData readSurfSTL(const string & fileName,
+	SPDataWithGhostNodesACLData readSurface(const string & fileName,
 	                                        double dx,
-	                                        double offset_X0, double offset_XE, 
-	                                        double offset_Y0, double offset_YE, 
+	                                        double offset_X0, double offset_XE,
+	                                        double offset_Y0, double offset_YE,
 	                                        double offset_Z0, double offset_ZE,
 	                                        acl::CommandQueue queue)
 	{
-		vtkSmartPointer<vtkSTLReader> reader(vtkSmartPointer<vtkSTLReader>::New());
-		reader->SetFileName(fileName.c_str());
-		reader->Update();
-		
-		return surfToData(reader->GetOutput(),
-		                  dx,
-	                      offset_X0, offset_XE, 
-	                      offset_Y0, offset_YE, 
-	                      offset_Z0, offset_ZE,
-		                  queue);
-	}
-	
-	SPDataWithGhostNodesACLData readSurf(const string & fileName,
-	                 			         double dx,
-	                                     acl::CommandQueue queue)
-	{
 		string fileExtension;
 		path pathToFile(fileName);
 		fileExtension = pathToFile.extension().string();
@@ -315,67 +362,20 @@ namespace asl
 		SPDataWithGhostNodesACLData data;
 
 		if (fileExtension == ".vtp")
-			data = readSurfVTKXML(fileName, dx, queue);
+			data = readSurfaceVTKXML(fileName,
+			                         dx,
+			                         offset_X0, offset_XE,
+			                         offset_Y0, offset_YE,
+			                         offset_Z0, offset_ZE,
+			                         queue);
 
 		if (fileExtension == ".stl")
-			data = readSurfSTL(fileName, dx, queue);
-		
-		if (data.get() == 0)
-			errorMessage("Reader: file format not supported");
-
-		return data;		
-	}
-	
-	SPDataWithGhostNodesACLData readSurf(const string & fileName,
-	                                     Block & b,
-	                                     acl::CommandQueue queue)
-	{
-		string fileExtension;
-		path pathToFile(fileName);
-		fileExtension = pathToFile.extension().string();
-
-		SPDataWithGhostNodesACLData data;
-
-		if (fileExtension == ".vtp")
-			data = readSurfVTKXML(fileName, b, queue);
-
-		if (fileExtension == ".stl")
-			data = readSurfSTL(fileName, b, queue);
-		
-		if (data.get() == 0)
-			errorMessage("Reader: file format not supported");
-
-		return data;		
-	}
-
-	SPDataWithGhostNodesACLData readSurf(const string & fileName,
-	                                     double dx,
-	                                     double offset_X0, double offset_XE, 
-	                                     double offset_Y0, double offset_YE, 
-	                                     double offset_Z0, double offset_ZE,
-	                                     acl::CommandQueue queue)
-	{
-		string fileExtension;
-		path pathToFile(fileName);
-		fileExtension = pathToFile.extension().string();
-
-		SPDataWithGhostNodesACLData data;
-
-		if (fileExtension == ".vtp")
-			data = readSurfVTKXML(fileName, 
+			data = readSurfaceSTL(fileName,
 			                      dx,
-	                              offset_X0, offset_XE, 
-	                              offset_Y0, offset_YE, 
-	                              offset_Z0, offset_ZE,
+			                      offset_X0, offset_XE,
+			                      offset_Y0, offset_YE,
+			                      offset_Z0, offset_ZE,
 			                      queue);
-
-		if (fileExtension == ".stl")
-			data = readSurfSTL(fileName, 
-			                   dx,
-	                           offset_X0, offset_XE, 
-	                           offset_Y0, offset_YE, 
-	                           offset_Z0, offset_ZE,
-			                   queue);
 		
 		if (data.get() == 0)
 			errorMessage("Reader: file format not supported");

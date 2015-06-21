@@ -57,14 +57,14 @@ void testMINCplus()
 
 }
 
-void testSurfSTL()
+void testSurfaceSTL()
 {
 	cout << "Test of Surface STL files reader..." << endl;
 
-	auto data(asl::readSurf("bus.stl", 5));
-//	auto data(asl::readSurf("xx.vtp", .01));
+	auto data(asl::readSurface("bus.stl", 5));
+//	auto data(asl::readSurface("xx.vtp", .01));
 	
-	asl::writeVTKXML("dataSurfSTL.vti",
+	asl::writeVTKXML("dataSurfaceSTL.vti",
 	                 *data,
 	                 "data");
 }
@@ -75,6 +75,6 @@ int main()
 {
 //	testMINC();
 //	testMINCplus();
-	testSurfSTL();
+	testSurfaceSTL();
 	return 0;
 }
