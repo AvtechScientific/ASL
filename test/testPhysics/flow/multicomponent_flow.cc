@@ -58,7 +58,6 @@ class Parameters
 		string folder;
 
 		asl::Block::DV size;
-
 		asl::Parameter<double> dx;
 		asl::Parameter<double> dt;
 

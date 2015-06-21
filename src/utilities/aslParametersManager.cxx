@@ -288,8 +288,8 @@ namespace asl
 	{
 		configurationOptions.add_options()
 			(key.c_str(), value<T>()->required(), description.c_str());
-		// ToDo: maps - Add the option to the default parameters file
-//		parametersFileStr += "\n# " + description + "\n" + key + " = " + numToStr(defaultValue) + "\n";
+		// Add the option to the default parameters file
+		parametersFileStr += "\n# " + description + "\n" + key + " = \n";
 	}
 
 
@@ -299,10 +299,12 @@ namespace asl
 	                                                 string description)
 	{		
 		configurationOptions.add_options()
-			(key.c_str(), value<T>(&parameter.v())->default_value(defaultValue), description.c_str());
+			(key.c_str(), value<T>(&parameter.v())->default_value(defaultValue),
+			 description.c_str());
 
 		// Add the option to the default parameters file
-		parametersFileStr += "\n# " + description + "\n" + key + " = " + numToStr(defaultValue) + "\n";
+		parametersFileStr += "\n# " + description + "\n"
+							+ key + " = " + numToStr(defaultValue) + "\n";
 	}
 
 
@@ -423,7 +425,7 @@ namespace asl
 
 			populateMaps(vm);
 
-			// Set Hardware default queue as required through provided options
+			// Set hardware default queue as required through provided options
 			acl::hardware.setDefaultQueue(vm["platform"].as<string>(), vm["device"].as<string>());
 
 			// Place it after(!) notify(vm);
@@ -452,11 +454,15 @@ namespace asl
 			if (!ifs)
 				errorMessage("Can not open configuration file: " + configFile);
 
-			parsed_options parsed = parse_config_file(ifs, configurationOptions, true);
+			parsed_options parsed = parse_config_file(ifs, configurationOptions,
+			                                          true);
 			store(parsed, vm);
 			notify(vm);
 			populateMaps(vm);
-		}
+			// No need to set hardware default queue, because this
+			// member functions is not called on program launch and deals with
+			// parameters others than `platform` and `device`.
+	}
 		catch(exception& e)
 		{
 			errorMessage(string("ParametersManager::load() - ") + e.what());
