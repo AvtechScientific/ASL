@@ -37,6 +37,7 @@ include_directories(SYSTEM ${OpenCL_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 add_subdirectory(src)
 add_subdirectory(test)
+add_subdirectory(examples)
 add_subdirectory(doc)
 
 # Packaging

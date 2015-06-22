@@ -45,16 +45,12 @@ namespace acl
 	const vector<TypeID> TYPE_SELECT({TYPE_INT, 	TYPE_INT, TYPE_INT, TYPE_LONG, TYPE_LONG});
 
 	Hardware hardware;
-	
-	Hardware::Hardware():
-		devicesInfo(""),
-		defaultPlatform(""),
-		defaultDevice("")
-	{
-		loadConfiguration();
-		
 
-		// Have a look at the available platforms and their devices
+
+	Hardware::Hardware():
+		devicesInfo("")
+	{
+		// Scan all available platforms and their devices
 		vector<cl::Platform> platforms;
 		vector<cl::Device> devices;
 		cl_context_properties cps[3];
@@ -71,7 +67,7 @@ namespace acl
 				status = platforms[i].getDevices(CL_DEVICE_TYPE_ALL, &devices);
 				errorMessage(status, "Platform::getDevices()");
 				devicesInfo += "Platform: " + platforms[i].getInfo<CL_PLATFORM_VENDOR>()
-					 + "\nNumber of devices: " + numToStr(devices.size()) + "\n";
+					    + "\nNumber of devices: " + numToStr(devices.size()) + "\n";
 
 				cps[0] = CL_CONTEXT_PLATFORM;
 				cps[1] = (cl_context_properties)(platforms[i])();
@@ -87,40 +83,46 @@ namespace acl
 					queues.push_back(CommandQueue(new cl::CommandQueue(context, devices[j], 0, &status)));
 					errorMessage(status, "CommandQueue::CommandQueue()");
 					
-					if ((platforms[i].getInfo<CL_PLATFORM_VENDOR>().c_str() == defaultPlatform) && 
-					    (devices[j].getInfo<CL_DEVICE_NAME>().c_str() == defaultDevice))
-					{
-						// Choose requested device on requested platform
-						defaultQueue = queues.back();
-					}
-
 					devicesInfo += "\t" + devices[j].getInfo<CL_DEVICE_NAME>() + "\n";
 				}
 			}
 		}
-		
-		if (defaultQueue.get() == 0)
-		{
-			devicesInfo += "\n" + warningString("Requested device not found") + "\n";
-			// Choose first available device
-			defaultQueue = queues.front();
-		}
 
-		// get platform and device info from defaultQueue
-		devicesInfo += "\nDefault device: " + getPlatformVendor(defaultQueue)
-					+ ", " + getDeviceName(defaultQueue) + "\n";
+		// Set first found queue as default queue
+		defaultQueue = queues.front();
 	}
 
 
-	void Hardware::loadConfiguration(const string & fileName)
+	void Hardware::setDefaultQueue(const std::string & platform,
+								   const std::string & device)
 	{
-		ParametersManager parametersManager;
-		Parameter<string> platform("", "platform", "Default platform", "");
-		Parameter<string> device("", "device", "Default device", "");
-		parametersManager.load(fileName);
+		defaultQueue = NULL;
 
-		defaultPlatform = platform.v();
-		defaultDevice = device.v();
+		for (unsigned int i(0); i < queues.size(); ++i)
+		{
+			if ((platform == getPlatformVendor(queues[i])) && 
+			    (device == getDeviceName(queues[i])))
+			{
+				// Choose requested device on requested platform
+				defaultQueue = queues.back();
+			}
+		}
+
+		// Warn if requested combination of platform and device was not found
+		if (defaultQueue.get() == 0)
+		{
+			// Choose first available device
+			defaultQueue = queues.front();
+			warningMessage("Requested device not found! Using:\n" + getDefaultDeviceInfo());
+		}
+	}
+
+
+	std::string Hardware::getDefaultDeviceInfo()
+	{
+		string defaultDeviceInfo("platform = " + getPlatformVendor(defaultQueue)
+								+ "\ndevice = " + getDeviceName(defaultQueue));
+		return defaultDeviceInfo;
 	}
 
 

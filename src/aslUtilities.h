@@ -41,7 +41,7 @@
 namespace asl
 {
 	
-	/// Converts numbers or an other type to string \ingroup Utilities
+	/// Converts numbers or another type to string \ingroup Utilities
 	template <typename T> inline std::string numToStr(T i)
 	{
 		std::stringstream s;
@@ -50,7 +50,7 @@ namespace asl
 	}
 
 
-	/// Converts numbers or an other type to string with given value of positions with 0 before \ingroup Utilities
+	/// Converts numbers or another type to string with given value of positions with 0 before \ingroup Utilities
 	template <typename T> std::string numToStr(T i, int numberOf0)
 	{
 		std::stringstream s;
