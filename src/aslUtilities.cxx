@@ -20,7 +20,7 @@
  *
  */
 
-
+#include <stdexcept>
 #include "aslUtilities.h"
 #include <acl/aclUtilities.h>
 
@@ -64,8 +64,7 @@ namespace asl
 	{
 		if (status != CL_SUCCESS)
 		{
-			cerr << "ASL ERROR: " << errorMessage << " (" << status << ")." << endl;
-			exit(EXIT_FAILURE);
+			throw std::logic_error("ASL ERROR: " + string(errorMessage) + " (" + to_string(status) + ")." );
 		}
 	}
 
@@ -74,23 +73,20 @@ namespace asl
 	{
 		if (status != CL_SUCCESS)
 		{
-			cerr << "ASL ERROR: " << errorMessage << " (" << status << ")." << endl;
-			exit(EXIT_FAILURE);
+			throw std::logic_error("ASL ERROR: " + errorMessage + " (" + to_string(status) + ")." );
 		}
 	}
 	
 
 	void errorMessage(const char *errorMessage)
 	{
-		cerr << "ASL ERROR: " << errorMessage << "." << endl;
-		exit(EXIT_FAILURE);
+			throw std::logic_error("ASL ERROR: " + string(errorMessage));	
 	}
 
 
 	void errorMessage(const string & errorMessage)
 	{
-		cerr << "ASL ERROR: " << errorMessage << "." << endl;
-		exit(EXIT_FAILURE);
+			throw std::logic_error("ASL ERROR: " + errorMessage);	
 	}
 
 

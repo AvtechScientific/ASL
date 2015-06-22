@@ -63,21 +63,21 @@ namespace asl
 	/// returns asl data;
 	/// Supported formats: .vtp .stl
 	/// \ingroup IO
-	SPDataWithGhostNodesACLData readSurf(const string & fileName,
-	                                     double dx,
-	                                     acl::CommandQueue queue = acl::hardware.defaultQueue);
+	SPDataWithGhostNodesACLData readSurface(const string & fileName,
+	                                        double dx,
+	                                        acl::CommandQueue queue = acl::hardware.defaultQueue);
 
-	SPDataWithGhostNodesACLData readSurf(const string & fileName,
-	                                     Block & b,
-	                                     acl::CommandQueue queue = acl::hardware.defaultQueue);
+	SPDataWithGhostNodesACLData readSurface(const string & fileName,
+	                                        Block & b,
+	                                        acl::CommandQueue queue = acl::hardware.defaultQueue);
 
 	// read surface with offsets retative to the surface outframe
-	SPDataWithGhostNodesACLData readSurf(const string & fileName,
-	                                     double dx,
-	                                     double offset_X0, double offset_XE, 
-	                                     double offset_Y0, double offset_YE, 
-	                                     double offset_Z0, double offset_ZE,
-	                                     acl::CommandQueue queue = acl::hardware.defaultQueue);
+	SPDataWithGhostNodesACLData readSurface(const string & fileName,
+	                                        double dx,
+	                                        double offset_X0, double offset_XE,
+	                                        double offset_Y0, double offset_YE,
+	                                        double offset_Z0, double offset_ZE,
+	                                        acl::CommandQueue queue = acl::hardware.defaultQueue);
 	
 } // asl
 
