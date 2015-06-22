@@ -22,7 +22,7 @@
 
 
 /**
-	\example flow.cc
+	\example locomotive_laminar.cc
  */
 
 #include <utilities/aslUValue.h>
@@ -85,7 +85,7 @@ int main()
 	std::cout<<"Flow: Data initialization...";
 
 
-	auto object(asl::readSurface("train1.stl", bl));
+	auto object(asl::readSurface("locomotive.stl", bl));
 	
 	asl::Block block(object->getInternalBlock());
 

@@ -69,9 +69,9 @@ class Parameters
 		asl::Parameter<double> pumpL;
 		asl::Parameter<double> pumpD;
 
-		asl::Parameter<double> oilInVel;
-		asl::Parameter<double> waterInVel;
-		asl::Parameter<double> gasInVel;
+		asl::Parameter<double> component2InVel;
+		asl::Parameter<double> component1InVel;
+		asl::Parameter<double> component3InVel;
 		
 		
 		void load(int argc, char * argv[],
@@ -93,9 +93,9 @@ Parameters::Parameters():
 	tubeD(0.05, "tubeD", "tube's diameter"),
 	pumpL(0.025, "pumpL", "pump's length"),
 	pumpD(0.03, "pumpD", "pump's diameter"),
-	oilInVel(0.08, "oil_in_velocity", "flow velocity in the oil input"),
-	waterInVel(0.16, "water_in_velocity", "flow velocity in the water input"),
-	gasInVel(0.1, "gas_in_velocity", "flow velocity in the gas input")
+	component1InVel(0.16, "component1_in_velocity", "flow velocity in the component1 input"),
+	component2InVel(0.08, "component2_in_velocity", "flow velocity in the component2 input"),
+	component3InVel(0.1, "component3_in_velocity", "flow velocity in the component3 input")
 {
 }
 
@@ -157,10 +157,10 @@ int main(int argc, char *argv[])
 	auto mcfMapMem(asl::generateDataContainerACL_SP<FlT>(block, 1, 1u));
 	asl::initData(mcfMapMem, generateMixer(block, params));
 
-	auto waterFrac(asl::generateDataContainerACL_SP<FlT>(block, 1, 1u));
-	asl::initData(waterFrac, 0);
-	auto gasFrac(asl::generateDataContainerACL_SP<FlT>(block, 1, 1u));
-	asl::initData(gasFrac, 0);
+	auto component1Frac(asl::generateDataContainerACL_SP<FlT>(block, 1, 1u));
+	asl::initData(component1Frac, 0);
+	auto component3Frac(asl::generateDataContainerACL_SP<FlT>(block, 1, 1u));
+	asl::initData(component3Frac, 0);
 	
 	
 	std::cout<<"Finished"<<endl;
@@ -178,10 +178,10 @@ int main(int argc, char *argv[])
 	lbgkUtil->initF(acl::generateVEConstant(.0, .0, .0));
 
 	auto flowVel(lbgk->getVelocity());
-	auto nmWater(asl::generateFDAdvectionDiffusion(waterFrac, 0.01, flowVel, templ, true));
-	nmWater->init();
-	auto nmGas(asl::generateFDAdvectionDiffusion(gasFrac, 0.01, flowVel, templ));
-	nmGas->init();
+	auto nmcomponent1(asl::generateFDAdvectionDiffusion(component1Frac, 0.01, flowVel, templ, true));
+	nmcomponent1->init();
+	auto nmcomponent3(asl::generateFDAdvectionDiffusion(component3Frac, 0.01, flowVel, templ));
+	nmcomponent3->init();
 
 	std::vector<asl::SPNumMethod> bc;
 	std::vector<asl::SPNumMethod> bcV;
@@ -190,24 +190,24 @@ int main(int argc, char *argv[])
 	bc.push_back(generateBCNoSlip(lbgk, mcfMapMem));
 	bc.push_back(generateBCConstantPressure(lbgk,1.,{asl::ZE}));
 	bc.push_back(generateBCConstantPressureVelocity(lbgk, 1., 
-	                                                makeAVec(0.,0.,params.oilInVel.v()),
+	                                                makeAVec(0.,0.,params.component2InVel.v()),
 	                                                {asl::Z0}));
 	bc.push_back(generateBCConstantPressureVelocity(lbgk, 1., 
-	                                                makeAVec(0.,-params.waterInVel.v(),0.),
+	                                                makeAVec(0.,-params.component1InVel.v(),0.),
 	                                                {asl::YE}));
 	bc.push_back(generateBCConstantPressureVelocity(lbgk,1., 
-	                                                makeAVec(0.,params.gasInVel.v(),0.),
+	                                                makeAVec(0.,params.component3InVel.v(),0.),
 	                                                {asl::Y0}));
 	
 	bcDif.push_back(generateBCNoSlipVel(lbgk, mcfMapMem));
-	bc.push_back(generateBCConstantGradient(waterFrac, 0., mcfMapMem, templ));
-	bc.push_back(generateBCConstantGradient(gasFrac, 0., mcfMapMem, templ));
-	bc.push_back(generateBCConstantValue(waterFrac, 1., {asl::YE}));
-	bc.push_back(generateBCConstantValue(gasFrac, 0., {asl::YE, asl::Z0, asl::ZE}));
-	bc.push_back(generateBCConstantValue(waterFrac, 0., {asl::Y0, asl::Z0, asl::ZE}));
-	bc.push_back(generateBCConstantValue(gasFrac, 1., {asl::Y0}));
-//	bc.push_back(generateBCConstantGradient(waterFrac, 0.,templ, {asl::ZE}));
-//	bc.push_back(generateBCConstantGradient(gasFrac, 0.,templ, {asl::ZE}));
+	bc.push_back(generateBCConstantGradient(component1Frac, 0., mcfMapMem, templ));
+	bc.push_back(generateBCConstantGradient(component3Frac, 0., mcfMapMem, templ));
+	bc.push_back(generateBCConstantValue(component1Frac, 1., {asl::YE}));
+	bc.push_back(generateBCConstantValue(component3Frac, 0., {asl::YE, asl::Z0, asl::ZE}));
+	bc.push_back(generateBCConstantValue(component1Frac, 0., {asl::Y0, asl::Z0, asl::ZE}));
+	bc.push_back(generateBCConstantValue(component3Frac, 1., {asl::Y0}));
+//	bc.push_back(generateBCConstantGradient(component1Frac, 0.,templ, {asl::ZE}));
+//	bc.push_back(generateBCConstantGradient(component3Frac, 0.,templ, {asl::ZE}));
 	
 	initAll(bc);
 	initAll(bcDif);
@@ -219,8 +219,8 @@ int main(int argc, char *argv[])
 
 	asl::WriterVTKXML writer("multicomponent_flow");
 	writer.addScalars("map", *mcfMapMem);
-	writer.addScalars("water", *waterFrac);
-	writer.addScalars("gas", *gasFrac);
+	writer.addScalars("component1", *component1Frac);
+	writer.addScalars("component3", *component3Frac);
 	writer.addScalars("rho", *lbgk->getRho());
 	writer.addVector("v", *flowVel);
 
@@ -235,8 +235,8 @@ int main(int argc, char *argv[])
 	{
 		lbgk->execute();
 		executeAll(bcDif);
-		nmWater->execute();
-		nmGas->execute();
+		nmcomponent1->execute();
+		nmcomponent3->execute();
 		executeAll(bc);
 		
 		if(!(i%100))

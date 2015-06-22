@@ -21,9 +21,9 @@ add_executable(flowKDPGrowth flowKDPGrowth.cc)
 target_link_libraries(flowKDPGrowth aslnum aslvtk asl)
 set_property(TARGET flowKDPGrowth PROPERTY RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/flowKDPGrowth)
 
-add_executable(flowAroundObject flowAroundObject.cc)
-target_link_libraries(flowAroundObject aslnum aslvtk asl)
-set_property(TARGET flowAroundObject PROPERTY RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/flowAroundObject)
+add_executable(locomotive_laminar locomotive_laminar.cc)
+target_link_libraries(locomotive_laminar aslnum aslvtk asl)
+set_property(TARGET locomotive_laminar PROPERTY RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/locomotive_laminar)
 
 add_executable(compressor compressor.cc)
 target_link_libraries(compressor aslnum aslvtk asl)
