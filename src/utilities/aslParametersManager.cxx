@@ -208,9 +208,21 @@ namespace asl
 	ParametersManager * ParametersManager::current(NULL);
 
 	ParametersManager::ParametersManager():
-		configurationOptions("Configuration options")
+		configurationOptions("Configuration options"),
+		parametersFileStr(""),
+		platform(""),
+		device(""),
+		folder(""),
+		folderWithSlash(""),
+		programName(""),
+		programVersion("")
 	{
 		enable();
+		// Add platform and device parameters with default values
+		add(platform, acl::getPlatformVendor(acl::hardware.defaultQueue),
+		    "platform", "Default computation platform");
+		add(device, acl::getDeviceName(acl::hardware.defaultQueue),
+		    "device", "Default computation device");
 	}
 
 
@@ -264,6 +276,9 @@ namespace asl
 	{
 		configurationOptions.add_options()
 			(key.c_str(), value<T>(&parameter.v())->required(), description.c_str());
+
+		// Add the option to the default parameters file			
+		parametersFileStr += "\n# " + description + "\n" + key + " = \n";
 	}
 
 
@@ -273,6 +288,8 @@ namespace asl
 	{
 		configurationOptions.add_options()
 			(key.c_str(), value<T>()->required(), description.c_str());
+		// Add the option to the default parameters file
+		parametersFileStr += "\n# " + description + "\n" + key + " = \n";
 	}
 
 
@@ -282,7 +299,12 @@ namespace asl
 	                                                 string description)
 	{		
 		configurationOptions.add_options()
-			(key.c_str(), value<T>(&parameter.v())->default_value(defaultValue), description.c_str());
+			(key.c_str(), value<T>(&parameter.v())->default_value(defaultValue),
+			 description.c_str());
+
+		// Add the option to the default parameters file
+		parametersFileStr += "\n# " + description + "\n"
+							+ key + " = " + numToStr(defaultValue) + "\n";
 	}
 
 
@@ -304,9 +326,12 @@ namespace asl
 
 
 	void ParametersManager::load(int argc, char * argv[],
-	                             string programName,
-	                             string programVersion)
+	                             string programName_,
+	                             string programVersion_)
 	{
+		programName = programName_;
+		programVersion = programVersion_;
+
 		variables_map vm;
 
 		options_description genericOptions("Generic options");
@@ -314,16 +339,17 @@ namespace asl
 		genericOptions.add_options()
 			("help,h", "display this help and exit")
 			("version,v", "display version and exit")
-			("devices,d", "display available devices and exit")
-			("folder,f",
-			 value<string>()->default_value("Default"),
+			("devices,d", "display all available devices and exit")
+			("folder,f", value<string>()->default_value("Default"),
 			 "path to the working folder that contains configuration file - parameters.ini")
+			("parameters,p", value<string>(),
+			 "generate default configuration file parameters.ini, write it to the provided path and exit")
 			("check,c", "check configuration for consistency and exit");
 
 		positional_options_description positional;
-		positional.add("folder", 1);
 
 		options_description allOptions;
+		positional.add("folder", 1);
 
 		allOptions.add(genericOptions).add(configurationOptions);
 
@@ -349,8 +375,28 @@ namespace asl
 			if (vm.count("devices"))
 			{
 				cout << programName + " " + programVersion + "\n\n"
-					 << acl::hardware.getDevicesInfo()
-					 << endl;
+					<< "Default computation device:\n"
+					<< acl::hardware.getDefaultDeviceInfo() << "\n\n"
+					<< "List of all available platforms and their devices:\n"
+					<< acl::hardware.getDevicesInfo()
+					<< endl;
+				exit(0);
+			}
+
+			if (vm.count("parameters"))
+			{
+				path p(vm["parameters"].as<string>());
+				// add at least one slash at the end
+				p /= "/";
+				// and then cut all possible slashes at the end
+				p = p.parent_path();
+				p /= "/";
+				p /= "parameters.ini";
+
+				cout << "Writing default configuration file to: "
+					 << p.string() << endl;
+
+				writeParametersFile(p.string());
 				exit(0);
 			}
 
@@ -365,7 +411,11 @@ namespace asl
 			p /= "parameters.ini";
 			ifstream ifs(p.string());
 			if (!ifs)
+			{
+				// Only warn, since all options might have default values, or required values
+				// provided through the command line - so no configuration file is required
 				warningMessage("ParametersManager::load() - can not open configuration file: " + p.string());
+			}
 
 			parsed_options parsed = parse_config_file(ifs, allOptions, true);
 			store(parsed, vm);
@@ -374,6 +424,9 @@ namespace asl
 			notify(vm);
 
 			populateMaps(vm);
+
+			// Set hardware default queue as required through provided options
+			acl::hardware.setDefaultQueue(vm["platform"].as<string>(), vm["device"].as<string>());
 
 			// Place it after(!) notify(vm);
 			if (vm.count("check"))
@@ -401,11 +454,15 @@ namespace asl
 			if (!ifs)
 				errorMessage("Can not open configuration file: " + configFile);
 
-			parsed_options parsed = parse_config_file(ifs, configurationOptions, true);
+			parsed_options parsed = parse_config_file(ifs, configurationOptions,
+			                                          true);
 			store(parsed, vm);
 			notify(vm);
 			populateMaps(vm);
-		}
+			// No need to set hardware default queue, because this
+			// member functions is not called on program launch and deals with
+			// parameters others than `platform` and `device`.
+	}
 		catch(exception& e)
 		{
 			errorMessage(string("ParametersManager::load() - ") + e.what());
@@ -422,6 +479,23 @@ namespace asl
 	string ParametersManager::getFolderWithSlash()
 	{
 		return folderWithSlash;
+	}
+	
+
+	void ParametersManager::writeParametersFile(const std::string fileName)
+	{
+		ofstream fo(fileName);
+		if (!fo)
+			errorMessage("ParametersManager::writeParametersFile() - can not open file: " + fileName);
+			
+		// Prepend informative header
+		parametersFileStr = "# Parameters file with default values (where available).\n# Generated by "
+									+ programName + " version " + programVersion + "\n\n"
+									+ "# Get the list of all available computation devices by running:\n"
+									+ "# `" + programName + " -d`\n" + parametersFileStr;
+									
+		fo << parametersFileStr;
+		fo.close();
 	}
 
 } //namespace asl

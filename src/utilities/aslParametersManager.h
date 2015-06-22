@@ -97,8 +97,8 @@ namespace asl
 			/// from command line and/or configuration file (provided
 			/// through command line)
 			void load(int argc, char* argv[],
-			          std::string programName = "program_name",
-			          std::string programVersion = "1.0");
+			          std::string programName_ = "program_name",
+			          std::string programVersion_ = "1.0");
 			/// Loads all previously declared parameters
 			/// from configuration file \p configFile
 			void load(std::string configFile);
@@ -109,13 +109,22 @@ namespace asl
 
 		private:
 			boost::program_options::options_description configurationOptions;
+			UValue<std::string> platform;
+			UValue<std::string> device;
 			std::string folder;
 			std::string folderWithSlash;
+			std::string programName;
+			std::string programVersion;
 			/// Accomodates prefixes (defined by attached "*" wildcard)
 			/// using PrefixStore class
 			std::vector<std::shared_ptr<PrefixStore>> prefixes;
 
-			void populateMaps(boost::program_options::variables_map & vm);			
+			void populateMaps(boost::program_options::variables_map & vm);
+			/// Wrties all parameters and their
+			/// default values (if available) to the file \p fileName
+			void writeParametersFile(const std::string fileName);
+			/// Content of the parameters file
+			std::string parametersFileStr;
 	};
 
 
