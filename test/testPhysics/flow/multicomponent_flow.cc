@@ -26,17 +26,14 @@
  */
 
 #include <utilities/aslParametersManager.h>
-#include <math/aslVectors.h>
 #include <math/aslTemplates.h>
 #include <aslGeomInc.h>
-#include <data/aslDataWithGhostNodes.h>
-#include <aslGenerators.h>
+#include <aslDataInc.h>
 #include <acl/aclGenerators.h>
 #include <writers/aslVTKFormatWriters.h>
 #include <num/aslLBGK.h>
 #include <num/aslLBGKBC.h>
 #include "utilities/aslTimer.h"
-#include "acl/aclUtilities.h"
 #include <num/aslFDAdvectionDiffusion.h>
 #include <num/aslBasicBC.h>
 
