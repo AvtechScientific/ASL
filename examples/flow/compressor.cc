@@ -37,8 +37,6 @@
 #include "utilities/aslTimer.h"
 #include <readers/aslVTKFormatReaders.h>
 
-
-
 typedef float FlT;
 //typedef double FlT;
 typedef asl::UValue<double> Param;

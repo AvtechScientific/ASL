@@ -26,17 +26,15 @@
  */
 
 #include <utilities/aslUValue.h>
-#include <math/aslVectors.h>
 #include <math/aslTemplates.h>
 #include <math/aslDistanceFunction.h>
-#include<math/aslPositionFunction.h>
+#include <math/aslPositionFunction.h>
 #include <aslDataInc.h>
 #include <acl/aclGenerators.h>
 #include <writers/aslVTKFormatWriters.h>
 #include <num/aslLBGK.h>
 #include <num/aslLBGKBC.h>
 #include "utilities/aslTimer.h"
-#include "acl/aclUtilities.h"
 #include <readers/aslVTKFormatReaders.h>
 
 
