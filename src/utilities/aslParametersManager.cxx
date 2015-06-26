@@ -363,13 +363,9 @@ namespace asl
 	}
 
 
-/////////////////////////////////////////////////////// copied bellow...
-
-
 	ApplicationParametersManager::ApplicationParametersManager(string applicationName_,
 	                                                           string applicationVersion_,
 	                                                           string configFileName_):
-//???		ParametersManager(),
 		platform(acl::getPlatformVendor(acl::hardware.defaultQueue)),
 		device(acl::getDeviceName(acl::hardware.defaultQueue)),
 		applicationName(applicationName_),
@@ -388,14 +384,6 @@ namespace asl
 		    "platform", "Default computation platform");
 		add(device, device.v(),
 		    "device", "Default computation device");
-	}
-
-
-	ApplicationParametersManager::~ApplicationParametersManager()
-	{
-		// Deactivates this instance of ApplicationParametersManager
-		if (current == this)
-			current = NULL;
 	}
 
 

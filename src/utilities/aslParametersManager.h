@@ -131,8 +131,6 @@ namespace asl
 			ApplicationParametersManager(std::string applicationName_,
 			                             std::string applicationVersion_,
 			                             std::string configFileName_ = "parameters.ini");
-			// ToDo: do we need the destructor? it is the same as in the base class
-			~ApplicationParametersManager();
 			
 			/** Loads all previously declared parameters from command line
 			and/or configuration file (provided	through command line) */
