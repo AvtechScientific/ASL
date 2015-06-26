@@ -209,20 +209,11 @@ namespace asl
 
 	ParametersManager::ParametersManager():
 		configurationOptions("Configuration options"),
-		parametersFileStr(""),
-		platform(""),
-		device(""),
+		parametersFileStr("# Parameters file with initial default values (where available).\n"),
 		folder(""),
-		folderWithSlash(""),
-		programName(""),
-		programVersion("")
+		folderWithSlash("")
 	{
 		enable();
-		// Add platform and device parameters with default values
-		add(platform, acl::getPlatformVendor(acl::hardware.defaultQueue),
-		    "platform", "Default computation platform");
-		add(device, acl::getDeviceName(acl::hardware.defaultQueue),
-		    "device", "Default computation device");
 	}
 
 
@@ -283,13 +274,14 @@ namespace asl
 
 
 	template<typename T> void ParametersManager::add(UValue<map<string, T>> parameter,
-	                                                  string key,
-	                                                  string description)
+	                                                 string key,
+	                                                 string description)
 	{
 		configurationOptions.add_options()
 			(key.c_str(), value<T>()->required(), description.c_str());
 		// Add the option to the default parameters file
-		parametersFileStr += "\n# " + description + "\n" + key + " = \n";
+		parametersFileStr += "\n# " + description + "; substite '*' by any suffix to provide a set of related parameters\n"
+							+ key + " = \n";
 	}
 
 
@@ -325,125 +317,6 @@ namespace asl
 	}
 
 
-	void ParametersManager::load(int argc, char * argv[],
-	                             string programName_,
-	                             string programVersion_)
-	{
-		programName = programName_;
-		programVersion = programVersion_;
-
-		variables_map vm;
-
-		options_description genericOptions("Generic options");
-
-		genericOptions.add_options()
-			("help,h", "display this help and exit")
-			("version,v", "display version and exit")
-			("devices,d", "display all available devices and exit")
-			("folder,f", value<string>()->default_value("Default"),
-			 "path to the working folder that contains configuration file - parameters.ini")
-			("parameters,p", value<string>(),
-			 "generate default configuration file parameters.ini, write it to the provided path and exit")
-			("check,c", "check configuration for consistency and exit");
-
-		positional_options_description positional;
-
-		options_description allOptions;
-		positional.add("folder", 1);
-
-		allOptions.add(genericOptions).add(configurationOptions);
-
-		try
-		{
-			store(command_line_parser(argc, argv).options(allOptions).positional(positional).run(), vm);
-
-			if (vm.count("help"))
-			{
-				cout << "Usage: " + programName + " [WORKING_FOLDER] [OPTION]...\n"
-					 << allOptions
-					 << endl;
-				exit(0);
-			}
-
-			if (vm.count("version"))
-			{
-				cout << programName + " " + programVersion
-					 << endl;
-				exit(0);
-			}
-
-			if (vm.count("devices"))
-			{
-				cout << programName + " " + programVersion + "\n\n"
-					<< "Default computation device:\n"
-					<< acl::hardware.getDefaultDeviceInfo() << "\n\n"
-					<< "List of all available platforms and their devices:\n"
-					<< acl::hardware.getDevicesInfo()
-					<< endl;
-				exit(0);
-			}
-
-			if (vm.count("parameters"))
-			{
-				path p(vm["parameters"].as<string>());
-				// add at least one slash at the end
-				p /= "/";
-				// and then cut all possible slashes at the end
-				p = p.parent_path();
-				p /= "/";
-				p /= "parameters.ini";
-
-				cout << "Writing default configuration file to: "
-					 << p.string() << endl;
-
-				writeParametersFile(p.string());
-				exit(0);
-			}
-
-			path p(vm["folder"].as<string>());
-			// add at least one slash at the end
-			p /= "/";
-			// and then cut all possible slashes at the end
-			p = p.parent_path();
-			folder = p.string();
-			p /= "/";
-			folderWithSlash = p.string();
-			p /= "parameters.ini";
-			ifstream ifs(p.string());
-			if (!ifs)
-			{
-				// Only warn, since all options might have default values, or required values
-				// provided through the command line - so no configuration file is required
-				warningMessage("ParametersManager::load() - can not open configuration file: " + p.string());
-			}
-
-			parsed_options parsed = parse_config_file(ifs, allOptions, true);
-			store(parsed, vm);
-			// Run error notification only after obtaining
-			// all options and dealing with "--help"
-			notify(vm);
-
-			populateMaps(vm);
-
-			// Set hardware default queue as required through provided options
-			acl::hardware.setDefaultQueue(vm["platform"].as<string>(), vm["device"].as<string>());
-
-			// Place it after(!) notify(vm);
-			if (vm.count("check"))
-			{
-				cout << programName + " " + programVersion + "\n"
-					 << "Consistency check - successful."
-					 << endl;
-				exit(0);
-			}
-		}
-		catch(exception& e)
-		{
-			errorMessage(string("ParametersManager::load() - ") + e.what());
-		}
-	}
-
-
 	void ParametersManager::load(string configFile)
 	{
 		variables_map vm;
@@ -459,9 +332,6 @@ namespace asl
 			store(parsed, vm);
 			notify(vm);
 			populateMaps(vm);
-			// No need to set hardware default queue, because this
-			// member functions is not called on program launch and deals with
-			// parameters others than `platform` and `device`.
 	}
 		catch(exception& e)
 		{
@@ -487,15 +357,159 @@ namespace asl
 		ofstream fo(fileName);
 		if (!fo)
 			errorMessage("ParametersManager::writeParametersFile() - can not open file: " + fileName);
-			
-		// Prepend informative header
-		parametersFileStr = "# Parameters file with default values (where available).\n# Generated by "
-									+ programName + " version " + programVersion + "\n\n"
-									+ "# Get the list of all available computation devices by running:\n"
-									+ "# `" + programName + " -d`\n" + parametersFileStr;
-									
+
 		fo << parametersFileStr;
 		fo.close();
 	}
 
+
+/////////////////////////////////////////////////////// copied bellow...
+
+
+	ApplicationParametersManager::ApplicationParametersManager(string applicationName_,
+	                                                           string applicationVersion_,
+	                                                           string configFileName_):
+//???		ParametersManager(),
+		platform(acl::getPlatformVendor(acl::hardware.defaultQueue)),
+		device(acl::getDeviceName(acl::hardware.defaultQueue)),
+		applicationName(applicationName_),
+		applicationVersion(applicationVersion_),
+		configFileName(configFileName_)
+	{
+		enable();
+		// Prepend informative header
+		parametersFileStr += "# Generated by " + applicationName + " version " + applicationVersion + "\n\n"
+							+ "# Get the list of all available computation devices by running:\n"
+							+ "# `" + applicationName + " -d`\n";
+
+		/* Add platform and device parameters already initialized
+		with their default values */
+		add(platform, platform.v(),
+		    "platform", "Default computation platform");
+		add(device, device.v(),
+		    "device", "Default computation device");
+	}
+
+
+	ApplicationParametersManager::~ApplicationParametersManager()
+	{
+		// Deactivates this instance of ApplicationParametersManager
+		if (current == this)
+			current = NULL;
+	}
+
+
+	void ApplicationParametersManager::load(int argc, char * argv[])
+	{
+		variables_map vm;
+
+		options_description genericOptions("Generic options");
+
+		genericOptions.add_options()
+			("help,h", "display this help and exit")
+			("version,v", "display version and exit")
+			("devices,d", "display all available devices and exit")
+			("folder,f", value<string>()->default_value("Default"),
+			 string("path to the working folder that contains configuration file - " + configFileName).c_str())
+			("parameters,p", value<string>(),
+			 string("generate default configuration file " + configFileName + ", write it to the provided path and ext").c_str())
+			("check,c", "check configuration for consistency and exit");
+
+		positional_options_description positional;
+
+		options_description allOptions;
+		positional.add("folder", 1);
+
+		allOptions.add(genericOptions).add(configurationOptions);
+
+		try
+		{
+			store(command_line_parser(argc, argv).options(allOptions).positional(positional).run(), vm);
+
+			if (vm.count("help"))
+			{
+				cout << "Usage: " + applicationName + " [WORKING_FOLDER] [OPTION]...\n"
+					 << allOptions
+					 << endl;
+				exit(0);
+			}
+
+			if (vm.count("version"))
+			{
+				cout << applicationName + " " + applicationVersion
+					 << endl;
+				exit(0);
+			}
+
+			if (vm.count("devices"))
+			{
+				cout << applicationName + " " + applicationVersion + "\n\n"
+					<< "Default computation device:\n"
+					<< acl::hardware.getDefaultDeviceInfo() << "\n\n"
+					<< "List of all available platforms and their devices:\n"
+					<< acl::hardware.getDevicesInfo()
+					<< endl;
+				exit(0);
+			}
+
+			if (vm.count("parameters"))
+			{
+				path p(vm["parameters"].as<string>());
+				// add at least one slash at the end
+				p /= "/";
+				// and then cut all possible slashes at the end
+				p = p.parent_path();
+				p /= "/";
+				p /= configFileName;
+
+				cout << "Writing default configuration file to: "
+					 << p.string() << endl;
+
+				writeParametersFile(p.string());
+				exit(0);
+			}
+
+			path p(vm["folder"].as<string>());
+			// add at least one slash at the end
+			p /= "/";
+			// and then cut all possible slashes at the end
+			p = p.parent_path();
+			folder = p.string();
+			p /= "/";
+			folderWithSlash = p.string();
+			p /= configFileName;
+			ifstream ifs(p.string());
+			if (!ifs)
+			{
+				// Only warn, since all options might have default values, or required values
+				// provided through the command line - so no configuration file is required
+				warningMessage("ParametersManager::load() - can not open configuration file: " + p.string());
+			}
+
+			parsed_options parsed = parse_config_file(ifs, allOptions, true);
+			store(parsed, vm);
+			// Run error notification only after obtaining
+			// all options and dealing with "--help"
+			notify(vm);
+
+			populateMaps(vm);
+
+			// Set hardware default queue as required through provided options
+			acl::hardware.setDefaultQueue(vm["platform"].as<string>(), vm["device"].as<string>());
+
+			// Place it after(!) notify(vm);
+			if (vm.count("check"))
+			{
+				cout << applicationName + " " + applicationVersion + "\n"
+					 << "Consistency check - successful."
+					 << endl;
+				exit(0);
+			}
+		}
+		catch(exception& e)
+		{
+			errorMessage(string("ParametersManager::load() - ") + e.what());
+		}
+	}
+		 
 } //namespace asl

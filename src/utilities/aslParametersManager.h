@@ -40,9 +40,9 @@ namespace asl
 	template <typename T> class Parameter
 	{
 		public:
-			/// \p key is the parameter's identification key in the configuration file
-			/// If no default value is specified, then the parameter
-			/// is required to be specified in the configuration file.
+			/// \p key is the parameter's identification key in the
+			/// configuration file. If no default value is specified, then the
+			/// parameter is required to be specified in the configuration file.
 			Parameter(std::string key_,
 			          std::string description_,
 			          std::string units_ = "");
@@ -65,8 +65,10 @@ namespace asl
 	};
 
 
-	/// This class automatically accomodates newly created Parameters
-	/// and then loads them
+	/** This class automatically accomodates newly created Parameters and then
+	can load them from a parameters file.
+	It has to be declared before declaring all the parameters it has to manage!
+	\ingroup Utilities */
 	class ParametersManager
 	{
 		public:
@@ -92,13 +94,6 @@ namespace asl
 			template <typename T>
 			void addPrefix(const std::string prefix,
 			               std::shared_ptr<std::map<std::string, T>> destinationMap);
-
-			/// Loads all previously declared parameters
-			/// from command line and/or configuration file (provided
-			/// through command line)
-			void load(int argc, char* argv[],
-			          std::string programName_ = "program_name",
-			          std::string programVersion_ = "1.0");
 			/// Loads all previously declared parameters
 			/// from configuration file \p configFile
 			void load(std::string configFile);
@@ -107,14 +102,10 @@ namespace asl
 
 			static ParametersManager * current;
 
-		private:
+		protected:
 			boost::program_options::options_description configurationOptions;
-			UValue<std::string> platform;
-			UValue<std::string> device;
 			std::string folder;
 			std::string folderWithSlash;
-			std::string programName;
-			std::string programVersion;
 			/// Accomodates prefixes (defined by attached "*" wildcard)
 			/// using PrefixStore class
 			std::vector<std::shared_ptr<PrefixStore>> prefixes;
@@ -127,6 +118,34 @@ namespace asl
 			std::string parametersFileStr;
 	};
 
+
+	/** This class inherits ParametersManager class and thus also automatically
+	accomodates newly created Parameters and then can load them from
+	a parameters file and/or command line. It silently includes two parameters -
+	`platform` and `device` that determine the hardware application will run on.
+	It has to be declared before declaring all the parameters it has to manage!
+	\ingroup Utilities */
+	class ApplicationParametersManager: public ParametersManager
+	{
+		public:
+			ApplicationParametersManager(std::string applicationName_,
+			                             std::string applicationVersion_,
+			                             std::string configFileName_ = "parameters.ini");
+			// ToDo: do we need the destructor? it is the same as in the base class
+			~ApplicationParametersManager();
+			
+			/** Loads all previously declared parameters from command line
+			and/or configuration file (provided	through command line) */
+			void load(int argc, char* argv[]);
+
+		private:
+			UValue<std::string> platform;
+			UValue<std::string> device;
+			std::string applicationName;
+			std::string applicationVersion;
+			std::string configFileName;
+			
+	};
 
 
 //-------------------------- Implementation --------------------------

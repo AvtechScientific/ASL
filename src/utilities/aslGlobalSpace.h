@@ -30,7 +30,7 @@ namespace asl{
 	//The class describes global discrete space
 	/**
 		It is used for correct positioning of the objects and 
-		sychronisation of processes in time
+		synchronization of processes in time
 	*/
 	class GlobalSpace {
 		public:
@@ -49,4 +49,4 @@ namespace asl{
 
 }  //namespace acl
 
-#endif // ASLTIMESTAMP_H
+#endif // ASLGLOBALSPACE_H
