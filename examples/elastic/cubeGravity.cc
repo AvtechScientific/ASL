@@ -47,7 +47,7 @@ typedef asl::UValue<FlT> Param;
 
 int main(int argc, char* argv[])
 {
-	asl::ParametersManager parametersManager;
+	asl::ApplicationParametersManager appParamsManager("cubeGravity", "1.0", "cubeGravity.ini");
 	asl::Parameter<asl::AVec<int> > size("size", "size 3D");
 	asl::Parameter<cl_float> dx("dx", "dx");
 	asl::Parameter<cl_float> dt("dt", "dt");
@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
 	asl::Parameter<unsigned int> tsim("num_iterations", "number of iterations");
 	asl::Parameter<unsigned int> tout("num_it_out", "number of iterations between outputs");
 	
-	parametersManager.load(argc, argv, "cubeGravity");
+	appParamsManager.load(argc, argv);
 
 	Param bulkModulusNum(bulkModulus.v()/rho.v()/dx.v()/dx.v());
 	Param shearModulusNum(shearModulus.v()/rho.v()/dx.v()/dx.v());
@@ -78,7 +78,7 @@ int main(int argc, char* argv[])
 	initData(mapX->getEContainer(), map->getEContainer());
 
 	
-	asl::WriterVTKXML writer(parametersManager.getFolderWithSlash() + "cubeGravity");
+	asl::WriterVTKXML writer(appParamsManager.getFolderWithSlash() + "cubeGravity");
 	writer.addScalars("map", *mapX);
 	writer.addVector("displacement", *displacement);
 	writer.write();

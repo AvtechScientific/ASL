@@ -28,7 +28,7 @@
 #include <math/aslVectors.h>
 #include <data/aslDataWithGhostNodes.h>
 #include <aslGenerators.h>
-#include<acl/aclGenerators.h>
+#include <acl/aclGenerators.h>
 #include <num/aslFDPoroElasticity.h>
 #include <num/aslFDElasticityBC.h>
 #include <num/aslFDPoroElasticityBC.h>
@@ -52,7 +52,7 @@ typedef asl::UValue<FlT> Param;
 
 int main(int argc, char* argv[])
 {
-	asl::ParametersManager parametersManager;
+	asl::ApplicationParametersManager appParamsManager("poroelastic", "1.0", "poroelastic.ini");
 	asl::Parameter<asl::AVec<int> > size("size", "size 3D");
 	asl::Parameter<cl_float> dx("dx", "dx");
 	asl::Parameter<cl_float> dt("dt", "dt");
@@ -65,11 +65,11 @@ int main(int argc, char* argv[])
 	asl::Parameter<unsigned int> tsim("num_iterations", "number of iterations");
 	asl::Parameter<unsigned int> tout("num_it_out", "number of iterations between outputs");
 	
-	parametersManager.load(argc, argv, "poroelastic");
+	appParamsManager.load(argc, argv);
 		
 	std::cout<<"Jumping Box: Data initialization...";
 
-	asl::SPDataWithGhostNodesACLData map0(asl::read(parametersManager.getFolderWithSlash()+
+	asl::SPDataWithGhostNodesACLData map0(asl::read(appParamsManager.getFolderWithSlash()+
 	                                                "brain.vti", 0));
 //	asl::Block block(size.v(), dx.v());
 	asl::Block block(map0->getInternalBlock());
@@ -95,7 +95,7 @@ int main(int argc, char* argv[])
 //	initData(mapX->getEContainer(), map->getEContainer());
 	initData(mapX->getEContainer(), map0->getEContainer()*2.-1., acl::KERNEL_BASIC);
 	
-	asl::WriterVTKXML writer(parametersManager.getFolderWithSlash() + "displacement");
+	asl::WriterVTKXML writer(appParamsManager.getFolderWithSlash() + "poroelastic");
 	writer.addVector("displacement", *displacement);
 	writer.addScalars("pressure", *pressure);
 	writer.addScalars("map", *mapX);

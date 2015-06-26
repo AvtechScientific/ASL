@@ -55,7 +55,7 @@ class Parameters
 		void init();
 
   public:
-		asl::ParametersManager parametersManager;
+		asl::ApplicationParametersManager appParamsManager;
 		string folder;
 
 		asl::Block::DV size;
@@ -79,15 +79,14 @@ class Parameters
 		asl::Parameter<double> gasInVel;
 		
 		
-		void load(int argc, char * argv[],
-		          string programName,
-		          string programVersion);
+		void load(int argc, char * argv[]);
 		Parameters();
 		void updateNumValues();
 };
 
 
 Parameters::Parameters():
+	appParamsManager("multiphase_flow", "0.1", "multiphase_flow.ini"),
 	size(3),
 	dx(0.002, "dx", "space step"),
 	dt(1., "dt", "time step"),
@@ -105,12 +104,10 @@ Parameters::Parameters():
 }
 
 
-void Parameters::load(int argc, char * argv[],
-                      string programName,
-                      string programVersion)
+void Parameters::load(int argc, char * argv[])
 {
-	parametersManager.load(argc, argv, programName, programVersion);
-	folder = parametersManager.getFolderWithSlash();
+	appParamsManager.load(argc, argv);
+	folder = appParamsManager.getFolderWithSlash();
 
 	init();
 }
@@ -153,7 +150,7 @@ asl::SPDistanceFunction generateMixer(asl::Block & block, Parameters &params)
 int main(int argc, char *argv[])
 {
 	Parameters params;
-	params.load(argc, argv, "multiphase_flow", "0.1");
+	params.load(argc, argv);
 	
 	std::cout<<"Flow: Data initialization...";
 

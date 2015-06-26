@@ -50,7 +50,7 @@ class Parameters
 		void init();
 
   public:
-		asl::ParametersManager parametersManager;
+		asl::ApplicationParametersManager appParamsManager;
 		string folder;
 
 		asl::Block::DV size;
@@ -74,15 +74,14 @@ class Parameters
 		asl::UValue<double> bulkMNum;
 		asl::UValue<double> shearMNum;
 		
-		void load(int argc, char * argv[],
-		          string programName,
-		          string programVersion);
+		void load(int argc, char * argv[]);
 		Parameters();
 		void updateNumValues();
 };
 
 
 Parameters::Parameters():
+	appParamsManager("acousticWaves", "0.1", "acousticWaves.ini"),
 	size(3),
 	dx(1e-3,"dx", "dx"),
 	bulkModulus(160e9,"bulk_modulus", "bulk modulus"),
@@ -102,12 +101,10 @@ Parameters::Parameters():
 }
 
 
-void Parameters::load(int argc, char * argv[],
-                      string programName,
-                      string programVersion)
+void Parameters::load(int argc, char * argv[])
 {
-	parametersManager.load(argc, argv, programName, programVersion);
-	folder = parametersManager.getFolderWithSlash();
+	appParamsManager.load(argc, argv);
+	folder = appParamsManager.getFolderWithSlash();
 
 	init();
 }
@@ -168,7 +165,7 @@ asl::AVec<float> getAmplitude(double it)
 int main(int argc, char* argv[])
 {
 	Parameters params;
-	params.load(argc, argv, "acousticWaves", "0.1");
+	params.load(argc, argv);
 		
 	std::cout<<"acoustic waves: Data initialization..."<<flush;
 

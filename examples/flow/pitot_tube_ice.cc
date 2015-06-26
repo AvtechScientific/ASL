@@ -53,7 +53,7 @@ class Parameters
 		void init();
 
   public:
-		asl::ParametersManager parametersManager;
+		asl::ApplicationParametersManager appParamsManager;
 		string folder;
 
 		asl::Block::DV size;
@@ -76,15 +76,14 @@ class Parameters
 		asl::Parameter<double> humidity;
 		asl::Parameter<double> flowVel;
 		
-		void load(int argc, char * argv[],
-		          string programName,
-		          string programVersion);
+		void load(int argc, char * argv[]);
 		Parameters();
 		void updateNumValues();
 };
 
 
 Parameters::Parameters():
+	appParamsManager("pitot_tube_ice", "0.1", "pitot_tube_ice.ini"),
 	size(3),
 	dx(0.000125, "dx", "space step"),
 	dt(1., "dt", "time step"),
@@ -102,12 +101,10 @@ Parameters::Parameters():
 }
 
 
-void Parameters::load(int argc, char * argv[],
-                      string programName,
-                      string programVersion)
+void Parameters::load(int argc, char * argv[])
 {
-	parametersManager.load(argc, argv, programName, programVersion);
-	folder = parametersManager.getFolderWithSlash();
+	appParamsManager.load(argc, argv);
+	folder = appParamsManager.getFolderWithSlash();
 
 	init();
 }
@@ -154,7 +151,7 @@ asl::SPDistanceFunction generateGeometry(asl::Block & block, Parameters &params)
 int main(int argc, char *argv[])
 {
 	Parameters params;
-	params.load(argc, argv, "pitot_tube_ice", "0.1");
+	params.load(argc, argv);
 	
 	std::cout<<"Flow: Data initialization...";
 

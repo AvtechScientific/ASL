@@ -48,7 +48,9 @@ typedef asl::UValue<FlT> Param;
 
 int main(int argc, char* argv[])
 {
-	asl::ParametersManager parametersManager;
+	asl::ApplicationParametersManager appParamsManager("cubePoroelasticGravity",
+	                                                   "1.0",
+	                                                   "cubePoroelasticGravity.ini");
 	asl::Parameter<asl::AVec<int> > size("size", "size 3D");
 	asl::Parameter<cl_float> dx("dx", "dx");
 	asl::Parameter<cl_float> dt("dt", "dt");
@@ -61,7 +63,7 @@ int main(int argc, char* argv[])
 	asl::Parameter<unsigned int> tsim("num_iterations", "number of iterations");
 	asl::Parameter<unsigned int> tout("num_it_out", "number of iterations between outputs");
 	
-	parametersManager.load(argc, argv, "cubePoroElasticGravity");
+	appParamsManager.load(argc, argv);
 
 	Param bulkModulusNum(bulkModulus.v()/rho.v()/dx.v()/dx.v()*dt.v()*dt.v());
 	Param shearModulusNum(shearModulus.v()/rho.v()/dx.v()/dx.v()*dt.v()*dt.v());
@@ -101,7 +103,7 @@ int main(int argc, char* argv[])
 	asl::addBCRigidWall(bc, elasticity, {asl::X0});
 	asl::initAll(bc);
 
-	asl::WriterVTKXML writer(parametersManager.getFolderWithSlash() + "cubePoroElasticGravity");
+	asl::WriterVTKXML writer(appParamsManager.getFolderWithSlash() + "cubePoroelasticGravity");
 	writer.addScalars("map", *mapX);
 	writer.addVector("displacement", *displacement);
 	writer.addScalars("pressure", *elasticity->getPressureData());

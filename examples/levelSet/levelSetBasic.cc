@@ -47,7 +47,8 @@ acl::TypeID type(acl::typeToTypeID<FlT>());
 
 int main(int argc, char* argv[])
 {
-	asl::ParametersManager parametersManager;
+	asl::ApplicationParametersManager appParamsManager("levelSetBasic", "1.0",
+	                                                   "levelSetBasic.ini");
 
 	asl::Parameter<asl::AVec<int>> size("size", "size");
 	asl::Parameter<FlT> dx("dx", "dx");
@@ -59,7 +60,7 @@ int main(int argc, char* argv[])
 	asl::Parameter<cl_uint> nIterations("nIterations", "Number of iterations");
 	asl::Parameter<cl_uint> nItOut("nItOut", "Number of iterations for output");
 
-	parametersManager.load(argc, argv, "levelSetBasic");
+	appParamsManager.load(argc, argv);
 	
 	std::cout<<"Jumping Box: Data initialization...";
 
@@ -72,7 +73,7 @@ int main(int argc, char* argv[])
 	auto velocity(asl::generateDataContainerConst_SP(block, v.v(), 1u));
 
 	
-	asl::WriterVTKXML writer(parametersManager.getFolder()+"/"+"levelSet");
+	asl::WriterVTKXML writer(appParamsManager.getFolderWithSlash() + "levelSetBasic");
 	writer.addScalars("levelSet", *levelSet);
 	
 	std::cout << "Finished" << endl;

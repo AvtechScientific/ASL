@@ -47,7 +47,8 @@ acl::TypeID type(acl::typeToTypeID<FlT>());
 
 int main(int argc, char* argv[])
 {
-	asl::ParametersManager parametersManager;
+	asl::ApplicationParametersManager appParamsManager("levelSetFacetedGrowth", "1.0",
+	                                                   "levelSetFacetedGrowth.ini");
 
 	asl::Parameter<asl::AVec<int>> size("size", "size");
 	asl::Parameter<FlT> dx("dx", "dx");
@@ -64,7 +65,7 @@ int main(int argc, char* argv[])
 	asl::Parameter<cl_uint> nIterations("nIterations", "Number of iterations");
 	asl::Parameter<cl_uint> nItOut("nItOut", "Number of iterations for output");
 
-	parametersManager.load(argc, argv, "levelSetFacetedGrowth");
+	appParamsManager.load(argc, argv);
 
 	std::cout<<"LevelSet: Data initialization...";
 
@@ -80,7 +81,7 @@ int main(int argc, char* argv[])
 	auto superSaturation(asl::generateDataContainerConst_SP(block, superS.v(), 1u));
 
 	
-	asl::WriterVTKXML writer(parametersManager.getFolder()+"/"+"levelSetFG");
+	asl::WriterVTKXML writer(appParamsManager.getFolderWithSlash() + "levelSetFacetedGrowth");
 	writer.addScalars("levelSet", *levelSet);
 	
 	std::cout << "Finished" << endl;

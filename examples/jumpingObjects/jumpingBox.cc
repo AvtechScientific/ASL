@@ -45,7 +45,8 @@ typedef asl::UValue<FlT> Param;
 
 int main(int argc, char* argv[])
 {
-	asl::ParametersManager parametersManager;
+	asl::ApplicationParametersManager appParamsManager("jumpingBox", "1.0",
+	                                                   "jumpingBox.ini");
 	asl::Parameter<asl::AVec<int> > size("size", "size 3D");
 	asl::Parameter<cl_float> dx("dx", "dx");
 	asl::Parameter<cl_float> dt("dt", "dt");
@@ -57,7 +58,7 @@ int main(int argc, char* argv[])
 	asl::Parameter<unsigned int> tsim("num_iterations", "number of iterations");
 	asl::Parameter<unsigned int> tout("num_it_out", "number of iterations between outputs");
 	
-	parametersManager.load(argc, argv, "jumpingBox");
+	appParamsManager.load(argc, argv);
 
 	Param bulkModulusNum(bulkModulus.v()/rho.v()/dx.v()/dx.v());
 	Param shearModulusNum(shearModulus.v()/rho.v()/dx.v()/dx.v());
@@ -70,7 +71,7 @@ int main(int argc, char* argv[])
 	auto displacement(asl::generateDataContainerACL_SP<FlT>(block, 3, 1u));
 	acl::initData(displacement->getEContainer(), acl::generateVEConstantN(3,0));
 
-	asl::WriterVTKXML writer(parametersManager.getFolderWithSlash() + "displacement");
+	asl::WriterVTKXML writer(appParamsManager.getFolderWithSlash() + "jumpingBox");
 	writer.addScalars("displacement", *displacement);
 	writer.addVector("displacement", *displacement);
 	writer.write();
