@@ -33,14 +33,13 @@
 #include <writers/aslVTKFormatWriters.h>
 #include <num/aslLBGK.h>
 #include <num/aslLBGKBC.h>
-#include "utilities/aslTimer.h"
+#include <utilities/aslTimer.h>
 #include <num/aslFDAdvectionDiffusion.h>
 #include <num/aslBasicBC.h>
 
-
-typedef float FlT;
+// typedef to switch to double precision
 //typedef double FlT;
-typedef asl::UValue<double> Param;
+typedef float FlT;
 
 using asl::AVec;
 using asl::makeAVec;
@@ -125,21 +124,24 @@ void Parameters::init()
 	updateNumValues();
 }
 
-// generate geometry of the mixer
+// Generate geometry of the mixer (cross-coupled pipes)
 asl::SPDistanceFunction generateMixer(asl::Block & block, Parameters &params)
 {
 	asl::SPDistanceFunction mixerGeometry;
 	asl::AVec<double> orientation(asl::makeAVec(0., 0., 1.));
 	asl::AVec<double> center(asl::AVec<double>(params.size) * .5 * params.dx.v());
 
-	mixerGeometry = generateDFCylinderInf(params.tubeD.v() / 2., orientation, center);
+	mixerGeometry = generateDFCylinderInf(params.tubeD.v() / 2., orientation,
+	                                      center);
 
 	orientation[1] = 1.0;
 	orientation[2] = 0.0;
 	center[2] = params.pumpD.v() * 1.5;
-	mixerGeometry = mixerGeometry | generateDFCylinderInf(params.pumpD.v() / 2., orientation, center);
+	mixerGeometry = mixerGeometry | generateDFCylinderInf(params.pumpD.v() / 2.,
+	                                                      orientation, center);
 
-	return asl::normalize(-(mixerGeometry) | asl::generateDFInBlock(block, 0), params.dx.v());
+	return asl::normalize(-(mixerGeometry) | asl::generateDFInBlock(block, 0),
+	                      params.dx.v());
 }
 
 int main(int argc, char *argv[])
@@ -241,7 +243,7 @@ int main(int argc, char *argv[])
 		if(!(i%100))
 		{
 			timer.stop();
-			cout<<i<<"/10000; expected left time: "<< timer.getLeftTime(double(i)/10000.) <<endl;
+			cout << i << "/10000; expected left time: " <<  timer.getLeftTime(double(i)/10000.)  << endl;
 			executeAll(bcV);
 			writer.write();
 			timer.resume();
@@ -252,8 +254,8 @@ int main(int argc, char *argv[])
 	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+		 <<  timer.getClockTime()	 <<  "; load=" 
+		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 
 	std::cout << "Output...";
 	std::cout << "Finished" << endl;	

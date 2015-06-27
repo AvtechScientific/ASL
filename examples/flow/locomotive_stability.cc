@@ -80,7 +80,7 @@ int main()
 	
 	Param nuNum(nu.v()*dt.v()/dx.v()/dx.v());
 	
-	std::cout<<"Flow: Data initialization...";
+	std::cout << "Flow: Data initialization...";
 
 
 	auto object(asl::readSurface("locomotive.stl", dx.v(), .5,1.,0.,1.,2.,4.));
@@ -90,9 +90,9 @@ int main()
 	auto forceField(asl::generateDataContainerACL_SP<FlT>(block, 3, 1u));
 	asl::initData(forceField, makeAVec(0.,0.,0.));
 	
-	std::cout<<"Finished"<<endl;
+	std::cout << "Finished" << endl;
 	
-	std::cout<<"Flow: Numerics initialization...";
+	std::cout << "Flow: Numerics initialization...";
 
 	asl::SPLBGK lbgk(new asl::LBGK(block, 
 				               acl::generateVEConstant(FlT(nu.v())),  
@@ -124,8 +124,8 @@ int main()
 	computeForce->init();
 	
 
-	std::cout<<"Finished"<<endl;
-	std::cout<<"Computing...";
+	std::cout << "Finished" << endl;
+	std::cout << "Computing...";
 
 	asl::WriterVTKXML writer("locomotive_stability");
 	writer.addScalars("train", *object);
@@ -148,7 +148,7 @@ int main()
 		executeAll(bc);
 		if(!(i%1000))
 		{
-			cout<<i<<endl;
+			cout << i << endl;
 			executeAll(bcV);
 			computeForce->execute();
 			writer.write();
@@ -156,15 +156,15 @@ int main()
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+		 <<  timer.getClockTime()	 <<  "; load=" 
+		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 
-	std::cout<<"Output...";
-	std::cout<<"Finished"<<endl;	
-	std::cout<<"Ok"<<endl;
+	std::cout << "Output...";
+	std::cout << "Finished" << endl;	
+	std::cout << "Ok" << endl;
 
 	return 0;
 }

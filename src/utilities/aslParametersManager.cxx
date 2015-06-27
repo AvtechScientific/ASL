@@ -208,8 +208,8 @@ namespace asl
 	ParametersManager * ParametersManager::current(NULL);
 
 	ParametersManager::ParametersManager():
-		configurationOptions("Configuration options"),
-		parametersFileStr("# Parameters file with initial default values (where available).\n"),
+		parametersOptions("Parameters options"),
+		parametersFileStr("# Parameters file\n"),
 		folder(""),
 		folderWithSlash("")
 	{
@@ -265,10 +265,10 @@ namespace asl
 	                                                  string key,
 	                                                  string description)
 	{
-		configurationOptions.add_options()
+		parametersOptions.add_options()
 			(key.c_str(), value<T>(&parameter.v())->required(), description.c_str());
 
-		// Add the option to the default parameters file			
+		// Add the parameter to the default parameters file			
 		parametersFileStr += "\n# " + description + "\n" + key + " = \n";
 	}
 
@@ -277,9 +277,9 @@ namespace asl
 	                                                 string key,
 	                                                 string description)
 	{
-		configurationOptions.add_options()
+		parametersOptions.add_options()
 			(key.c_str(), value<T>()->required(), description.c_str());
-		// Add the option to the default parameters file
+		// Add the parameter to the default parameters file
 		parametersFileStr += "\n# " + description + "; substite '*' by any suffix to provide a set of related parameters\n"
 							+ key + " = \n";
 	}
@@ -290,11 +290,11 @@ namespace asl
 	                                                 string key,
 	                                                 string description)
 	{		
-		configurationOptions.add_options()
+		parametersOptions.add_options()
 			(key.c_str(), value<T>(&parameter.v())->default_value(defaultValue),
 			 description.c_str());
 
-		// Add the option to the default parameters file
+		// Add the parameter to the default parameters file
 		parametersFileStr += "\n# " + description + "\n"
 							+ key + " = " + numToStr(defaultValue) + "\n";
 	}
@@ -317,17 +317,17 @@ namespace asl
 	}
 
 
-	void ParametersManager::load(string configFile)
+	void ParametersManager::load(string paramFile)
 	{
 		variables_map vm;
 
 		try
 		{
-			ifstream ifs(configFile);
+			ifstream ifs(paramFile);
 			if (!ifs)
-				errorMessage("Can not open configuration file: " + configFile);
+				errorMessage("Can not open parameters file: " + paramFile);
 
-			parsed_options parsed = parse_config_file(ifs, configurationOptions,
+			parsed_options parsed = parse_config_file(ifs, parametersOptions,
 			                                          true);
 			store(parsed, vm);
 			notify(vm);
@@ -365,12 +365,12 @@ namespace asl
 
 	ApplicationParametersManager::ApplicationParametersManager(string applicationName_,
 	                                                           string applicationVersion_,
-	                                                           string configFileName_):
+	                                                           string paramFileName_):
 		platform(acl::getPlatformVendor(acl::hardware.defaultQueue)),
 		device(acl::getDeviceName(acl::hardware.defaultQueue)),
 		applicationName(applicationName_),
 		applicationVersion(applicationVersion_),
-		configFileName(configFileName_)
+		paramFileName(paramFileName_)
 	{
 		enable();
 		// Prepend informative header
@@ -394,21 +394,21 @@ namespace asl
 		options_description genericOptions("Generic options");
 
 		genericOptions.add_options()
-			("help,h", "display this help and exit")
-			("version,v", "display version and exit")
-			("devices,d", "display all available devices and exit")
+			("help,h", "Display this help and exit")
+			("version,v", "Display version and exit")
+			("devices,d", "Display all available devices and exit")
 			("folder,f", value<string>()->default_value("Default"),
-			 string("path to the working folder that contains configuration file - " + configFileName).c_str())
+			 string("Path to the working folder that contains parameters file - " + paramFileName).c_str())
 			("parameters,p", value<string>(),
-			 string("generate default configuration file " + configFileName + ", write it to the provided path and ext").c_str())
-			("check,c", "check configuration for consistency and exit");
+			 string("Generate default parameters file " + paramFileName + ", write it to the provided path and exit").c_str())
+			("check,c", "Check parameters for consistency and exit");
 
 		positional_options_description positional;
 
 		options_description allOptions;
 		positional.add("folder", 1);
 
-		allOptions.add(genericOptions).add(configurationOptions);
+		allOptions.add(genericOptions).add(parametersOptions);
 
 		try
 		{
@@ -448,9 +448,9 @@ namespace asl
 				// and then cut all possible slashes at the end
 				p = p.parent_path();
 				p /= "/";
-				p /= configFileName;
+				p /= paramFileName;
 
-				cout << "Writing default configuration file to: "
+				cout << "Writing default parameters file to: "
 					 << p.string() << endl;
 
 				writeParametersFile(p.string());
@@ -465,13 +465,13 @@ namespace asl
 			folder = p.string();
 			p /= "/";
 			folderWithSlash = p.string();
-			p /= configFileName;
+			p /= paramFileName;
 			ifstream ifs(p.string());
 			if (!ifs)
 			{
 				// Only warn, since all options might have default values, or required values
-				// provided through the command line - so no configuration file is required
-				warningMessage("ParametersManager::load() - can not open configuration file: " + p.string());
+				// provided through the command line - so no parameters file is required
+				warningMessage("ParametersManager::load() - can not open parameters file: " + p.string());
 			}
 
 			parsed_options parsed = parse_config_file(ifs, allOptions, true);

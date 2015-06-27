@@ -35,20 +35,21 @@ namespace asl
 	class PrefixStore;
 
 	/// This class stores parameter's value and the information
-	/// needed to extract it from command line and/or configuration file
+	/// needed to extract it from command line and/or parameters file
 	/// \ingroup LDI
 	template <typename T> class Parameter
 	{
 		public:
 			/// \p key is the parameter's identification key in the
-			/// configuration file. If no default value is specified, then the
-			/// parameter is required to be specified in the configuration file.
+			/// parameters file. If no default value is specified, then the
+			/// parameter is required to be specified in the parameters file
+			/// or command line.
 			Parameter(std::string key_,
 			          std::string description_,
 			          std::string units_ = "");
-			/// \p key is the parameter's identification key in the configuration file
-			/// If a default value is specified, then the parameter
-			/// is not required to be specified in the configuration file.		
+			/// \p key is the parameter's identification key in the parameters file
+			/// If a default value is specified, then the parameter is not
+			/// required to be specified in the parameters file or command line.	
 			Parameter(T defaultValue,
 			          std::string key_,
 			          std::string description_,
@@ -67,7 +68,7 @@ namespace asl
 
 	/** This class automatically accomodates newly created Parameters and then
 	can load them from a parameters file.
-	It has to be declared before declaring all the parameters it has to manage!
+	It has to be declared before declaring all the parameters it will manage!
 	\ingroup Utilities */
 	class ParametersManager
 	{
@@ -95,15 +96,15 @@ namespace asl
 			void addPrefix(const std::string prefix,
 			               std::shared_ptr<std::map<std::string, T>> destinationMap);
 			/// Loads all previously declared parameters
-			/// from configuration file \p configFile
-			void load(std::string configFile);
+			/// from parameters file \p paramFile
+			void load(std::string paramFile);
 			std::string getFolder();
 			std::string getFolderWithSlash();
 
 			static ParametersManager * current;
 
 		protected:
-			boost::program_options::options_description configurationOptions;
+			boost::program_options::options_description parametersOptions;
 			std::string folder;
 			std::string folderWithSlash;
 			/// Accomodates prefixes (defined by attached "*" wildcard)
@@ -123,17 +124,17 @@ namespace asl
 	accomodates newly created Parameters and then can load them from
 	a parameters file and/or command line. It silently includes two parameters -
 	`platform` and `device` that determine the hardware application will run on.
-	It has to be declared before declaring all the parameters it has to manage!
+	It has to be declared before declaring all the parameters it will manage!
 	\ingroup Utilities */
 	class ApplicationParametersManager: public ParametersManager
 	{
 		public:
 			ApplicationParametersManager(std::string applicationName_,
 			                             std::string applicationVersion_,
-			                             std::string configFileName_ = "parameters.ini");
+			                             std::string paramFileName_ = "parameters.ini");
 			
 			/** Loads all previously declared parameters from command line
-			and/or configuration file (provided	through command line) */
+			and/or parameters file (provided through command line) */
 			void load(int argc, char* argv[]);
 
 		private:
@@ -141,7 +142,7 @@ namespace asl
 			UValue<std::string> device;
 			std::string applicationName;
 			std::string applicationVersion;
-			std::string configFileName;
+			std::string paramFileName;
 			
 	};
 

@@ -47,27 +47,28 @@ acl::TypeID type(acl::typeToTypeID<FlT>());
 
 int main(int argc, char* argv[])
 {
-	asl::ApplicationParametersManager appParamsManager("levelSetFacetedGrowth", "1.0",
+	asl::ApplicationParametersManager appParamsManager("levelSetFacetedGrowth",
+	                                                   "1.0",
 	                                                   "levelSetFacetedGrowth.ini");
 
 	asl::Parameter<asl::AVec<int>> size("size", "size");
 	asl::Parameter<FlT> dx("dx", "dx");
 	asl::Parameter<FlT> dt("dt", "dt");
-	asl::Parameter<FlT> superS("superS", "super satuation");
-	asl::Parameter<FlT> radius("radius", "initial radius");
+	asl::Parameter<FlT> superS("superS", "Super saturation");
+	asl::Parameter<FlT> radius("radius", "Initial radius");
 	asl::Parameter<FlT> betaSt("beta_step", "Kinetic coefficient for step");
 	asl::Parameter<FlT> betaDisl("beta_dislocation", "Kinetic coefficient for dislocation");
 	asl::Parameter<FlT> betaRough("beta_rough", "Kinetic coefficient for rough region");
 
 	asl::Parameter<map<string, asl::AVec<FlT>>> cr_directions_p("cr_direction_*",
-	                                                            "crystallographic directions");
+	                                                            "Crystallographic directions");
 	
 	asl::Parameter<cl_uint> nIterations("nIterations", "Number of iterations");
 	asl::Parameter<cl_uint> nItOut("nItOut", "Number of iterations for output");
 
 	appParamsManager.load(argc, argv);
 
-	std::cout<<"LevelSet: Data initialization...";
+	std::cout << "LevelSet: Data initialization...";
 
 	asl::Block block(size.v(), dx.v());
 	auto levelSet(asl::generateDataContainerACL_SP<FlT>(block, 1, 1u));
@@ -111,11 +112,11 @@ int main(int argc, char* argv[])
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+		 <<  timer.getClockTime()	 <<  "; load=" 
+		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 
 	std::cout << "Output...";
 	std::cout << "Finished" << endl;	
