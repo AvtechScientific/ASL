@@ -51,7 +51,6 @@ class Parameters
 
   public:
 		asl::ApplicationParametersManager appParamsManager;
-		string folder;
 
 		asl::Block::DV size;
 		asl::Parameter<double> dx;
@@ -80,7 +79,7 @@ class Parameters
 
 
 Parameters::Parameters():
-	appParamsManager("multicomponent_flow", "0.1", "multicomponent_flow.ini"),
+	appParamsManager("multicomponent_flow", "0.1"),
 	size(3),
 	dx(0.0005, "dx", "space step"),
 	dt(1., "dt", "time step"),
@@ -101,8 +100,6 @@ Parameters::Parameters():
 void Parameters::load(int argc, char * argv[])
 {
 	appParamsManager.load(argc, argv);
-	folder = appParamsManager.getFolderWithSlash();
-
 	init();
 }
 
@@ -149,7 +146,7 @@ int main(int argc, char *argv[])
 	Parameters params;
 	params.load(argc, argv);
 	
-	std::cout << "Flow: Data initialization...";
+	std::cout << "Data initialization...";
 
 	asl::Block block(params.size, params.dx.v());
 
@@ -164,7 +161,7 @@ int main(int argc, char *argv[])
 	
 	std::cout << "Finished" << endl;
 	
-	std::cout << "Flow: Numerics initialization...";
+	std::cout << "Numerics initialization...";
 
 	auto templ(&asl::d3q15());	
 	
@@ -232,7 +229,7 @@ int main(int argc, char *argv[])
 	writer.write();
 
 	timer.start();
-	for(unsigned int i(1); i < 10001; ++i)
+	for (unsigned int i(1); i < 10001; ++i)
 	{
 		lbgk->execute();
 		executeAll(bcDif);
@@ -240,7 +237,7 @@ int main(int argc, char *argv[])
 		nmcomponent3->execute();
 		executeAll(bc);
 		
-		if(!(i%100))
+		if (!(i%100))
 		{
 			timer.stop();
 			cout << i << "/10000; expected left time: " <<  timer.getLeftTime(double(i)/10000.)  << endl;
@@ -254,7 +251,7 @@ int main(int argc, char *argv[])
 	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		 <<  timer.getClockTime()	 <<  "; load=" 
+		 <<  timer.getClockTime() <<  "; load=" 
 		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 
 	std::cout << "Output...";

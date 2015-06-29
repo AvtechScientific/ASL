@@ -25,10 +25,7 @@
 	\example levelSetNormalGrowth.cc
  */
 
-#include <utilities/aslUValue.h>
-#include <math/aslVectors.h>
-#include <data/aslDataWithGhostNodes.h>
-#include <aslGenerators.h>
+#include <aslDataInc.h>
 #include <writers/aslVTKFormatWriters.h>
 #include <num/aslLSNormalGrowth.h>
 #include <utilities/aslTimer.h>
@@ -36,9 +33,7 @@
 #include <math/aslTemplates.h>
 #include <acl/aclMath/aclVectorOfElements.h>
 #include <acl/aclUtilities.h>
-
 #include <aslGeomInc.h>
-//#include <math/aslIndex2Position.h>
 
 
 typedef float FlT;
@@ -49,8 +44,8 @@ acl::TypeID type(acl::typeToTypeID<FlT>());
 
 int main(int argc, char* argv[])
 {
-	asl::ApplicationParametersManager appParamsManager("levelSetNormalGrowth", "1.0",
-	                                                   "levelSetNormalGrowth.ini");
+	asl::ApplicationParametersManager appParamsManager("levelSetNormalGrowth",
+	                                                   "1.0");
 
 	asl::Parameter<asl::AVec<int>> size("size", "size");
 	asl::Parameter<FlT> dx("dx", "dx");
@@ -64,7 +59,7 @@ int main(int argc, char* argv[])
 
 	appParamsManager.load(argc, argv);
 	
-	std::cout<<"LevelSet: Data initialization...";
+	std::cout << "Data initialization...";
 
 	asl::Block block(size.v(), dx.v());
 	auto levelSet(asl::generateDataContainerACL_SP<FlT>(block, 1, 1u));
@@ -78,12 +73,12 @@ int main(int argc, char* argv[])
 	auto superSaturation(asl::generateDataContainerConst_SP(block, superS.v(), 1u));
 
 	
-	asl::WriterVTKXML writer(appParamsManager.getFolderWithSlash() + "levelSetNormalGrowth");
+	asl::WriterVTKXML writer(appParamsManager.getDir() + "levelSetNormalGrowth");
 	writer.addScalars("levelSet", *levelSet);
 	
 	std::cout << "Finished" << endl;
 	
-	std::cout << "LevelSetBasic: Numerics initialization..." << flush;
+	std::cout << "Numerics initialization..." << flush;
 
 	auto lsNum(std::make_shared<asl::LSNormalGrowth>(levelSet, superSaturation));
 	
@@ -99,16 +94,16 @@ int main(int argc, char* argv[])
 	for (unsigned int i(0); i < nIterations.v(); ++i)
 	{
 		lsNum->execute();
-		if(!(i % nItOut.v()))
+		if (!(i % nItOut.v()))
 			writer.write();		
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+		 << timer.getClockTime()	 << "; load=" 
+		 << timer.getProcessorLoad() * 100 << "%" << endl;
 
 	std::cout << "Output...";
 	std::cout << "Finished" << endl;	

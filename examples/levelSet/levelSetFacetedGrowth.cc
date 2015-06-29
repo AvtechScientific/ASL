@@ -25,10 +25,7 @@
 	\example levelSetFacetedGrowth.cc
  */
 
-#include <utilities/aslUValue.h>
-#include <math/aslVectors.h>
-#include <data/aslDataWithGhostNodes.h>
-#include <aslGenerators.h>
+#include <aslDataInc.h>
 #include <writers/aslVTKFormatWriters.h>
 #include <num/aslLSFacetedGrowth.h>
 #include <utilities/aslTimer.h>
@@ -36,7 +33,6 @@
 #include <math/aslTemplates.h>
 #include <acl/aclMath/aclVectorOfElements.h>
 #include <acl/aclUtilities.h>
-
 #include <aslGeomInc.h>
 
 typedef float FlT;
@@ -48,8 +44,7 @@ acl::TypeID type(acl::typeToTypeID<FlT>());
 int main(int argc, char* argv[])
 {
 	asl::ApplicationParametersManager appParamsManager("levelSetFacetedGrowth",
-	                                                   "1.0",
-	                                                   "levelSetFacetedGrowth.ini");
+	                                                   "1.0");
 
 	asl::Parameter<asl::AVec<int>> size("size", "size");
 	asl::Parameter<FlT> dx("dx", "dx");
@@ -68,7 +63,7 @@ int main(int argc, char* argv[])
 
 	appParamsManager.load(argc, argv);
 
-	std::cout << "LevelSet: Data initialization...";
+	std::cout << "Data initialization...";
 
 	asl::Block block(size.v(), dx.v());
 	auto levelSet(asl::generateDataContainerACL_SP<FlT>(block, 1, 1u));
@@ -82,12 +77,12 @@ int main(int argc, char* argv[])
 	auto superSaturation(asl::generateDataContainerConst_SP(block, superS.v(), 1u));
 
 	
-	asl::WriterVTKXML writer(appParamsManager.getFolderWithSlash() + "levelSetFacetedGrowth");
+	asl::WriterVTKXML writer(appParamsManager.getDir() +  "levelSetFacetedGrowth");
 	writer.addScalars("levelSet", *levelSet);
 	
 	std::cout << "Finished" << endl;
 	
-	std::cout << "LevelSetBasic: Numerics initialization..." << flush;
+	std::cout << "Numerics initialization..." << flush;
 
 	auto lsNum(std::make_shared<asl::LSFacetedGrowth>(levelSet, superSaturation));
 
@@ -107,7 +102,7 @@ int main(int argc, char* argv[])
 	for (unsigned int i(0); i < nIterations.v(); ++i)
 	{
 		lsNum->execute();
-		if(!(i % nItOut.v()))
+		if (!(i % nItOut.v()))
 			writer.write();		
 	}
 	timer.stop();
@@ -115,7 +110,7 @@ int main(int argc, char* argv[])
 	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		 <<  timer.getClockTime()	 <<  "; load=" 
+		 <<  timer.getClockTime() <<  "; load=" 
 		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 
 	std::cout << "Output...";

@@ -26,17 +26,15 @@
  */
 
 #include <utilities/aslUValue.h>
-#include <math/aslVectors.h>
+#include <aslDataInc.h>
 #include <math/aslTemplates.h>
 #include <aslGeomInc.h>
-#include <data/aslDataWithGhostNodes.h>
-#include <aslGenerators.h>
 #include <acl/aclGenerators.h>
 #include <writers/aslVTKFormatWriters.h>
 #include <num/aslLBGK.h>
 #include <num/aslLBGKBC.h>
-#include "utilities/aslTimer.h"
-#include "acl/aclUtilities.h"
+#include <utilities/aslTimer.h>
+#include <acl/aclUtilities.h>
 
 
 
@@ -104,16 +102,16 @@ int main()
 	AVec<> gSize(dx.v()*AVec<>(size));
 
 	
-	std::cout<<"Flow: Data initialization...";
+	std::cout << "Flow: Data initialization...";
 
 	asl::Block block(size,dx.v());
 
 	auto mirrorsMapMem(asl::generateDataContainerACL_SP<FlT>(block, 1, 1u));
 	asl::initData(mirrorsMapMem, generateMirrors());
 
-	std::cout<<"Finished"<<endl;
+	std::cout << "Finished" << endl;
 	
-	std::cout<<"Flow: Numerics initialization...";
+	std::cout << "Flow: Numerics initialization...";
 
 	asl::SPLBGK lbgk(new asl::LBGK(block, 
 				               acl::generateVEConstant(FlT(nuNum.v())),  
@@ -136,8 +134,8 @@ int main()
 	bcP->init();
 	bcTop->init();
 
-	std::cout<<"Finished"<<endl;
-	std::cout<<"Computing...";
+	std::cout << "Finished" << endl;
+	std::cout << "Computing...";
 	asl::Timer timer;
 
 	asl::WriterVTKXML writer("flow2Res");
@@ -156,31 +154,31 @@ int main()
 	writer.write();
 
 	timer.start();
-	for(unsigned int i(0); i < 1000  ; ++i)
+	for (unsigned int i(0); i < 1000  ; ++i)
 	{
 		lbgk->execute();
 		bcP->execute();
 		bcTop->execute();
 		bcNoSlip->execute();
 		bcNoSlipM->execute();
-		if(!(i%100))
+		if (!(i%100))
 		{
-			cout<< i <<endl;
+			cout <<  i  << endl;
 			bcNoSlipV->execute();
 			writer.write();
 		}
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+		 <<  timer.getClockTime() <<  "; load=" 
+		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 
-	std::cout<<"Output...";
-	std::cout<<"Finished"<<endl;	
-	std::cout<<"Ok"<<endl;
+	std::cout << "Output...";
+	std::cout << "Finished" << endl;	
+	std::cout << "Ok" << endl;
 
 	return 0;
 }

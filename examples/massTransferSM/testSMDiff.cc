@@ -34,7 +34,7 @@
 #include <writers/aslVTKFormatWriters.h>
 #include <num/aslFDStefanMaxwell.h>
 #include <num/aslBasicBC.h>
-#include "utilities/aslTimer.h"
+#include <utilities/aslTimer.h>
 //#include "acl/aclUtilities.h"
 
 typedef float FlT;
@@ -57,7 +57,7 @@ int main()
 	auto gSize(dx.v()*AVec<>(size));
 
 	
-	std::cout<<"Flow: Data initialization...";
+	std::cout << "Data initialization...";
 
 	asl::Block block(size,dx.v());
 	
@@ -67,9 +67,9 @@ int main()
 	asl::initData(c2Field, 0.5);	
 
 	
-	std::cout<<"Finished"<<endl;
+	std::cout << "Finished" << endl;
 	
-	std::cout<<"Flow: Numerics initialization...";
+	std::cout << "Numerics initialization...";
 
 	auto templ(&asl::d3q7());
 	auto nm(generateFDStefanMaxwell(c1Field, c2Field,  diffCoefNum.v(), templ));
@@ -87,8 +87,8 @@ int main()
 	bc.push_back(asl::generateBCConstantValue(c2Field, 1, {asl::X0}));
 	initAll(bc);
 
-	std::cout<<"Finished"<<endl;
-	std::cout<<"Computing..."<<flush;
+	std::cout << "Finished" << endl;
+	std::cout << "Computing..." << flush;
 	asl::Timer timer;
 
 	asl::WriterVTKXML writer("surfaceFlux");
@@ -105,21 +105,21 @@ int main()
 		executeAll(bc);
 		if(!(i%40))
 		{
-			cout<<i<<endl;
+			cout << i << endl;
 			writer.write();
 		}
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+		 <<  timer.getClockTime() <<  "; load=" 
+		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 
-	std::cout<<"Output...";
-	std::cout<<"Finished"<<endl;	
-	std::cout<<"Ok"<<endl;
+	std::cout << "Output...";
+	std::cout << "Finished" << endl;	
+	std::cout << "Ok" << endl;
 
 	return 0;
 }

@@ -25,9 +25,7 @@
 	\example cubePoroelasticGravity.cc
  */
 
-#include <math/aslVectors.h>
 #include <aslDataInc.h>
-#include <aslGenerators.h>
 #include <acl/aclGenerators.h>
 #include <writers/aslVTKFormatWriters.h>
 #include <num/aslFDPoroElasticity.h>
@@ -38,7 +36,7 @@
 #include <math/aslTemplates.h>
 #include <acl/aclMath/aclVectorOfElements.h>
 #include <aslGeomInc.h>
-#include "acl/aclUtilities.h"
+#include <acl/aclUtilities.h>
 
 
 typedef float FlT;
@@ -49,8 +47,7 @@ typedef asl::UValue<FlT> Param;
 int main(int argc, char* argv[])
 {
 	asl::ApplicationParametersManager appParamsManager("cubePoroelasticGravity",
-	                                                   "1.0",
-	                                                   "cubePoroelasticGravity.ini");
+	                                                   "1.0");
 	asl::Parameter<asl::AVec<int> > size("size", "size 3D");
 	asl::Parameter<cl_float> dx("dx", "dx");
 	asl::Parameter<cl_float> dt("dt", "dt");
@@ -70,7 +67,7 @@ int main(int argc, char* argv[])
 
 	asl::AVec<FlT> gNum(g.v()*dt.v()*dt.v());
 		
-	std::cout<<"cubeGravity: Data initialization..."<<flush;
+	std::cout << "Data initialization..." << flush;
 
 	asl::Block block(size.v(), dx.v());
 	auto displacement(asl::generateDataContainerACL_SP<FlT>(block, 3, 1u));
@@ -87,7 +84,7 @@ int main(int argc, char* argv[])
 
 	std::cout << "Finished" << endl;
 	
-	std::cout << "cubeIncompressibleGravity: Numerics initialization..."<<flush;
+	std::cout << "Numerics initialization..." << flush;
 
 	auto elasticity(generateFDPoroElasticity(displacement,
 	                                         pressureL,
@@ -103,14 +100,14 @@ int main(int argc, char* argv[])
 	asl::addBCRigidWall(bc, elasticity, {asl::X0});
 	asl::initAll(bc);
 
-	asl::WriterVTKXML writer(appParamsManager.getFolderWithSlash() + "cubePoroelasticGravity");
+	asl::WriterVTKXML writer(appParamsManager.getDir() + "cubePoroelasticGravity");
 	writer.addScalars("map", *mapX);
 	writer.addVector("displacement", *displacement);
 	writer.addScalars("pressure", *elasticity->getPressureData());
 	writer.addScalars("pressureL", *elasticity->getLiquidPressureData());
 	
 	std::cout << "Finished" << endl;
-	std::cout << "Computing..."<<endl;
+	std::cout << "Computing..." << endl;
 	asl::Timer timer, timerBulk, timerBC;
 
 	executeAll(bc);
@@ -127,21 +124,21 @@ int main(int argc, char* argv[])
 		timerBC.resume();
 		executeAll(bc);
 		timerBC.stop();		
-		if(!(i % tout.v()))
+		if (!(i % tout.v()))
 		{
-			cout<<i<<endl;
+			cout << i << endl;
 			writer.write();
 		}
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+		 <<  timer.getClockTime() <<  "; load=" 
+		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 	cout << "timeBulk=" << timerBulk.getTime() << 
-		    "; timeBC=" << timerBC.getTime()  << endl;
+		    "; timeBC=" << timerBC.getTime() << endl;
 
 	std::cout << "Output...";
 	std::cout << "Finished" << endl;	

@@ -71,19 +71,19 @@ asl::SPDistanceFunction generateTunnel(asl::Block & bl)
 int main(int argc, char* argv[])
 {
 	asl::ApplicationParametersManager appParamsManager("locomotive_in_tunnel",
-	                                                   "1.0",
-	                                                   "locomotive_in_tunnel.ini");
-	asl::Parameter<FlT> dx(0.08, "dx", "space step");
-	asl::Parameter<FlT> dt(1., "dt", "time step");
+	                                                   "1.0");
+	asl::Parameter<FlT> dx(0.08, "dx", "space step", "m");
+	asl::Parameter<FlT> dt(1., "dt", "time step", "s");
 	asl::Parameter<FlT> nu(.001, "nu", "viscosity");
 
-	
+	appParamsManager.load(argc, argv);
+cout << "getDir(): " << appParamsManager.getDir() << endl;
 	AVec<int> size(makeAVec(40., 10., 15.) * (1. / dx.v()));
 	asl::Block bl(size, dx.v(), makeAVec(-30., 8.58, 1.53));
 	
 	asl::UValue<FlT> nuNum(nu.v() * dt.v() / dx.v() / dx.v());
 	
-	std::cout << "Flow: Data initialization...";
+	std::cout << "Data initialization...";
 
 	auto locomotive(asl::readSurface("locomotive.stl", bl));
 	
@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
 	
 	std::cout << "Finished" << endl;
 	
-	std::cout << "Flow: Numerics initialization...";
+	std::cout << "Numerics initialization...";
 
 	asl::SPLBGK lbgk(new asl::LBGKTurbulence(block, 
 	                                         acl::generateVEConstant(FlT(nu.v())),  
@@ -133,7 +133,7 @@ int main(int argc, char* argv[])
 	std::cout << "Computing...";
 	asl::Timer timer;
 
-	asl::WriterVTKXML writer("locomotive_in_tunnel");
+	asl::WriterVTKXML writer(appParamsManager.getDir() + "locomotive_in_tunnel");
 	writer.addScalars("map", *locomotive);
 	writer.addScalars("tunnel", *tunnelMap);
 	writer.addScalars("rho", *lbgk->getRho());
@@ -147,11 +147,11 @@ int main(int argc, char* argv[])
 	writer.write();
 
 	timer.start();
-	for(unsigned int i(1); i < 20001; ++i)
+	for (unsigned int i(1); i < 20001; ++i)
 	{
 		lbgk->execute();
 		executeAll(bc);
-		if(!(i%1000))
+		if (!(i%1000))
 		{
 			cout << i << endl;
 			executeAll(bcV);
