@@ -74,16 +74,16 @@ int main(int argc, char* argv[])
 	                                                   "1.0");
 	asl::Parameter<FlT> dx(0.08, "dx", "space step", "m");
 	asl::Parameter<FlT> dt(1., "dt", "time step", "s");
-	asl::Parameter<FlT> nu(.001, "nu", "viscosity");
+	asl::Parameter<FlT> nu(.001, "nu", "viscosity", "Pa*s");
 
 	appParamsManager.load(argc, argv);
-cout << "getDir(): " << appParamsManager.getDir() << endl;
+
 	AVec<int> size(makeAVec(40., 10., 15.) * (1. / dx.v()));
 	asl::Block bl(size, dx.v(), makeAVec(-30., 8.58, 1.53));
 	
 	asl::UValue<FlT> nuNum(nu.v() * dt.v() / dx.v() / dx.v());
 	
-	std::cout << "Data initialization...";
+	std::cout << "Data initialization... ";
 
 	auto locomotive(asl::readSurface("locomotive.stl", bl));
 	
@@ -97,7 +97,7 @@ cout << "getDir(): " << appParamsManager.getDir() << endl;
 	
 	std::cout << "Finished" << endl;
 	
-	std::cout << "Numerics initialization...";
+	std::cout << "Numerics initialization... ";
 
 	asl::SPLBGK lbgk(new asl::LBGKTurbulence(block, 
 	                                         acl::generateVEConstant(FlT(nu.v())),  
@@ -130,7 +130,7 @@ cout << "getDir(): " << appParamsManager.getDir() << endl;
 	
 
 	std::cout << "Finished" << endl;
-	std::cout << "Computing...";
+	std::cout << "Computing... ";
 	asl::Timer timer;
 
 	asl::WriterVTKXML writer(appParamsManager.getDir() + "locomotive_in_tunnel");

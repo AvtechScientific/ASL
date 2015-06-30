@@ -333,7 +333,7 @@ namespace asl
 		try
 		{
 			ifstream ifs(paramFile);
-			if (!ifs)
+			if (!ifs.good())
 				errorMessage("Can not open parameters file: " + paramFile);
 
 			parsed_options parsed = parse_config_file(ifs, parametersOptions,
@@ -358,7 +358,7 @@ namespace asl
 	void ParametersManager::writeParametersFile(const std::string fileName)
 	{
 		ofstream fo(fileName);
-		if (!fo)
+		if (!fo.good())
 			errorMessage("ParametersManager::writeParametersFile() - can not open file: " + fileName);
 
 		fo << parametersFileStr;
@@ -391,6 +391,8 @@ namespace asl
 	void ApplicationParametersManager::load(int argc, char * argv[])
 	{
 		variables_map vm;
+		// Set default parameters file path
+		path p("./");
 
 		options_description genericOptions("Generic options");
 
@@ -400,7 +402,7 @@ namespace asl
 			("devices,d", "Display all available devices and exit")
 			("parameters,p", value<string>(), "Path to the parameters file")
 			("generate,g", value<string>(),
-			 "Generate default parameters file and exit")
+			 "Generate default parameters file, write it and exit")
 			("check,c", "Check parameters for consistency and exit");
 
 		positional_options_description positional;
@@ -442,34 +444,53 @@ namespace asl
 
 			if (vm.count("generate"))
 			{
-				path p(vm["generate"].as<string>());
+				path gp(vm["generate"].as<string>());
 				cout << "Writing default parameters file to: "
-					 << p.string() << endl;
+					 << gp.string() << endl;
 
-				writeParametersFile(p.string());
+				writeParametersFile(gp.string());
 				exit(0);
 			}
 
-			path p(vm["parameters"].as<string>());
-			ifstream ifs(p.string());
-			if (!ifs)
+			if (vm.count("parameters"))
 			{
-				// Only warn, since all options might have default values, or required values
-				// provided through the command line - so not always a parameters file is required
-				warningMessage("ParametersManager::load() - can not open parameters file: " + p.string());
+				p = vm["parameters"].as<string>();
+				if (is_directory(p))
+				{
+					// Only warn, since all options might have default values, or required values
+					// provided through the command line - so no configuration file is required
+					warningMessage("ApplicationParametersManager::load() - no parameters file provided, " + p.string() + " is a directory");
+				}
+				else
+				{
+					ifstream ifs(p.string());
+					if (ifs.good())
+					{
+						parsed_options parsed = parse_config_file(ifs, allOptions, true);
+						store(parsed, vm);
+						// Get directory, cutting file name
+						p = p.parent_path();
+					}
+					else
+					{
+						warningMessage("ApplicationParametersManager::load() - can not open configuration file: " + p.string());
+						// Get directory, cutting file name, after using p for warning
+						p = p.parent_path();
+					}
+				}
+			}
+			else
+			{
+					warningMessage("ApplicationParametersManager::load() - no parameters file provided");
 			}
 
-			// Get absolute path
-			p = absolute(p);
-			// Get directory
-			p = p.parent_path();
+			// Generate `parametersFileDirectory`
+			// Get absolute, canonical (no symbolic links, . or ..) path first
+			p = canonical(p);
 			// Append slash
 			p /= "/";
 			parametersFileDirectory = p.string(); 
-			
 
-			parsed_options parsed = parse_config_file(ifs, allOptions, true);
-			store(parsed, vm);
 			// Run error notification only after obtaining
 			// all options and dealing with "--help"
 			notify(vm);
@@ -477,7 +498,8 @@ namespace asl
 			populateMaps(vm);
 
 			// Set hardware default queue as required through provided options
-			acl::hardware.setDefaultQueue(vm["platform"].as<string>(), vm["device"].as<string>());
+			acl::hardware.setDefaultQueue(vm["platform"].as<string>(),
+			                              vm["device"].as<string>());
 
 			// Place it after(!) notify(vm);
 			if (vm.count("check"))
@@ -490,7 +512,7 @@ namespace asl
 		}
 		catch(exception& e)
 		{
-			errorMessage(string("ParametersManager::load() - ") + e.what());
+			errorMessage(string("ApplicationParametersManager::load() - ") + e.what());
 		}
 	}
 		 
