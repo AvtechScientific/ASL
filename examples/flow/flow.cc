@@ -25,18 +25,16 @@
 	\example flow.cc
  */
 
-#include <utilities/aslUValue.h>
-#include <math/aslVectors.h>
+#include <utilities/aslParametersManager.h>
+#include <aslDataInc.h>
 #include <math/aslTemplates.h>
 #include <aslGeomInc.h>
-#include <data/aslDataWithGhostNodes.h>
-#include <aslGenerators.h>
 #include <acl/aclGenerators.h>
 #include <writers/aslVTKFormatWriters.h>
 #include <num/aslLBGK.h>
 #include <num/aslLBGKBC.h>
-#include "utilities/aslTimer.h"
-#include "acl/aclUtilities.h"
+#include <utilities/aslTimer.h>
+#include <acl/aclUtilities.h>
 
 
 
@@ -47,19 +45,26 @@ typedef asl::UValue<double> Param;
 using asl::AVec;
 using asl::makeAVec;
 
-int main()
+
+int main(int argc, char* argv[])
 {
+	// Optionally add appParamsManager to be able to manipulate at least
+	// hardware parameters(platform/device) through command line/parameters file
+	asl::ApplicationParametersManager appParamsManager("flow",
+	                                                   "1.0");
+	appParamsManager.load(argc, argv);
+
 	Param dx(1.);
 	Param dt(1.);
 	Param nu(.00625);
 
 	Param nuNum(nu.v()*dt.v()/dx.v()/dx.v());
-	AVec<int> size(asl::makeAVec(300,50,50));
+	AVec<int> size(asl::makeAVec(300, 50, 50));
 
 	auto gSize(dx.v()*AVec<>(size));
 
 	
-	std::cout<<"Flow: Data initialization...";
+	std::cout << "Data initialization... ";
 
 	asl::Block block(size,dx.v());
 
@@ -73,9 +78,9 @@ int main()
 	asl::initData(ballMapMem, ball);
 
 	
-	std::cout<<"Finished"<<endl;
+	std::cout << "Finished" << endl;
 	
-	std::cout<<"Flow: Numerics initialization...";
+	std::cout << "Numerics initialization... ";
 
 	asl::SPLBGK lbgk(new asl::LBGK(block,
 	                               acl::generateVEConstant(FlT(nuNum.v())),
@@ -99,11 +104,11 @@ int main()
 	initAll(bc);
 	initAll(bcVis);
 
-	std::cout<<"Finished"<<endl;
-	std::cout<<"Computing...";
+	std::cout << "Finished" << endl;
+	std::cout << "Computing...";
 	asl::Timer timer;
 
-	asl::WriterVTKXML writer("flowRes");
+	asl::WriterVTKXML writer("flow");
 	writer.addScalars("map", *ballMapMem);
 	writer.addScalars("rho", *lbgk->getRho());
 	writer.addVector("v", *lbgk->getVelocity());
@@ -115,28 +120,28 @@ int main()
 	writer.write();
 
 	timer.start();
-	for(unsigned int i(1); i < 1001; ++i)
+	for (unsigned int i(1); i < 1001; ++i)
 	{
 		lbgk->execute();
 		executeAll(bc);
-		if(!(i%5000))
+		if (!(i%5000))
 		{
-			cout<<i<<endl;
+			cout << i << endl;
 			executeAll(bcVis);
 			writer.write();
 		}
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+		 <<  timer.getClockTime() <<  "; load=" 
+		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 
-	std::cout<<"Output...";
-	std::cout<<"Finished"<<endl;	
-	std::cout<<"Ok"<<endl;
+	std::cout << "Output...";
+	std::cout << "Finished" << endl;	
+	std::cout << "Ok" << endl;
 
 	return 0;
 }

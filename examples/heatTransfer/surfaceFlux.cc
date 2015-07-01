@@ -25,18 +25,17 @@
 	\example surfaceFlux.cc
  */
 
-#include <utilities/aslUValue.h>
-#include <math/aslVectors.h>
+#include <utilities/aslParametersManager.h>
 #include <math/aslTemplates.h>
 #include <aslGeomInc.h>
-//#include <data/aslDataWithGhostNodes.h>
 #include <aslDataInc.h>
 #include <acl/aclGenerators.h>
 #include <writers/aslVTKFormatWriters.h>
 #include <num/aslFDAdvectionDiffusion.h>
 #include <num/aslBasicBC.h>
-#include "utilities/aslTimer.h"
-#include "acl/aclUtilities.h"
+#include <utilities/aslTimer.h>
+#include <acl/aclUtilities.h>
+
 
 typedef float FlT;
 //typedef double FlT;
@@ -45,8 +44,15 @@ typedef asl::UValue<double> Param;
 using asl::AVec;
 using asl::makeAVec;
 
-int main()
+
+int main(int argc, char* argv[])
 {
+	// Optionally add appParamsManager to be able to manipulate at least
+	// hardware parameters(platform/device) through command line/parameters file
+	asl::ApplicationParametersManager appParamsManager("surfaceFlux",
+	                                                   "1.0");
+	appParamsManager.load(argc, argv);
+
 	Param dx(1.);
 	Param dt(1.);
 	Param diffCoef(.15);
@@ -57,7 +63,7 @@ int main()
 	auto gSize(dx.v()*AVec<>(size));
 
 	
-	std::cout<<"Flow: Data initialization...";
+	std::cout << "Data initialization... ";
 
 	asl::Block block(size,dx.v());
 
@@ -78,9 +84,9 @@ int main()
 	asl::initData(cField, 0.);
 
 	
-	std::cout<<"Finished"<<endl;
+	std::cout << "Finished" << endl;
 	
-	std::cout<<"Flow: Numerics initialization...";
+	std::cout << "Numerics initialization... ";
 
 	auto templ(&asl::d3q15());
 	auto nm(generateFDAdvectionDiffusion(cField,  diffCoefNum.v(), templ));
@@ -93,8 +99,8 @@ int main()
 	bc.push_back(asl::generateBCConstantValue(cField, 0, ballBMapMem));
 	initAll(bc);
 
-	std::cout<<"Finished"<<endl;
-	std::cout<<"Computing..."<<flush;
+	std::cout << "Finished" << endl;
+	std::cout << "Computing..." << flush;
 	asl::Timer timer;
 
 	asl::WriterVTKXML writer("surfaceFlux");
@@ -106,27 +112,27 @@ int main()
 	writer.write();
 
 	timer.start();
-	for(unsigned int i(1); i < 201; ++i)
+	for (unsigned int i(1); i < 201; ++i)
 	{
 		nm->execute();
 		executeAll(bc);
-		if(!(i%40))
+		if (!(i%40))
 		{
-			cout<<i<<endl;
+			cout << i << endl;
 			writer.write();
 		}
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+		 <<  timer.getClockTime() << "; load=" 
+		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 
-	std::cout<<"Output...";
-	std::cout<<"Finished"<<endl;	
-	std::cout<<"Ok"<<endl;
+	std::cout << "Output...";
+	std::cout << "Finished" << endl;	
+	std::cout << "Ok" << endl;
 
 	return 0;
 }

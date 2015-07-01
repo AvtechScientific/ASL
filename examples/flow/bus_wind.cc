@@ -25,18 +25,16 @@
 	\example bus_wind.cc
  */
 
-#include <utilities/aslUValue.h>
-#include <math/aslVectors.h>
+#include <utilities/aslParametersManager.h>
 #include <math/aslTemplates.h>
 #include <math/aslDistanceFunction.h>
-#include<math/aslPositionFunction.h>
+#include <math/aslPositionFunction.h>
 #include <aslDataInc.h>
 #include <acl/aclGenerators.h>
 #include <writers/aslVTKFormatWriters.h>
 #include <num/aslLBGK.h>
 #include <num/aslLBGKBC.h>
-#include "utilities/aslTimer.h"
-#include "acl/aclUtilities.h"
+#include <utilities/aslTimer.h>
 #include <readers/aslVTKFormatReaders.h>
 
 
@@ -49,15 +47,21 @@ using asl::AVec;
 using asl::makeAVec;
 
 
-int main()
+int main(int argc, char* argv[])
 {
+	// Optionally add appParamsManager to be able to manipulate at least
+	// hardware parameters(platform/device) through command line/parameters file
+	asl::ApplicationParametersManager appParamsManager("bus_wind",
+	                                                   "1.0");
+	appParamsManager.load(argc, argv);
+
 	Param dx(8);
 	Param dt(1.);
 	Param nu(.01);
 	
 	Param nuNum(nu.v()*dt.v()/dx.v()/dx.v());
 	
-	std::cout<<"Flow: Data initialization...";
+	std::cout << "Data initialization... ";
 
 
 	auto object(asl::readSurface("bus.stl", dx.v(), 1.5,.25,0.,1.,3.,1.));
@@ -67,9 +71,9 @@ int main()
 	auto forceField(asl::generateDataContainerACL_SP<FlT>(block, 3, 1u));
 	asl::initData(forceField, makeAVec(0.,0.,0.));
 	
-	std::cout<<"Finished"<<endl;
+	std::cout << "Finished" << endl;
 	
-	std::cout<<"Flow: Numerics initialization...";
+	std::cout << "Numerics initialization... ";
 
 	asl::SPLBGK lbgk(new asl::LBGK(block, 
 				               acl::generateVEConstant(FlT(nu.v())),  
@@ -94,8 +98,8 @@ int main()
 	computeForce->init();
 	
 
-	std::cout<<"Finished"<<endl;
-	std::cout<<"Computing...";
+	std::cout << "Finished" << endl;
+	std::cout << "Computing...";
 
 	asl::WriterVTKXML writer("bus_wind");
 	writer.addScalars("bus", *object);
@@ -113,7 +117,7 @@ int main()
 	timer.start();
 	timer1.reset();
 	timer2.reset();
-	for(unsigned int i(1); i < 101; ++i)
+	for (unsigned int i(1); i < 101; ++i)
 	{
 		timer1.resume();
 		lbgk->execute();
@@ -121,9 +125,9 @@ int main()
 		timer2.resume();
 		executeAll(bc);
 		timer2.stop();
-		if(!(i%1000))
+		if (!(i%1000))
 		{
-			cout<<i<<endl;
+			cout << i << endl;
 			executeAll(bcV);
 			computeForce->execute();
 			writer.write();
@@ -131,16 +135,16 @@ int main()
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+		 <<  timer.getClockTime() <<  "; load=" 
+		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 	cout << "time1=" << timer1.getTime() << "; time2=" << timer2.getTime() << endl;
 
-	std::cout<<"Output...";
-	std::cout<<"Finished"<<endl;	
-	std::cout<<"Ok"<<endl;
+	std::cout << "Output...";
+	std::cout << "Finished" << endl;	
+	std::cout << "Ok" << endl;
 
 	return 0;
 }

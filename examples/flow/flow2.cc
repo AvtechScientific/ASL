@@ -25,18 +25,16 @@
 	\example flow2.cc
  */
 
-#include <utilities/aslUValue.h>
-#include <math/aslVectors.h>
+#include <utilities/aslParametersManager.h>
+#include <aslDataInc.h>
 #include <math/aslTemplates.h>
 #include <aslGeomInc.h>
-#include <data/aslDataWithGhostNodes.h>
-#include <aslGenerators.h>
 #include <acl/aclGenerators.h>
 #include <writers/aslVTKFormatWriters.h>
 #include <num/aslLBGK.h>
 #include <num/aslLBGKBC.h>
-#include "utilities/aslTimer.h"
-#include "acl/aclUtilities.h"
+#include <utilities/aslTimer.h>
+#include <acl/aclUtilities.h>
 
 
 
@@ -92,8 +90,15 @@ asl::SPDistanceFunction generateMirrors()
 	return res;
 }
 
-int main()
+
+int main(int argc, char* argv[])
 {
+	// Optionally add appParamsManager to be able to manipulate at least
+	// hardware parameters(platform/device) through command line/parameters file
+	asl::ApplicationParametersManager appParamsManager("flow2",
+	                                                   "1.0");
+	appParamsManager.load(argc, argv);
+
 	Param dx(1.);
 	Param dt(1.);
 	Param nu(.0125);
@@ -104,16 +109,16 @@ int main()
 	AVec<> gSize(dx.v()*AVec<>(size));
 
 	
-	std::cout<<"Flow: Data initialization...";
+	std::cout << "Data initialization... ";
 
 	asl::Block block(size,dx.v());
 
 	auto mirrorsMapMem(asl::generateDataContainerACL_SP<FlT>(block, 1, 1u));
 	asl::initData(mirrorsMapMem, generateMirrors());
 
-	std::cout<<"Finished"<<endl;
+	std::cout << "Finished" << endl;
 	
-	std::cout<<"Flow: Numerics initialization...";
+	std::cout << "Numerics initialization... ";
 
 	asl::SPLBGK lbgk(new asl::LBGK(block, 
 				               acl::generateVEConstant(FlT(nuNum.v())),  
@@ -136,11 +141,11 @@ int main()
 	bcP->init();
 	bcTop->init();
 
-	std::cout<<"Finished"<<endl;
-	std::cout<<"Computing...";
+	std::cout << "Finished" << endl;
+	std::cout << "Computing...";
 	asl::Timer timer;
 
-	asl::WriterVTKXML writer("flow2Res");
+	asl::WriterVTKXML writer("flow2");
 	writer.addScalars("map", *mirrorsMapMem);
 	writer.addScalars("rho", *lbgk->getRho());
 	writer.addVector("v", *lbgk->getVelocity());
@@ -156,31 +161,31 @@ int main()
 	writer.write();
 
 	timer.start();
-	for(unsigned int i(0); i < 1000  ; ++i)
+	for (unsigned int i(0); i < 1000  ; ++i)
 	{
 		lbgk->execute();
 		bcP->execute();
 		bcTop->execute();
 		bcNoSlip->execute();
 		bcNoSlipM->execute();
-		if(!(i%100))
+		if (!(i%100))
 		{
-			cout<< i <<endl;
+			cout <<  i  << endl;
 			bcNoSlipV->execute();
 			writer.write();
 		}
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+		 <<  timer.getClockTime() <<  "; load=" 
+		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 
-	std::cout<<"Output...";
-	std::cout<<"Finished"<<endl;	
-	std::cout<<"Ok"<<endl;
+	std::cout << "Output...";
+	std::cout << "Finished" << endl;	
+	std::cout << "Ok" << endl;
 
 	return 0;
 }
