@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
 
 	asl::AVec<FlT> gNum(g.v()/dx.v());
 		
-	std::cout << "Data initialization...";
+	std::cout << "Data initialization... ";
 
 	asl::Block block(size.v(), dx.v());
 	auto displacement(asl::generateDataContainerACL_SP<FlT>(block, 3, 1u));
@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
 
 	std::cout << "Finished" << endl;
 	
-	std::cout << "Numerics initialization...";
+	std::cout << "Numerics initialization... ";
 
 	asl::SPFDElasticity2 elasticity(new asl::FDElasticity2(displacement,
 	                                                       acl::generateVEConstant(bulkModulusNum.v()),

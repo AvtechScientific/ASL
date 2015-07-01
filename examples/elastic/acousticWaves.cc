@@ -108,7 +108,7 @@ void Parameters::updateNumValues()
 {
 	double vs(sqrt((bulkModulus.v()+2.*shearModulus.v())/rho.v()));
 	dt=dx.v()/vs*.1;
-	cout<<vs<<"; "<<dx.v()<<"; "<<dt.v()<<endl;
+	cout << vs << "; " << dx.v() << "; " << dt.v() << endl;
 	bulkMNum = bulkModulus.v()/rho.v()/dx.v()/dx.v();
 	shearMNum = shearModulus.v()/rho.v()/dx.v()/dx.v();
 	size = asl::makeAVec(tubeL.v() / dx.v() + 1, 
@@ -162,7 +162,7 @@ int main(int argc, char* argv[])
 	Parameters params;
 	params.load(argc, argv);
 		
-	std::cout << "Acoustic waves: Data initialization..."<<flush;
+	std::cout << "Data initialization... " << flush;
 
 	asl::Block block(params.size, params.dx.v());
 	auto displacement(asl::generateDataContainerACL_SP<FlT>(block, 3, 1u));
@@ -179,7 +179,7 @@ int main(int argc, char* argv[])
 
 	std::cout << "Finished" << endl;
 	
-	std::cout << "cubeGravity: Numerics initialization..." << flush;
+	std::cout << "Numerics initialization... " << flush;
 
 	auto elasticity(generateFDElasticityRelax(displacement,
 	                                          params.bulkMNum.v(),
@@ -207,14 +207,14 @@ int main(int argc, char* argv[])
 	initAll(bc);
 
 	std::cout << "Finished" << endl;
-	std::cout << "Computing..."<<endl;
+	std::cout << "Computing..." << endl;
 	asl::Timer timer;
 
 	executeAll(bc);
 
 	timer.start();
 	double tOutPrev(0);
-	cout<<params.dt.v()<<endl;
+	cout << params.dt.v() << endl;
 	for (double t(0); t < params.tSimulation.v(); t+=params.dt.v())
 	{
 		elasticity->execute();
@@ -224,8 +224,8 @@ int main(int argc, char* argv[])
 		{
 			timer.stop();
 			tOutPrev=t;
-			cout<<t<<"/"<<params.tSimulation.v()<<"; expected left time: "<< 
-				  timer.getLeftTime(t/params.tSimulation.v()) <<endl;
+			cout << t << "/" << params.tSimulation.v() << "; expected left time: " <<  
+				  timer.getLeftTime(t/params.tSimulation.v())  << endl;
 			writer.write();
 			timer.resume();
 
@@ -233,11 +233,11 @@ int main(int argc, char* argv[])
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+		 <<  timer.getClockTime()	 <<  "; load=" 
+		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 
 	std::cout << "Output...";
 	std::cout << "Finished" << endl;	

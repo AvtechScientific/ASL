@@ -25,7 +25,7 @@
 	\example compressor.cc
  */
 
-#include <utilities/aslUValue.h>
+#include <utilities/aslParametersManager.h>
 #include <math/aslTemplates.h>
 #include <aslGeomInc.h>
 #include <aslDataInc.h>
@@ -34,7 +34,7 @@
 #include <writers/aslVTKFormatWriters.h>
 #include <num/aslLBGK.h>
 #include <num/aslLBGKBC.h>
-#include "utilities/aslTimer.h"
+#include <utilities/aslTimer.h>
 #include <readers/aslVTKFormatReaders.h>
 
 typedef float FlT;
@@ -56,8 +56,15 @@ asl::SPDistanceFunction generateCase(asl::Block & bl)
 	return normalize(comprCase, bl.dx);
 }
 
-int main()
+
+int main(int argc, char* argv[])
 {
+	// Optionally add appParamsManager to be able to manipulate at least
+	// hardware parameters(platform/device) through command line/parameters file
+	asl::ApplicationParametersManager appParamsManager("compressor",
+	                                                   "1.0");
+	appParamsManager.load(argc, argv);
+
 	Param dx(0.5);
 	Param dt(.001);
 	Param nu(.2);

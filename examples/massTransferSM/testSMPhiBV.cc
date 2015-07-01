@@ -25,8 +25,7 @@
 	\example testSMPhiBV.cc
  */
 
-#include <utilities/aslUValue.h>
-#include <math/aslVectors.h>
+#include <utilities/aslParametersManager.h>
 #include <math/aslTemplates.h>
 #include <aslGeomInc.h>
 #include <aslDataInc.h>
@@ -46,8 +45,15 @@ typedef asl::UValue<double> Param;
 using asl::AVec;
 using asl::makeAVec;
 
-int main()
+
+int main(int argc, char* argv[])
 {
+	// Optionally add appParamsManager to be able to manipulate at least
+	// hardware parameters(platform/device) through command line/parameters file
+	asl::ApplicationParametersManager appParamsManager("testSMPhiBV",
+	                                                   "1.0");
+	appParamsManager.load(argc, argv);
+
 	Param dx(1.);
 	Param dt(1.);
 	Param diffCoef(.15);
@@ -58,7 +64,7 @@ int main()
 
 	auto gSize(dx.v()*AVec<>(size));
 
-	std::cout << "Data initialization...";
+	std::cout << "Data initialization... ";
 
 	asl::Block block(size,dx.v());
 	
@@ -77,7 +83,7 @@ int main()
 	
 	std::cout << "Finished" << endl;
 	
-	std::cout << "Numerics initialization...";
+	std::cout << "Numerics initialization... ";
 
 	auto templ(&asl::d3q7());
 	auto nm(generateFDStefanMaxwell(c1Field, c2Field,  diffCoefNum.v(), templ));
@@ -125,7 +131,7 @@ int main()
 	std::cout << "Computing..." << flush;
 	asl::Timer timer;
 
-	asl::WriterVTKXML writer("out");
+	asl::WriterVTKXML writer("testSMPhiBV");
 	writer.addScalars("c1", *c1Field);
 	writer.addScalars("c2", *c2Field);
 	writer.addScalars("c1a", *c1aField);	

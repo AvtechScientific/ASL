@@ -25,7 +25,7 @@
 	\example flowKDPGrowth.cc
  */
 
-#include <utilities/aslUValue.h>
+#include <utilities/aslParametersManager.h>
 #include <math/aslTemplates.h>
 #include <aslGeomInc.h>
 #include <math/aslPositionFunction.h>
@@ -183,7 +183,6 @@ double getWRotation(double t)
 	if(tRel>4.*tAcceleration+2.*tPlato+tStop)
 		x = 0;
 	return wMax*x;
-	
 
 //	flux = -9.32e-5*(1.170 - c); c_0=0.326 ceq=0.267
 }
@@ -197,9 +196,14 @@ using asl::AVec;
 using asl::makeAVec;
 
 
-
-int main()
+int main(int argc, char* argv[])
 {
+	// Optionally add appParamsManager to be able to manipulate at least
+	// hardware parameters(platform/device) through command line/parameters file
+	asl::ApplicationParametersManager appParamsManager("flowKDPGrowth",
+	                                                   "1.0");
+	appParamsManager.load(argc, argv);
+
 	Param dx(.02);
 	Param dt(0.8e-2);
 	Param nu(1e-2);

@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
 
 	appParamsManager.load(argc, argv);
 
-	std::cout << "Data initialization...";
+	std::cout << "Data initialization... ";
 
 	asl::Block block(size.v(), dx.v());
 	auto levelSet(asl::generateDataContainerACL_SP<FlT>(block, 1, 1u));
@@ -77,12 +77,12 @@ int main(int argc, char* argv[])
 	auto superSaturation(asl::generateDataContainerConst_SP(block, superS.v(), 1u));
 
 	
-	asl::WriterVTKXML writer(appParamsManager.getDir() +  "levelSetFacetedGrowth");
+	asl::WriterVTKXML writer(appParamsManager.getDir() + "levelSetFacetedGrowth");
 	writer.addScalars("levelSet", *levelSet);
 	
 	std::cout << "Finished" << endl;
 	
-	std::cout << "Numerics initialization..." << flush;
+	std::cout << "Numerics initialization... " << flush;
 
 	auto lsNum(std::make_shared<asl::LSFacetedGrowth>(levelSet, superSaturation));
 
@@ -110,7 +110,7 @@ int main(int argc, char* argv[])
 	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		 <<  timer.getClockTime() <<  "; load=" 
+		 <<  timer.getClockTime() << "; load=" 
 		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 
 	std::cout << "Output...";

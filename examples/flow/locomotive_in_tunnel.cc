@@ -70,12 +70,22 @@ asl::SPDistanceFunction generateTunnel(asl::Block & bl)
 
 int main(int argc, char* argv[])
 {
+	/* Convenience facility to manage simulation parameters (and also
+	hardware parameters - platform/device to run the application on)
+	through command line and/or parameters file.
+	Run `locomotive_in_tunnel -h` for more information */
 	asl::ApplicationParametersManager appParamsManager("locomotive_in_tunnel",
 	                                                   "1.0");
+
+	/* Important: declare Parameters only after declaring
+	ApplicationParametersManager instance because each Parameter adds itself
+	to it automatically */
 	asl::Parameter<FlT> dx(0.08, "dx", "space step", "m");
 	asl::Parameter<FlT> dt(1., "dt", "time step", "s");
 	asl::Parameter<FlT> nu(.001, "nu", "viscosity", "Pa*s");
 
+	/* Load previously declared Parameters from command line and/or
+	parameters file. Use default values if neither is provided. */
 	appParamsManager.load(argc, argv);
 
 	AVec<int> size(makeAVec(40., 10., 15.) * (1. / dx.v()));

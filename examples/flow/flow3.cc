@@ -25,7 +25,7 @@
 	\example flow3.cc
  */
 
-#include <utilities/aslUValue.h>
+#include <utilities/aslParametersManager.h>
 #include <aslDataInc.h>
 #include <math/aslTemplates.h>
 #include <aslGeomInc.h>
@@ -64,8 +64,15 @@ asl::SPDistanceFunction generateOrderedCylinders(asl::Block & block)
 	return resultGeometry;
 }
 
-int main()
+
+int main(int argc, char* argv[])
 {
+	// Optionally add appParamsManager to be able to manipulate at least
+	// hardware parameters(platform/device) through command line/parameters file
+	asl::ApplicationParametersManager appParamsManager("flow3",
+	                                                   "1.0");
+	appParamsManager.load(argc, argv);
+
 	Param dx(1.);
 	Param dt(1.);
 	Param nu(.00625);

@@ -27,7 +27,7 @@ ASL is distributed under the free GNU Affero General Public License (AGPLv3) wit
 
 1. Go to tests: `cd examples/flow/locomotive_in_tunnel`
 2. Copy the .stl input file: `cp ../../../../ASL/examples/input_data/locomotive.stl .`
-3. Run: `./locomotive_in_tunnel`
+3. Run: `./locomotive_in_tunnel`. Optionally: change some parameters - `./locomotive_in_tunnel --dx 0.1 --dt 2` or write all of them into a file for later editing/reuse - `./locomotive_in_tunnel -g bigGrid.ini`. See `locomotive_in_tunnel -h` for more information.
 4. Post-processing: [step by step example](https://github.com/AvtechScientific/ASL/wiki/User-Guide#post-processing).
 
 ### Writing your own code using ASL

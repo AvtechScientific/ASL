@@ -25,7 +25,6 @@
 	\example locomotive_laminar.cc
  */
 
-#include <utilities/aslUValue.h>
 #include <math/aslTemplates.h>
 #include <aslGeomInc.h>
 #include <math/aslPositionFunction.h>
@@ -37,7 +36,7 @@
 #include <utilities/aslTimer.h>
 #include <acl/aclUtilities.h>
 #include <readers/aslVTKFormatReaders.h>
-
+#include <utilities/aslParametersManager.h>
 
 
 typedef float FlT;
@@ -69,8 +68,14 @@ asl::SPDistanceFunction generateTunel(asl::Block & bl)
 }
 
 
-int main()
+int main(int argc, char* argv[])
 {
+	// Optionally add appParamsManager to be able to manipulate at least
+	// hardware parameters(platform/device) through command line/parameters file
+	asl::ApplicationParametersManager appParamsManager("locomotive_laminar",
+	                                                   "1.0");
+	appParamsManager.load(argc, argv);
+
 	Param dx(0.5);
 	Param dt(1.);
 	Param nu(.01);

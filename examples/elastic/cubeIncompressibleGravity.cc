@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
 
 	asl::AVec<FlT> gNum(g.v()/dx.v()*dt.v());
 		
-	std::cout << "Data initialization..." << flush;
+	std::cout << "Data initialization... " << flush;
 
 	asl::Block block(size.v(), dx.v());
 	auto displacement(asl::generateDataContainerACL_SP<FlT>(block, 3, 1u));
@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
 
 	std::cout << "Finished" << endl;
 	
-	std::cout << "Numerics initialization..." << flush;
+	std::cout << "Numerics initialization... " << flush;
 
 	auto elasticity(generateFDElasticityStatic(displacement,
 	                                           bulkModulusNum.v(),
@@ -129,7 +129,7 @@ int main(int argc, char* argv[])
 	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		 <<  timer.getClockTime()	 <<  "; load=" 
+		 <<  timer.getClockTime() << "; load=" 
 		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 	cout << "timeBulk=" << timerBulk.getTime() << 
 		    "; timeBC=" << timerBC.getTime()  << endl;

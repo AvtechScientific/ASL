@@ -25,7 +25,7 @@
 	\example flowRotatingCylinders.cc
  */
 
-#include <utilities/aslUValue.h>
+
 #include <aslDataInc.h>
 #include <math/aslTemplates.h>
 #include <aslGeomInc.h>
@@ -35,7 +35,7 @@
 #include <num/aslLBGK.h>
 #include <num/aslLBGKBC.h>
 #include <utilities/aslTimer.h>
-
+#include <utilities/aslParametersManager.h>
 
 
 typedef float FlT;
@@ -46,9 +46,14 @@ using asl::AVec;
 using asl::makeAVec;
 
 
-
-int main()
+int main(int argc, char* argv[])
 {
+	// Optionally add appParamsManager to be able to manipulate at least
+	// hardware parameters(platform/device) through command line/parameters file
+	asl::ApplicationParametersManager appParamsManager("flowRotatingCylinders",
+	                                                   "1.0");
+	appParamsManager.load(argc, argv);
+
 	Param dx(1.);
 	Param dt(1.);
 	Param nu(.01);
@@ -60,7 +65,7 @@ int main()
 	AVec<> gSize(dx.v()*AVec<>(size));
 
 	
-	std::cout << "Flow: Data initialization...";
+	std::cout << "Data initialization... ";
 
 	asl::Block block(size,dx.v());
 
@@ -91,7 +96,7 @@ int main()
 		
 	std::cout << "Finished" << endl;
 	
-	std::cout << "Flow: Numerics initialization...";
+	std::cout << "Numerics initialization... ";
 
 	asl::SPLBGK lbgk(new asl::LBGK(block, 
 				               acl::generateVEConstant(FlT(nuNum.v())),  

@@ -25,7 +25,7 @@
 	\example flow.cc
  */
 
-#include <utilities/aslUValue.h>
+#include <utilities/aslParametersManager.h>
 #include <aslDataInc.h>
 #include <math/aslTemplates.h>
 #include <aslGeomInc.h>
@@ -45,19 +45,26 @@ typedef asl::UValue<double> Param;
 using asl::AVec;
 using asl::makeAVec;
 
-int main()
+
+int main(int argc, char* argv[])
 {
+	// Optionally add appParamsManager to be able to manipulate at least
+	// hardware parameters(platform/device) through command line/parameters file
+	asl::ApplicationParametersManager appParamsManager("flow",
+	                                                   "1.0");
+	appParamsManager.load(argc, argv);
+
 	Param dx(1.);
 	Param dt(1.);
 	Param nu(.00625);
 
 	Param nuNum(nu.v()*dt.v()/dx.v()/dx.v());
-	AVec<int> size(asl::makeAVec(300,50,50));
+	AVec<int> size(asl::makeAVec(300, 50, 50));
 
 	auto gSize(dx.v()*AVec<>(size));
 
 	
-	std::cout << "Flow: Data initialization...";
+	std::cout << "Data initialization... ";
 
 	asl::Block block(size,dx.v());
 
@@ -73,7 +80,7 @@ int main()
 	
 	std::cout << "Finished" << endl;
 	
-	std::cout << "Flow: Numerics initialization...";
+	std::cout << "Numerics initialization... ";
 
 	asl::SPLBGK lbgk(new asl::LBGK(block,
 	                               acl::generateVEConstant(FlT(nuNum.v())),
@@ -101,7 +108,7 @@ int main()
 	std::cout << "Computing...";
 	asl::Timer timer;
 
-	asl::WriterVTKXML writer("flowRes");
+	asl::WriterVTKXML writer("flow");
 	writer.addScalars("map", *ballMapMem);
 	writer.addScalars("rho", *lbgk->getRho());
 	writer.addVector("v", *lbgk->getVelocity());

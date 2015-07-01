@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
 
 	appParamsManager.load(argc, argv);
 	
-	std::cout << "Data initialization...";
+	std::cout << "Data initialization... ";
 
 	asl::Block block(size.v(), dx.v());
 	auto levelSet(asl::generateDataContainerACL_SP<FlT>(block, 1, 1u));
@@ -68,12 +68,12 @@ int main(int argc, char* argv[])
 	auto velocity(asl::generateDataContainerConst_SP(block, v.v(), 1u));
 
 	
-	asl::WriterVTKXML writer(appParamsManager.getDir() +  "levelSetBasic");
+	asl::WriterVTKXML writer(appParamsManager.getDir() + "levelSetBasic");
 	writer.addScalars("levelSet", *levelSet);
 	
 	std::cout << "Finished" << endl;
 	
-	std::cout << "Numerics initialization..." << flush;
+	std::cout << "Numerics initialization... " << flush;
 
 	auto lsNum(std::make_shared<asl::InterfaceTrackingAlg1>(levelSet,velocity));
 	

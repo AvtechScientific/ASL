@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
 	
 	appParamsManager.load(argc, argv);
 		
-	std::cout << "Data initialization...";
+	std::cout << "Data initialization... ";
 
 	asl::SPDataWithGhostNodesACLData map0(asl::read(appParamsManager.getDir() + 
 	                                                "brain.vti", 0));
@@ -100,7 +100,7 @@ int main(int argc, char* argv[])
 
 	std::cout << "Finished" << endl;
 	
-	std::cout << "Numerics initialization...";
+	std::cout << "Numerics initialization... ";
 
 	auto elasticity(make_shared<asl::FDPoroElasticity>(displacement,
 	                                                   pressure,

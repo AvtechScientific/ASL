@@ -481,7 +481,7 @@ namespace asl
 			}
 			else
 			{
-					warningMessage("ApplicationParametersManager::load() - no parameters file provided");
+				warningMessage("ApplicationParametersManager::load() - no parameters file provided");
 			}
 
 			// Generate `parametersFileDirectory`
@@ -504,9 +504,7 @@ namespace asl
 			// Place it after(!) notify(vm);
 			if (vm.count("check"))
 			{
-				cout << applicationName + " " + applicationVersion + "\n"
-					 << "Consistency check - successful."
-					 << endl;
+				cout << "Parameters consistency check - successful." << endl;
 				exit(0);
 			}
 		}
