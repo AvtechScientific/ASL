@@ -26,8 +26,7 @@
 	ternary system
  */
 
-#include <utilities/aslUValue.h>
-#include <math/aslVectors.h>
+#include <utilities/aslParametersManager.h>
 #include <math/aslTemplates.h>
 #include <aslGeomInc.h>
 #include <aslDataInc.h>
@@ -35,8 +34,8 @@
 #include <writers/aslVTKFormatWriters.h>
 #include <num/aslFDStefanMaxwell.h>
 #include <num/aslBasicBC.h>
-#include "utilities/aslTimer.h"
-#include "acl/aclMath/aclVectorOfElements.h"
+#include <utilities/aslTimer.h>
+#include <acl/aclMath/aclVectorOfElements.h>
 
 typedef float FlT;
 //typedef double FlT;
@@ -45,8 +44,15 @@ typedef asl::UValue<double> Param;
 using asl::AVec;
 using asl::makeAVec;
 
-int main()
+
+int main(int argc, char* argv[])
 {
+	// Optionally add appParamsManager to be able to manipulate at least
+	// hardware parameters(platform/device) through command line/parameters file
+	asl::ApplicationParametersManager appParamsManager("testSMDiff3C",
+	                                                   "1.0");
+	appParamsManager.load(argc, argv);
+
 	Param dx(1.);
 	Param dt(1.);
 	Param diffCoef(.15);
@@ -58,7 +64,7 @@ int main()
 	auto gSize(dx.v()*AVec<>(size));
 
 	
-	std::cout<<"Flow: Data initialization...";
+	std::cout << "Flow: Data initialization... ";
 
 	asl::Block block(size,dx.v());
 	
@@ -70,9 +76,9 @@ int main()
 	asl::initData(c3Field, 0.33);	
 
 	
-	std::cout<<"Finished"<<endl;
+	std::cout << "Finished" << endl;
 	
-	std::cout<<"Flow: Numerics initialization...";
+	std::cout << "Flow: Numerics initialization... ";
 
 	auto templ(&asl::d3q7());
 	auto nm(generateFDStefanMaxwell(c1Field, c2Field,  diffCoefNum.v(), templ));
@@ -96,11 +102,11 @@ int main()
 	bc.push_back(asl::generateBCConstantValue(c3Field, 1, {asl::Y0}));
 	initAll(bc);
 
-	std::cout<<"Finished"<<endl;
-	std::cout<<"Computing..."<<flush;
+	std::cout << "Finished" << endl;
+	std::cout << "Computing..." << flush;
 	asl::Timer timer;
 
-	asl::WriterVTKXML writer("out");
+	asl::WriterVTKXML writer("testSMDiff3C");
 	writer.addScalars("c1", *c1Field);
 	writer.addScalars("c2", *c2Field);
 	writer.addScalars("c3", *c3Field);
@@ -115,21 +121,21 @@ int main()
 		executeAll(bc);
 		if(!(i%40))
 		{
-			cout<<i<<endl;
+			cout << i << endl;
 			writer.write();
 		}
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+		 <<  timer.getClockTime()	 <<  "; load=" 
+		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 
-	std::cout<<"Output...";
-	std::cout<<"Finished"<<endl;	
-	std::cout<<"Ok"<<endl;
+	std::cout << "Output...";
+	std::cout << "Finished" << endl;	
+	std::cout << "Ok" << endl;
 
 	return 0;
 }

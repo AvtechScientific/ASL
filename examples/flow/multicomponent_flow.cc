@@ -33,14 +33,13 @@
 #include <writers/aslVTKFormatWriters.h>
 #include <num/aslLBGK.h>
 #include <num/aslLBGKBC.h>
-#include "utilities/aslTimer.h"
+#include <utilities/aslTimer.h>
 #include <num/aslFDAdvectionDiffusion.h>
 #include <num/aslBasicBC.h>
 
-
-typedef float FlT;
+// typedef to switch to double precision
 //typedef double FlT;
-typedef asl::UValue<double> Param;
+typedef float FlT;
 
 using asl::AVec;
 using asl::makeAVec;
@@ -51,8 +50,7 @@ class Parameters
 		void init();
 
   public:
-		asl::ParametersManager parametersManager;
-		string folder;
+		asl::ApplicationParametersManager appParamsManager;
 
 		asl::Block::DV size;
 		asl::Parameter<double> dx;
@@ -74,15 +72,14 @@ class Parameters
 		asl::Parameter<double> component3InVel;
 		
 		
-		void load(int argc, char * argv[],
-		          string programName,
-		          string programVersion);
+		void load(int argc, char * argv[]);
 		Parameters();
 		void updateNumValues();
 };
 
 
 Parameters::Parameters():
+	appParamsManager("multicomponent_flow", "0.1"),
 	size(3),
 	dx(0.0005, "dx", "space step"),
 	dt(1., "dt", "time step"),
@@ -100,13 +97,9 @@ Parameters::Parameters():
 }
 
 
-void Parameters::load(int argc, char * argv[],
-                      string programName,
-                      string programVersion)
+void Parameters::load(int argc, char * argv[])
 {
-	parametersManager.load(argc, argv, programName, programVersion);
-	folder = parametersManager.getFolderWithSlash();
-
+	appParamsManager.load(argc, argv);
 	init();
 }
 
@@ -128,29 +121,32 @@ void Parameters::init()
 	updateNumValues();
 }
 
-// generate geometry of the mixer
+// Generate geometry of the mixer (cross-coupled pipes)
 asl::SPDistanceFunction generateMixer(asl::Block & block, Parameters &params)
 {
 	asl::SPDistanceFunction mixerGeometry;
 	asl::AVec<double> orientation(asl::makeAVec(0., 0., 1.));
-	asl::AVec<double> center(asl::AVec<double>(params.size)*.5*params.dx.v());
+	asl::AVec<double> center(asl::AVec<double>(params.size) * .5 * params.dx.v());
 
-	mixerGeometry = generateDFCylinderInf(params.tubeD.v() / 2., orientation, center);
+	mixerGeometry = generateDFCylinderInf(params.tubeD.v() / 2., orientation,
+	                                      center);
 
 	orientation[1] = 1.0;
 	orientation[2] = 0.0;
-	center[2]=params.pumpD.v() * 1.5;
-	mixerGeometry = mixerGeometry | generateDFCylinderInf(params.pumpD.v() / 2., orientation, center);
+	center[2] = params.pumpD.v() * 1.5;
+	mixerGeometry = mixerGeometry | generateDFCylinderInf(params.pumpD.v() / 2.,
+	                                                      orientation, center);
 
-	return asl::normalize(-(mixerGeometry) | asl::generateDFInBlock(block, 0), params.dx.v());
+	return asl::normalize(-(mixerGeometry) | asl::generateDFInBlock(block, 0),
+	                      params.dx.v());
 }
 
 int main(int argc, char *argv[])
 {
 	Parameters params;
-	params.load(argc, argv, "multicomponent_flow", "0.1");
+	params.load(argc, argv);
 	
-	std::cout<<"Flow: Data initialization...";
+	std::cout << "Data initialization...";
 
 	asl::Block block(params.size, params.dx.v());
 
@@ -163,9 +159,9 @@ int main(int argc, char *argv[])
 	asl::initData(component3Frac, 0);
 	
 	
-	std::cout<<"Finished"<<endl;
+	std::cout << "Finished" << endl;
 	
-	std::cout<<"Flow: Numerics initialization...";
+	std::cout << "Numerics initialization...";
 
 	auto templ(&asl::d3q15());	
 	
@@ -178,9 +174,11 @@ int main(int argc, char *argv[])
 	lbgkUtil->initF(acl::generateVEConstant(.0, .0, .0));
 
 	auto flowVel(lbgk->getVelocity());
-	auto nmcomponent1(asl::generateFDAdvectionDiffusion(component1Frac, 0.01, flowVel, templ, true));
+	auto nmcomponent1(asl::generateFDAdvectionDiffusion(component1Frac, 0.01,
+	                                                    flowVel, templ, true));
 	nmcomponent1->init();
-	auto nmcomponent3(asl::generateFDAdvectionDiffusion(component3Frac, 0.01, flowVel, templ));
+	auto nmcomponent3(asl::generateFDAdvectionDiffusion(component3Frac, 0.01,
+	                                                    flowVel, templ));
 	nmcomponent3->init();
 
 	std::vector<asl::SPNumMethod> bc;
@@ -188,15 +186,15 @@ int main(int argc, char *argv[])
 	std::vector<asl::SPNumMethod> bcDif;
 	
 	bc.push_back(generateBCNoSlip(lbgk, mcfMapMem));
-	bc.push_back(generateBCConstantPressure(lbgk,1.,{asl::ZE}));
+	bc.push_back(generateBCConstantPressure(lbgk, 1., {asl::ZE}));
 	bc.push_back(generateBCConstantPressureVelocity(lbgk, 1., 
-	                                                makeAVec(0.,0.,params.component2InVel.v()),
+	                                                makeAVec(0., 0., params.component2InVel.v()),
 	                                                {asl::Z0}));
 	bc.push_back(generateBCConstantPressureVelocity(lbgk, 1., 
-	                                                makeAVec(0.,-params.component1InVel.v(),0.),
+	                                                makeAVec(0., -params.component1InVel.v(), 0.),
 	                                                {asl::YE}));
-	bc.push_back(generateBCConstantPressureVelocity(lbgk,1., 
-	                                                makeAVec(0.,params.component3InVel.v(),0.),
+	bc.push_back(generateBCConstantPressureVelocity(lbgk, 1., 
+	                                                makeAVec(0., params.component3InVel.v(), 0.),
 	                                                {asl::Y0}));
 	
 	bcDif.push_back(generateBCNoSlipVel(lbgk, mcfMapMem));
@@ -213,8 +211,8 @@ int main(int argc, char *argv[])
 	initAll(bcDif);
 	initAll(bcV);
 
-	std::cout<<"Finished"<<endl;
-	std::cout<<"Computing..."<<endl;
+	std::cout << "Finished" << endl;
+	std::cout << "Computing..." << endl;
 	asl::Timer timer;
 
 	asl::WriterVTKXML writer("multicomponent_flow");
@@ -231,7 +229,7 @@ int main(int argc, char *argv[])
 	writer.write();
 
 	timer.start();
-	for(unsigned int i(1); i < 10001; ++i)
+	for (unsigned int i(1); i < 10001; ++i)
 	{
 		lbgk->execute();
 		executeAll(bcDif);
@@ -239,10 +237,10 @@ int main(int argc, char *argv[])
 		nmcomponent3->execute();
 		executeAll(bc);
 		
-		if(!(i%100))
+		if (!(i%100))
 		{
 			timer.stop();
-			cout<<i<<"/10000; expected left time: "<< timer.getLeftTime(double(i)/10000.) <<endl;
+			cout << i << "/10000; expected left time: " <<  timer.getLeftTime(double(i)/10000.)  << endl;
 			executeAll(bcV);
 			writer.write();
 			timer.resume();
@@ -250,15 +248,15 @@ int main(int argc, char *argv[])
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+		 <<  timer.getClockTime() <<  "; load=" 
+		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 
-	std::cout<<"Output...";
-	std::cout<<"Finished"<<endl;	
-	std::cout<<"Ok"<<endl;
+	std::cout << "Output...";
+	std::cout << "Finished" << endl;	
+	std::cout << "Ok" << endl;
 
 	return 0;
 }

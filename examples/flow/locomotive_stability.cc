@@ -22,10 +22,9 @@
 
 
 /**
-	\example locomotive_in_tunnel.cc
+	\example locomotive_stability.cc
  */
 
-#include <utilities/aslUValue.h>
 #include <math/aslVectors.h>
 #include <math/aslTemplates.h>
 #include <aslGeomInc.h>
@@ -35,10 +34,10 @@
 #include <writers/aslVTKFormatWriters.h>
 #include <num/aslLBGK.h>
 #include <num/aslLBGKBC.h>
-#include "utilities/aslTimer.h"
-#include "acl/aclUtilities.h"
+#include <utilities/aslTimer.h>
+#include <acl/aclUtilities.h>
 #include <readers/aslVTKFormatReaders.h>
-
+#include <utilities/aslParametersManager.h>
 
 
 typedef float FlT;
@@ -63,36 +62,42 @@ asl::SPDistanceFunction generateNozzels(asl::Block & bl)
 
 	asl::SPDistanceFunction res(generateDFCylinder(rNozzel, 
 	                                               makeAVec(0., 0., h), 
-	                                               makeAVec(x0,y,z+h*.5)));
+	                                               makeAVec(x0, y, z + h * .5)));
 	for(unsigned int i(1); i < n; ++i)
 		res = res | generateDFCylinder(rNozzel, 
 	                                   makeAVec(0., 0., h), 
-	                                   makeAVec(x0+i*(xE-x0)/n,y,z+h*.5)); 
+	                                   makeAVec(x0 + i * (xE-x0)/n, y, z+h*.5)); 
 	return normalize(res, dx);
 }
 
 
-int main()
+int main(int argc, char* argv[])
 {
+	// Optionally add appParamsManager to be able to manipulate at least
+	// hardware parameters(platform/device) through command line/parameters file
+	asl::ApplicationParametersManager appParamsManager("locomotive_stability",
+	                                                   "1.0");
+	appParamsManager.load(argc, argv);
+	
 	Param dx(0.25);
 	Param dt(1.);
 	Param nu(.01);
 	
 	Param nuNum(nu.v()*dt.v()/dx.v()/dx.v());
 	
-	std::cout<<"Flow: Data initialization...";
+	std::cout << "Data initialization... ";
 
 
-	auto object(asl::readSurface("locomotive.stl", dx.v(), .5,1.,0.,1.,2.,4.));
+	auto object(asl::readSurface("locomotive.stl", dx.v(), .5, 1., 0., 1., 2., 4.));
 	
 	asl::Block block(object->getInternalBlock());
 
 	auto forceField(asl::generateDataContainerACL_SP<FlT>(block, 3, 1u));
-	asl::initData(forceField, makeAVec(0.,0.,0.));
+	asl::initData(forceField, makeAVec(0., 0., 0.));
 	
-	std::cout<<"Finished"<<endl;
+	std::cout << "Finished" << endl;
 	
-	std::cout<<"Flow: Numerics initialization...";
+	std::cout << "Numerics initialization... ";
 
 	asl::SPLBGK lbgk(new asl::LBGK(block, 
 				               acl::generateVEConstant(FlT(nu.v())),  
@@ -124,8 +129,8 @@ int main()
 	computeForce->init();
 	
 
-	std::cout<<"Finished"<<endl;
-	std::cout<<"Computing...";
+	std::cout << "Finished" << endl;
+	std::cout << "Computing...";
 
 	asl::WriterVTKXML writer("locomotive_stability");
 	writer.addScalars("train", *object);
@@ -148,7 +153,7 @@ int main()
 		executeAll(bc);
 		if(!(i%1000))
 		{
-			cout<<i<<endl;
+			cout << i << endl;
 			executeAll(bcV);
 			computeForce->execute();
 			writer.write();
@@ -156,15 +161,15 @@ int main()
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+		 <<  timer.getClockTime()	 <<  "; load=" 
+		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 
-	std::cout<<"Output...";
-	std::cout<<"Finished"<<endl;	
-	std::cout<<"Ok"<<endl;
+	std::cout << "Output...";
+	std::cout << "Finished" << endl;	
+	std::cout << "Ok" << endl;
 
 	return 0;
 }

@@ -67,7 +67,7 @@ namespace acl
 			explicit Kernel(const KernelConfiguration kernelConfig_ = KERNEL_BASIC);
 			/// Prepares kernel for launch.
 			/// Should always be called before compute() after all expressions are added.
-			/// Generates kernel source, builds kernel and set its arguments.
+			/// Generates kernel source, builds kernel and sets its arguments.
 			void setup();
 			void compute();
 			void setGroupsNumber(unsigned int n);

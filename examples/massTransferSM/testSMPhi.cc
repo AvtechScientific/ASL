@@ -25,8 +25,7 @@
 	\example testSMPhi.cc
  */
 
-#include <utilities/aslUValue.h>
-#include <math/aslVectors.h>
+#include <utilities/aslParametersManager.h>
 #include <math/aslTemplates.h>
 #include <aslGeomInc.h>
 #include <aslDataInc.h>
@@ -44,8 +43,15 @@ typedef asl::UValue<double> Param;
 using asl::AVec;
 using asl::makeAVec;
 
-int main()
+
+int main(int argc, char* argv[])
 {
+	// Optionally add appParamsManager to be able to manipulate at least
+	// hardware parameters(platform/device) through command line/parameters file
+	asl::ApplicationParametersManager appParamsManager("testSMPhi",
+	                                                   "1.0");
+	appParamsManager.load(argc, argv);
+
 	Param dx(1.);
 	Param dt(1.);
 	Param diffCoef(.15);
@@ -56,7 +62,7 @@ int main()
 
 	auto gSize(dx.v()*AVec<>(size));
 
-	std::cout<<"Flow: Data initialization...";
+	std::cout << "Data initialization...";
 
 	asl::Block block(size,dx.v());
 	
@@ -67,9 +73,9 @@ int main()
 	auto phiField(asl::generateDataContainerACL_SP<FlT>(block, 1, 1u));
 	asl::initData(phiField, 0.5);	
 
-	std::cout<<"Finished"<<endl;
+	std::cout << "Finished" << endl;
 	
-	std::cout<<"Flow: Numerics initialization...";
+	std::cout << "Numerics initialization...";
 
 	auto templ(&asl::d3q7());
 	auto nm(generateFDStefanMaxwell(c1Field, c2Field,  diffCoefNum.v(), templ));
@@ -100,11 +106,11 @@ int main()
 	bcPhi.push_back(asl::generateBCConstantValue(phiField, 0, {asl::X0}));
 	initAll(bcPhi);
 
-	std::cout<<"Finished"<<endl;
-	std::cout<<"Computing..."<<flush;
+	std::cout << "Finished" << endl;
+	std::cout << "Computing..." << flush;
 	asl::Timer timer;
 
-	asl::WriterVTKXML writer("out");
+	asl::WriterVTKXML writer("testSMPhi");
 	writer.addScalars("c1", *c1Field);
 	writer.addScalars("c2", *c2Field);
 	writer.addScalars("phi", *phiField);
@@ -123,23 +129,23 @@ int main()
 		}
 		nm->execute();
 		executeAll(bc);
-		if(!(i%40))
+		if (!(i%40))
 		{
-			cout<<i<<endl;
+			cout << i << endl;
 			writer.write();
 		}
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+		 <<  timer.getClockTime() <<  "; load=" 
+		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 
-	std::cout<<"Output...";
-	std::cout<<"Finished"<<endl;	
-	std::cout<<"Ok"<<endl;
+	std::cout << "Output...";
+	std::cout << "Finished" << endl;	
+	std::cout << "Ok" << endl;
 
 	return 0;
 }

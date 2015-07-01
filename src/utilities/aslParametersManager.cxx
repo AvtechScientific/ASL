@@ -128,11 +128,10 @@ namespace asl
 	};
 		
 
-
 	template <typename T>
-	Parameter<T>::Parameter(string key_,
-	                        string description_,
-	                        string units_):
+	Parameter<T>::Parameter(const char* key_,
+	                        const char* description_,
+	                        const char* units_):
 		key(key_),
 		description(description_),
 		units(units_)
@@ -144,35 +143,36 @@ namespace asl
 		WildcardCheck<T>::check(key, parameter.p);
 
 		ParametersManager::current->add(parameter,
-		                                key,
-		                                description);
+		                                key.c_str(),
+		                                description.c_str(),
+		                                units.c_str());
 	}
 
-	template Parameter<string>::Parameter(string key,
-	                                      string description,
-	                                      string units);
+	template Parameter<string>::Parameter(const char* key,
+	                                      const char* description,
+	                                      const char* units);
 		
 	#define BOOST_TT_rep_expression(r, data, t) \
-		template Parameter<t>::Parameter(string key, \
-										 string description, \
-										 string units); \
-		template Parameter<AVec<t>>::Parameter(string key, \
-											   string description, \
-											   string units); \
-		template Parameter<map<string, t>>::Parameter(string key, \
-													  string description, \
-													  string units); \
-		template Parameter<map<string, AVec<t>>>::Parameter(string key, \
-															string description, \
-															string units);
+		template Parameter<t>::Parameter(const char* key, \
+										 const char* description, \
+										 const char* units); \
+		template Parameter<AVec<t>>::Parameter(const char* key, \
+											   const char* description, \
+											   const char* units); \
+		template Parameter<map<string, t>>::Parameter(const char* key, \
+													  const char* description, \
+													  const char* units); \
+		template Parameter<map<string, AVec<t>>>::Parameter(const char* key, \
+															const char* description, \
+															const char* units);
 	BOOST_PP_SEQ_FOR_EACH(BOOST_TT_rep_expression, ~, BOOST_TT_acl_types)
 	#undef BOOST_TT_rep_expression
 
 
 	template <typename T> Parameter<T>::Parameter(T defaultValue,
-	                                              string key_,
-	                                              string description_,
-	                                              string units_):
+	                                              const char* key_,
+	                                              const char* description_,
+	                                              const char* units_):
 		key(key_),
 		description(description_),
 		units(units_)
@@ -183,24 +183,25 @@ namespace asl
 		
 		ParametersManager::current->add(parameter,
 		                                defaultValue,
-		                                key,
-		                                description);
+		                                key.c_str(),
+		                                description.c_str(),
+		                                units.c_str());
 	}
 
 	template Parameter<string>::Parameter(string defaultValue,
-	                                      string key,
-	                                      string description,
-	                                      string units);
+	                                      const char* key,
+	                                      const char* description,
+	                                      const char* units);
 		
 	#define BOOST_TT_rep_expression(r, data, t) \
 		template Parameter<t>::Parameter(t defaultValue, \
-										 string key, \
-										 string description, \
-										 string units); \
+										 const char* key, \
+										 const char* description, \
+										 const char* units); \
 		template Parameter<AVec<t>>::Parameter(AVec<t> defaultValue, \
-											   string key, \
-											   string description, \
-											   string units);
+											   const char* key, \
+											   const char* description, \
+											   const char* units);
 	BOOST_PP_SEQ_FOR_EACH(BOOST_TT_rep_expression, ~, BOOST_TT_acl_types)
 	#undef BOOST_TT_rep_expression
 
@@ -208,21 +209,11 @@ namespace asl
 	ParametersManager * ParametersManager::current(NULL);
 
 	ParametersManager::ParametersManager():
-		configurationOptions("Configuration options"),
-		parametersFileStr(""),
-		platform(""),
-		device(""),
-		folder(""),
-		folderWithSlash(""),
-		programName(""),
-		programVersion("")
+		parametersOptions("Parameters options"),
+		parametersFileStr("# Parameters file\n"),
+		parametersFileDirectory("")
 	{
 		enable();
-		// Add platform and device parameters with default values
-		add(platform, acl::getPlatformVendor(acl::hardware.defaultQueue),
-		    "platform", "Default computation platform");
-		add(device, acl::getDeviceName(acl::hardware.defaultQueue),
-		    "device", "Default computation device");
 	}
 
 
@@ -271,39 +262,49 @@ namespace asl
 
 
 	template <typename T> void ParametersManager::add(UValue<T> parameter,
-	                                                  string key,
-	                                                  string description)
+	                                                  const char* key,
+	                                                  const char* description,
+	                                                  const char* units)
 	{
-		configurationOptions.add_options()
-			(key.c_str(), value<T>(&parameter.v())->required(), description.c_str());
+		string fullDescription = units[0] == '\0' ? description
+								: string(description) + ", [" + units + "]";
+		parametersOptions.add_options()
+			(key, value<T>(&parameter.v())->required(), fullDescription.c_str());
 
-		// Add the option to the default parameters file			
-		parametersFileStr += "\n# " + description + "\n" + key + " = \n";
+		// Add the parameter to the default parameters file			
+		parametersFileStr += "\n# " + fullDescription + "\n" + key + " = \n";
 	}
 
 
 	template<typename T> void ParametersManager::add(UValue<map<string, T>> parameter,
-	                                                  string key,
-	                                                  string description)
+	                                                 const char* key,
+	                                                 const char* description,
+	                                                 const char* units)
 	{
-		configurationOptions.add_options()
-			(key.c_str(), value<T>()->required(), description.c_str());
-		// Add the option to the default parameters file
-		parametersFileStr += "\n# " + description + "\n" + key + " = \n";
+		string fullDescription = units[0] == '\0' ? description
+								: string(description) + ", [" + units + "]";
+		parametersOptions.add_options()
+			(key, value<T>()->required(), fullDescription.c_str());
+		// Add the parameter to the default parameters file
+		parametersFileStr += "\n# " + fullDescription + "; replace '*' by any suffix to provide a set of related parameters\n"
+							+ key + " = \n";
 	}
 
 
 	template<typename T> void ParametersManager::add(UValue<T> parameter,
 	                                                 T defaultValue,
-	                                                 string key,
-	                                                 string description)
-	{		
-		configurationOptions.add_options()
-			(key.c_str(), value<T>(&parameter.v())->default_value(defaultValue),
-			 description.c_str());
+	                                                 const char* key,
+	                                                 const char* description,
+	                                                 const char* units)
+	{
+		string fullDescription = units[0] == '\0' ? description
+								: string(description) + ", [" + units + "]";
+		parametersOptions.add_options()
+			(key, value<T>(&parameter.v())->default_value(defaultValue),
+			 fullDescription.c_str());
 
-		// Add the option to the default parameters file
-		parametersFileStr += "\n# " + description + "\n"
+		// Add the parameter to the default parameters file
+		parametersFileStr += "\n# " + fullDescription + "\n"
 							+ key + " = " + numToStr(defaultValue) + "\n";
 	}
 
@@ -325,33 +326,91 @@ namespace asl
 	}
 
 
-	void ParametersManager::load(int argc, char * argv[],
-	                             string programName_,
-	                             string programVersion_)
+	void ParametersManager::load(string paramFile)
 	{
-		programName = programName_;
-		programVersion = programVersion_;
-
 		variables_map vm;
+
+		try
+		{
+			ifstream ifs(paramFile);
+			if (!ifs.good())
+				errorMessage("Can not open parameters file: " + paramFile);
+
+			parsed_options parsed = parse_config_file(ifs, parametersOptions,
+			                                          true);
+			store(parsed, vm);
+			notify(vm);
+			populateMaps(vm);
+	}
+		catch(exception& e)
+		{
+			errorMessage(string("ParametersManager::load() - ") + e.what());
+		}
+	}
+
+
+	string ParametersManager::getDir()
+	{
+		return parametersFileDirectory;
+	}
+	
+
+	void ParametersManager::writeParametersFile(const std::string fileName)
+	{
+		ofstream fo(fileName);
+		if (!fo.good())
+			errorMessage("ParametersManager::writeParametersFile() - can not open file: " + fileName);
+
+		fo << parametersFileStr;
+		fo.close();
+	}
+
+
+	ApplicationParametersManager::ApplicationParametersManager(const char* applicationName_,
+	                                                           const char* applicationVersion_):
+		platform(acl::getPlatformVendor(acl::hardware.defaultQueue)),
+		device(acl::getDeviceName(acl::hardware.defaultQueue)),
+		applicationName(applicationName_),
+		applicationVersion(applicationVersion_)
+	{
+		enable();
+		// Prepend informative header
+		parametersFileStr += "# Generated by " + applicationName + " version " + applicationVersion + "\n\n"
+							+ "# Get the list of all available computation devices by running:\n"
+							+ "# `" + applicationName + " -d`\n";
+
+		/* Add platform and device parameters already initialized
+		with their default values */
+		add(platform, platform.v(),
+		    "platform", "Default computation platform", "");
+		add(device, device.v(),
+		    "device", "Default computation device", "");
+	}
+
+
+	void ApplicationParametersManager::load(int argc, char * argv[])
+	{
+		variables_map vm;
+		// Set default parameters file path
+		path p("./");
 
 		options_description genericOptions("Generic options");
 
 		genericOptions.add_options()
-			("help,h", "display this help and exit")
-			("version,v", "display version and exit")
-			("devices,d", "display all available devices and exit")
-			("folder,f", value<string>()->default_value("Default"),
-			 "path to the working folder that contains configuration file - parameters.ini")
-			("parameters,p", value<string>(),
-			 "generate default configuration file parameters.ini, write it to the provided path and exit")
-			("check,c", "check configuration for consistency and exit");
+			("help,h", "Display this help and exit")
+			("version,v", "Display version and exit")
+			("devices,d", "Display all available devices and exit")
+			("parameters,p", value<string>(), "Path to the parameters file")
+			("generate,g", value<string>(),
+			 "Generate default parameters file, write it and exit")
+			("check,c", "Check parameters for consistency and exit");
 
 		positional_options_description positional;
 
 		options_description allOptions;
-		positional.add("folder", 1);
+		positional.add("parameters", 1);
 
-		allOptions.add(genericOptions).add(configurationOptions);
+		allOptions.add(genericOptions).add(parametersOptions);
 
 		try
 		{
@@ -359,7 +418,7 @@ namespace asl
 
 			if (vm.count("help"))
 			{
-				cout << "Usage: " + programName + " [WORKING_FOLDER] [OPTION]...\n"
+				cout << "Usage: " + applicationName + " [PARAMETERS_FILE] [OPTION]...\n"
 					 << allOptions
 					 << endl;
 				exit(0);
@@ -367,14 +426,14 @@ namespace asl
 
 			if (vm.count("version"))
 			{
-				cout << programName + " " + programVersion
+				cout << applicationName + " " + applicationVersion
 					 << endl;
 				exit(0);
 			}
 
 			if (vm.count("devices"))
 			{
-				cout << programName + " " + programVersion + "\n\n"
+				cout << applicationName + " " + applicationVersion + "\n\n"
 					<< "Default computation device:\n"
 					<< acl::hardware.getDefaultDeviceInfo() << "\n\n"
 					<< "List of all available platforms and their devices:\n"
@@ -383,42 +442,55 @@ namespace asl
 				exit(0);
 			}
 
-			if (vm.count("parameters"))
+			if (vm.count("generate"))
 			{
-				path p(vm["parameters"].as<string>());
-				// add at least one slash at the end
-				p /= "/";
-				// and then cut all possible slashes at the end
-				p = p.parent_path();
-				p /= "/";
-				p /= "parameters.ini";
+				path gp(vm["generate"].as<string>());
+				cout << "Writing default parameters file to: "
+					 << gp.string() << endl;
 
-				cout << "Writing default configuration file to: "
-					 << p.string() << endl;
-
-				writeParametersFile(p.string());
+				writeParametersFile(gp.string());
 				exit(0);
 			}
 
-			path p(vm["folder"].as<string>());
-			// add at least one slash at the end
-			p /= "/";
-			// and then cut all possible slashes at the end
-			p = p.parent_path();
-			folder = p.string();
-			p /= "/";
-			folderWithSlash = p.string();
-			p /= "parameters.ini";
-			ifstream ifs(p.string());
-			if (!ifs)
+			if (vm.count("parameters"))
 			{
-				// Only warn, since all options might have default values, or required values
-				// provided through the command line - so no configuration file is required
-				warningMessage("ParametersManager::load() - can not open configuration file: " + p.string());
+				p = vm["parameters"].as<string>();
+				if (is_directory(p))
+				{
+					// Only warn, since all options might have default values, or required values
+					// provided through the command line - so no configuration file is required
+					warningMessage("ApplicationParametersManager::load() - no parameters file provided, " + p.string() + " is a directory");
+				}
+				else
+				{
+					ifstream ifs(p.string());
+					if (ifs.good())
+					{
+						parsed_options parsed = parse_config_file(ifs, allOptions, true);
+						store(parsed, vm);
+						// Get directory, cutting file name
+						p = p.parent_path();
+					}
+					else
+					{
+						warningMessage("ApplicationParametersManager::load() - can not open configuration file: " + p.string());
+						// Get directory, cutting file name, after using p for warning
+						p = p.parent_path();
+					}
+				}
+			}
+			else
+			{
+				warningMessage("ApplicationParametersManager::load() - no parameters file provided");
 			}
 
-			parsed_options parsed = parse_config_file(ifs, allOptions, true);
-			store(parsed, vm);
+			// Generate `parametersFileDirectory`
+			// Get absolute, canonical (no symbolic links, . or ..) path first
+			p = canonical(p);
+			// Append slash
+			p /= "/";
+			parametersFileDirectory = p.string(); 
+
 			// Run error notification only after obtaining
 			// all options and dealing with "--help"
 			notify(vm);
@@ -426,76 +498,20 @@ namespace asl
 			populateMaps(vm);
 
 			// Set hardware default queue as required through provided options
-			acl::hardware.setDefaultQueue(vm["platform"].as<string>(), vm["device"].as<string>());
+			acl::hardware.setDefaultQueue(vm["platform"].as<string>(),
+			                              vm["device"].as<string>());
 
 			// Place it after(!) notify(vm);
 			if (vm.count("check"))
 			{
-				cout << programName + " " + programVersion + "\n"
-					 << "Consistency check - successful."
-					 << endl;
+				cout << "Parameters consistency check - successful." << endl;
 				exit(0);
 			}
 		}
 		catch(exception& e)
 		{
-			errorMessage(string("ParametersManager::load() - ") + e.what());
+			errorMessage(string("ApplicationParametersManager::load() - ") + e.what());
 		}
 	}
-
-
-	void ParametersManager::load(string configFile)
-	{
-		variables_map vm;
-
-		try
-		{
-			ifstream ifs(configFile);
-			if (!ifs)
-				errorMessage("Can not open configuration file: " + configFile);
-
-			parsed_options parsed = parse_config_file(ifs, configurationOptions,
-			                                          true);
-			store(parsed, vm);
-			notify(vm);
-			populateMaps(vm);
-			// No need to set hardware default queue, because this
-			// member functions is not called on program launch and deals with
-			// parameters others than `platform` and `device`.
-	}
-		catch(exception& e)
-		{
-			errorMessage(string("ParametersManager::load() - ") + e.what());
-		}
-	}
-
-
-	string ParametersManager::getFolder()
-	{
-		return folder;
-	}
-
-
-	string ParametersManager::getFolderWithSlash()
-	{
-		return folderWithSlash;
-	}
-	
-
-	void ParametersManager::writeParametersFile(const std::string fileName)
-	{
-		ofstream fo(fileName);
-		if (!fo)
-			errorMessage("ParametersManager::writeParametersFile() - can not open file: " + fileName);
-			
-		// Prepend informative header
-		parametersFileStr = "# Parameters file with default values (where available).\n# Generated by "
-									+ programName + " version " + programVersion + "\n\n"
-									+ "# Get the list of all available computation devices by running:\n"
-									+ "# `" + programName + " -d`\n" + parametersFileStr;
-									
-		fo << parametersFileStr;
-		fo.close();
-	}
-
+		 
 } //namespace asl
