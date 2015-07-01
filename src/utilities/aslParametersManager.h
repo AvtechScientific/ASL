@@ -35,38 +35,41 @@ namespace asl
 	class PrefixStore;
 
 	/// This class stores parameter's value and the information
-	/// needed to extract it from command line and/or configuration file
+	/// needed to extract it from command line and/or parameters file
 	/// \ingroup LDI
 	template <typename T> class Parameter
 	{
 		public:
-			/// \p key is the parameter's identification key in the configuration file
-			/// If no default value is specified, then the parameter
-			/// is required to be specified in the configuration file.
-			Parameter(std::string key_,
-			          std::string description_,
-			          std::string units_ = "");
-			/// \p key is the parameter's identification key in the configuration file
-			/// If a default value is specified, then the parameter
-			/// is not required to be specified in the configuration file.		
+			/// \p key is the parameter's identification key in the
+			/// parameters file. If no default value is specified, then the
+			/// parameter is required to be specified in the parameters file
+			/// or command line.
+			Parameter(const char* key_,
+			          const char* description_,
+			          const char* units_ = "");
+			/// \p key is the parameter's identification key in the parameters file
+			/// If a default value is specified, then the parameter is not
+			/// required to be specified in the parameters file or command line.	
 			Parameter(T defaultValue,
-			          std::string key_,
-			          std::string description_,
-			          std::string units_ = "");
+			          const char* key_,
+			          const char* description_,
+			          const char* units_ = "");
 			inline const T & v() const;
 			inline T & v();
 			inline std::shared_ptr<T> p();
 
 		private:
 			UValue<T> parameter;
-			std::string key;
-			std::string description;
-			std::string units;
+			const std::string key;
+			const std::string description;
+			const std::string units;
 	};
 
 
-	/// This class automatically accomodates newly created Parameters
-	/// and then loads them
+	/** This class automatically accomodates newly created Parameters and then
+	can load them from a parameters file.
+	It has to be declared before declaring all the parameters it will manage!
+	\ingroup Utilities */
 	class ParametersManager
 	{
 		public:
@@ -76,45 +79,39 @@ namespace asl
 			void enable();
 			/// Adds a Parameter to ParametersManager
 			template <typename T> void add(UValue<T> parameter,
-			                               std::string key,
-			                               std::string description);
+			                               const char* key,
+			                               const char* description,
+			                               const char* units);
 			/// Adds a group of parameters with common prefix to ParametersManager
 			template <typename T> void add(UValue<std::map<std::string, T>> parameter,
-			                               std::string key,
-			                               std::string description);
-			/// Adds a Parameter to ParametersManager
+			                               const char* key,
+			                               const char* description,
+			                               const char* units);
+			/// Adds a Parameter with a default value to ParametersManager
 			template <typename T> void add(UValue<T> parameter,
 			                               T defaultValue,
-			                               std::string key,
-			                               std::string description);
+			                               const char* key,
+			                               const char* description,
+			                               const char* units);
 			/// Adds prefix and the pointer on the respective
 			/// Parameter's destinationMap
 			template <typename T>
 			void addPrefix(const std::string prefix,
 			               std::shared_ptr<std::map<std::string, T>> destinationMap);
-
 			/// Loads all previously declared parameters
-			/// from command line and/or configuration file (provided
-			/// through command line)
-			void load(int argc, char* argv[],
-			          std::string programName_ = "program_name",
-			          std::string programVersion_ = "1.0");
-			/// Loads all previously declared parameters
-			/// from configuration file \p configFile
-			void load(std::string configFile);
-			std::string getFolder();
-			std::string getFolderWithSlash();
+			/// from parameters file \p paramFile
+			void load(std::string paramFile);
+			/** Get the parameters file directory (absolute, with ending slash).
+			It is convenient to write simulation results output together with
+			its respective parameters file into the same directory (whose name
+			might reflect the specifics of the parameters used) */
+			std::string getDir();
 
 			static ParametersManager * current;
 
-		private:
-			boost::program_options::options_description configurationOptions;
-			UValue<std::string> platform;
-			UValue<std::string> device;
-			std::string folder;
-			std::string folderWithSlash;
-			std::string programName;
-			std::string programVersion;
+		protected:
+			boost::program_options::options_description parametersOptions;
+			std::string parametersFileDirectory;
 			/// Accomodates prefixes (defined by attached "*" wildcard)
 			/// using PrefixStore class
 			std::vector<std::shared_ptr<PrefixStore>> prefixes;
@@ -127,6 +124,29 @@ namespace asl
 			std::string parametersFileStr;
 	};
 
+
+	/** This class inherits ParametersManager class and thus also automatically
+	accomodates newly created Parameters and then can load them from
+	a parameters file and/or command line. It silently includes two parameters -
+	`platform` and `device` that determine the hardware the application will run on.
+	It has to be declared before declaring all the parameters it will manage!
+	\ingroup Utilities */
+	class ApplicationParametersManager: public ParametersManager
+	{
+		public:
+			ApplicationParametersManager(const char* applicationName_,
+			                             const char* applicationVersion_);
+			
+			/** Loads all previously declared parameters from command line
+			and/or parameters file (provided through command line) */
+			void load(int argc, char* argv[]);
+
+		private:
+			UValue<std::string> platform;
+			UValue<std::string> device;
+			std::string applicationName;
+			std::string applicationVersion;
+	};
 
 
 //-------------------------- Implementation --------------------------

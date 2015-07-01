@@ -25,8 +25,6 @@
 	\example acousticWaves.cc
  */
 
-#include <math/aslVectors.h>
-#include <data/aslBlocks.h>
 #include <aslDataInc.h>
 #include <acl/aclGenerators.h>
 #include <writers/aslVTKFormatWriters.h>
@@ -36,9 +34,7 @@
 #include <utilities/aslTimer.h>
 #include <utilities/aslParametersManager.h>
 #include <math/aslTemplates.h>
-//#include <acl/aclMath/aclVectorOfElements.h>
 #include <aslGeomInc.h>
-//#include "acl/aclUtilities.h"
 
 
 typedef float FlT;
@@ -50,8 +46,7 @@ class Parameters
 		void init();
 
   public:
-		asl::ParametersManager parametersManager;
-		string folder;
+		asl::ApplicationParametersManager appParamsManager;
 
 		asl::Block::DV size;
 
@@ -74,40 +69,36 @@ class Parameters
 		asl::UValue<double> bulkMNum;
 		asl::UValue<double> shearMNum;
 		
-		void load(int argc, char * argv[],
-		          string programName,
-		          string programVersion);
+		void load(int argc, char * argv[]);
 		Parameters();
 		void updateNumValues();
 };
 
 
 Parameters::Parameters():
+	appParamsManager("acousticWaves", "0.1"),
 	size(3),
 	dx(1e-3,"dx", "dx"),
 	bulkModulus(160e9,"bulk_modulus", "bulk modulus"),
 	shearModulus(79e9,"shear_modulus", "shear modulus"),
 	rho(7800,"rho", "density"),
-	tubeL(.2,"tube_length", "pipe length, m"),
-	tubeDEx(0.021, "tube_diameter_external", "external pipe diameter, m"),
-//	tubeDIn(0.0157,"tube_diameter_internal", "internal pipe diameter, m"),
-	tubeDIn(0.0107,"tube_diameter_internal", "internal pipe diameter, m"),
-	hole1Pos(0.1,"hole_1_position", "position of first hole, m"),
-	hole2Pos(0.15,"hole_2_position", "position of second hole, m"),
-	hole1D(15e-3,"hole_1_diameter", "diameter of first hole, m"),
-	hole2D(15e-3,"hole_2_diameter", "diameter of second hole, m"),
+	tubeL(.2,"tube_length", "pipe length" "m"),
+	tubeDEx(0.021, "tube_diameter_external", "external pipe diameter" "m"),
+//	tubeDIn(0.0157,"tube_diameter_internal", "internal pipe diameter" "m"),
+	tubeDIn(0.0107,"tube_diameter_internal", "internal pipe diameter" "m"),
+	hole1Pos(0.1,"hole_1_position", "position of first hole" "m"),
+	hole2Pos(0.15,"hole_2_position", "position of second hole" "m"),
+	hole1D(15e-3,"hole_1_diameter", "diameter of first hole" "m"),
+	hole2D(15e-3,"hole_2_diameter", "diameter of second hole" "m"),
 	tSimulation(8e-5, "simulation_time", "simulation time"),
 	tOutput(1e-6, "output_interval", "output interval")
 {
 }
 
 
-void Parameters::load(int argc, char * argv[],
-                      string programName,
-                      string programVersion)
+void Parameters::load(int argc, char * argv[])
 {
-	parametersManager.load(argc, argv, programName, programVersion);
-	folder = parametersManager.getFolderWithSlash();
+	appParamsManager.load(argc, argv);
 
 	init();
 }
@@ -117,13 +108,14 @@ void Parameters::updateNumValues()
 {
 	double vs(sqrt((bulkModulus.v()+2.*shearModulus.v())/rho.v()));
 	dt=dx.v()/vs*.1;
-	cout<<vs<<"; "<<dx.v()<<"; "<<dt.v()<<endl;
+	cout << vs << "; " << dx.v() << "; " << dt.v() << endl;
 	bulkMNum = bulkModulus.v()/rho.v()/dx.v()/dx.v();
 	shearMNum = shearModulus.v()/rho.v()/dx.v()/dx.v();
 	size = asl::makeAVec(tubeL.v() / dx.v() + 1, 
 	                     tubeDEx.v() / dx.v() + 1, 
 	                     tubeDEx.v() / dx.v() + 1);
 }
+
 
 void Parameters::init()
 {
@@ -168,9 +160,9 @@ asl::AVec<float> getAmplitude(double it)
 int main(int argc, char* argv[])
 {
 	Parameters params;
-	params.load(argc, argv, "acousticWaves", "0.1");
+	params.load(argc, argv);
 		
-	std::cout<<"acoustic waves: Data initialization..."<<flush;
+	std::cout << "Data initialization... " << flush;
 
 	asl::Block block(params.size, params.dx.v());
 	auto displacement(asl::generateDataContainerACL_SP<FlT>(block, 3, 1u));
@@ -180,14 +172,14 @@ int main(int argc, char* argv[])
 	asl::initData(mapMem, generatePipe(block, params));
 
 	
-	asl::WriterVTKXML writer(params.folder + "acousticWaves");
+	asl::WriterVTKXML writer(params.appParamsManager.getDir() + "acousticWaves");
 	writer.addScalars("map", *mapMem);
 	writer.addVector("displacement", *displacement);
 	writer.write();
 
 	std::cout << "Finished" << endl;
 	
-	std::cout << "cubeGravity: Numerics initialization..."<<flush;
+	std::cout << "Numerics initialization... " << flush;
 
 	auto elasticity(generateFDElasticityRelax(displacement,
 	                                          params.bulkMNum.v(),
@@ -215,14 +207,14 @@ int main(int argc, char* argv[])
 	initAll(bc);
 
 	std::cout << "Finished" << endl;
-	std::cout << "Computing..."<<endl;
+	std::cout << "Computing..." << endl;
 	asl::Timer timer;
 
 	executeAll(bc);
 
 	timer.start();
 	double tOutPrev(0);
-	cout<<params.dt.v()<<endl;
+	cout << params.dt.v() << endl;
 	for (double t(0); t < params.tSimulation.v(); t+=params.dt.v())
 	{
 		elasticity->execute();
@@ -232,8 +224,8 @@ int main(int argc, char* argv[])
 		{
 			timer.stop();
 			tOutPrev=t;
-			cout<<t<<"/"<<params.tSimulation.v()<<"; expected left time: "<< 
-				  timer.getLeftTime(t/params.tSimulation.v()) <<endl;
+			cout << t << "/" << params.tSimulation.v() << "; expected left time: " <<  
+				  timer.getLeftTime(t/params.tSimulation.v())  << endl;
 			writer.write();
 			timer.resume();
 
@@ -241,11 +233,11 @@ int main(int argc, char* argv[])
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+		 <<  timer.getClockTime()	 <<  "; load=" 
+		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 
 	std::cout << "Output...";
 	std::cout << "Finished" << endl;	

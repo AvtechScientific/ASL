@@ -25,10 +25,7 @@
 	\example levelSetBasic.cc
  */
 
-#include <utilities/aslUValue.h>
-#include <math/aslVectors.h>
-#include <data/aslDataWithGhostNodes.h>
-#include <aslGenerators.h>
+#include <aslDataInc.h>
 #include <writers/aslVTKFormatWriters.h>
 #include <num/aslInterfaceTrackingAlg1.h>
 #include <utilities/aslTimer.h>
@@ -36,7 +33,6 @@
 #include <math/aslTemplates.h>
 #include <acl/aclMath/aclVectorOfElements.h>
 #include <acl/aclUtilities.h>
-
 #include <aslGeomInc.h>
 
 typedef float FlT;
@@ -47,7 +43,7 @@ acl::TypeID type(acl::typeToTypeID<FlT>());
 
 int main(int argc, char* argv[])
 {
-	asl::ParametersManager parametersManager;
+	asl::ApplicationParametersManager appParamsManager("levelSetBasic", "1.0");
 
 	asl::Parameter<asl::AVec<int>> size("size", "size");
 	asl::Parameter<FlT> dx("dx", "dx");
@@ -59,9 +55,9 @@ int main(int argc, char* argv[])
 	asl::Parameter<cl_uint> nIterations("nIterations", "Number of iterations");
 	asl::Parameter<cl_uint> nItOut("nItOut", "Number of iterations for output");
 
-	parametersManager.load(argc, argv, "levelSetBasic");
+	appParamsManager.load(argc, argv);
 	
-	std::cout<<"Jumping Box: Data initialization...";
+	std::cout << "Data initialization... ";
 
 	asl::Block block(size.v(), dx.v());
 	auto levelSet(asl::generateDataContainerACL_SP<FlT>(block, 1, 1u));
@@ -72,12 +68,12 @@ int main(int argc, char* argv[])
 	auto velocity(asl::generateDataContainerConst_SP(block, v.v(), 1u));
 
 	
-	asl::WriterVTKXML writer(parametersManager.getFolder()+"/"+"levelSet");
+	asl::WriterVTKXML writer(appParamsManager.getDir() + "levelSetBasic");
 	writer.addScalars("levelSet", *levelSet);
 	
 	std::cout << "Finished" << endl;
 	
-	std::cout << "LevelSetBasic: Numerics initialization..." << flush;
+	std::cout << "Numerics initialization... " << flush;
 
 	auto lsNum(std::make_shared<asl::InterfaceTrackingAlg1>(levelSet,velocity));
 	
@@ -98,11 +94,11 @@ int main(int argc, char* argv[])
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+		 <<  timer.getClockTime()	 <<  "; load=" 
+		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 
 	std::cout << "Output...";
 	std::cout << "Finished" << endl;	

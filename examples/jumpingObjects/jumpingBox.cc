@@ -25,9 +25,7 @@
 	\example jumpingBox.cc
  */
 
-#include <math/aslVectors.h>
-#include <data/aslDataWithGhostNodes.h>
-#include <aslGenerators.h>
+#include <aslDataInc.h>
 #include <acl/aclGenerators.h>
 #include <writers/aslVTKFormatWriters.h>
 #include <num/aslFDElasticity.h>
@@ -45,7 +43,7 @@ typedef asl::UValue<FlT> Param;
 
 int main(int argc, char* argv[])
 {
-	asl::ParametersManager parametersManager;
+	asl::ApplicationParametersManager appParamsManager("jumpingBox", "1.0");
 	asl::Parameter<asl::AVec<int> > size("size", "size 3D");
 	asl::Parameter<cl_float> dx("dx", "dx");
 	asl::Parameter<cl_float> dt("dt", "dt");
@@ -57,27 +55,27 @@ int main(int argc, char* argv[])
 	asl::Parameter<unsigned int> tsim("num_iterations", "number of iterations");
 	asl::Parameter<unsigned int> tout("num_it_out", "number of iterations between outputs");
 	
-	parametersManager.load(argc, argv, "jumpingBox");
+	appParamsManager.load(argc, argv);
 
 	Param bulkModulusNum(bulkModulus.v()/rho.v()/dx.v()/dx.v());
 	Param shearModulusNum(shearModulus.v()/rho.v()/dx.v()/dx.v());
 
 	asl::AVec<FlT> gNum(g.v()/dx.v());
 		
-	std::cout<<"Jumping Box: Data initialization...";
+	std::cout << "Data initialization... ";
 
 	asl::Block block(size.v(), dx.v());
 	auto displacement(asl::generateDataContainerACL_SP<FlT>(block, 3, 1u));
 	acl::initData(displacement->getEContainer(), acl::generateVEConstantN(3,0));
 
-	asl::WriterVTKXML writer(parametersManager.getFolderWithSlash() + "displacement");
+	asl::WriterVTKXML writer(appParamsManager.getDir() + "jumpingBox");
 	writer.addScalars("displacement", *displacement);
 	writer.addVector("displacement", *displacement);
 	writer.write();
 
 	std::cout << "Finished" << endl;
 	
-	std::cout << "Jumping Box: Numerics initialization...";
+	std::cout << "Numerics initialization... ";
 
 	asl::SPFDElasticity2 elasticity(new asl::FDElasticity2(displacement,
 	                                                       acl::generateVEConstant(bulkModulusNum.v()),
@@ -119,11 +117,11 @@ int main(int argc, char* argv[])
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+		 <<  timer.getClockTime()	 <<  "; load=" 
+		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 
 	std::cout << "Output...";
 	std::cout << "Finished" << endl;	

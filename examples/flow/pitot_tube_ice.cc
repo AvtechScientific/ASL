@@ -27,7 +27,6 @@
  */
 
 #include <utilities/aslParametersManager.h>
-#include <math/aslVectors.h>
 #include <math/aslTemplates.h>
 #include <aslGeomInc.h>
 #include <aslGenerators.h>
@@ -35,7 +34,7 @@
 #include <writers/aslVTKFormatWriters.h>
 #include <num/aslLBGK.h>
 #include <num/aslLBGKBC.h>
-#include "utilities/aslTimer.h"
+#include <utilities/aslTimer.h>
 #include <num/aslFDAdvectionDiffusion.h>
 #include <num/aslBasicBC.h>
 
@@ -53,8 +52,7 @@ class Parameters
 		void init();
 
   public:
-		asl::ParametersManager parametersManager;
-		string folder;
+		asl::ApplicationParametersManager appParamsManager;
 
 		asl::Block::DV size;
 
@@ -76,15 +74,14 @@ class Parameters
 		asl::Parameter<double> humidity;
 		asl::Parameter<double> flowVel;
 		
-		void load(int argc, char * argv[],
-		          string programName,
-		          string programVersion);
+		void load(int argc, char * argv[]);
 		Parameters();
 		void updateNumValues();
 };
 
 
 Parameters::Parameters():
+	appParamsManager("pitot_tube_ice", "0.1"),
 	size(3),
 	dx(0.000125, "dx", "space step"),
 	dt(1., "dt", "time step"),
@@ -102,12 +99,9 @@ Parameters::Parameters():
 }
 
 
-void Parameters::load(int argc, char * argv[],
-                      string programName,
-                      string programVersion)
+void Parameters::load(int argc, char * argv[])
 {
-	parametersManager.load(argc, argv, programName, programVersion);
-	folder = parametersManager.getFolderWithSlash();
+	appParamsManager.load(argc, argv);
 
 	init();
 }
@@ -154,9 +148,9 @@ asl::SPDistanceFunction generateGeometry(asl::Block & block, Parameters &params)
 int main(int argc, char *argv[])
 {
 	Parameters params;
-	params.load(argc, argv, "pitot_tube_ice", "0.1");
+	params.load(argc, argv);
 	
-	std::cout<<"Flow: Data initialization...";
+	std::cout << "Data initialization...";
 
 	asl::Block block(params.size, params.dx.v());
 
@@ -167,9 +161,9 @@ int main(int argc, char *argv[])
 //	asl::initData(waterFrac, 0);
 	
 	
-	std::cout<<"Finished"<<endl;
+	std::cout << "Finished" << endl;
 	
-	std::cout<<"Flow: Numerics initialization...";
+	std::cout << "Flow: Numerics initialization...";
 
 	auto templ(&asl::d3q15());	
 	
@@ -205,11 +199,11 @@ int main(int argc, char *argv[])
 	initAll(bcDif);
 	initAll(bcV);
 
-	std::cout<<"Finished"<<endl;
-	std::cout<<"Computing..."<<endl;
+	std::cout << "Finished" << endl;
+	std::cout << "Computing..." << endl;
 	asl::Timer timer;
 
-	asl::WriterVTKXML writer("pitot_tube");
+	asl::WriterVTKXML writer(params.appParamsManager.getDir() + "pitot_tube");
 	writer.addScalars("map", *mcfMapMem);
 //	writer.addScalars("water", *waterFrac);
 	writer.addScalars("rho", *lbgk->getRho());
@@ -232,7 +226,7 @@ int main(int argc, char *argv[])
 		if(!(i%800))
 		{
 			timer.stop();
-			cout<<i<<"/8000; expected left time: "<< timer.getLeftTime(double(i)/8000.) <<endl;
+			cout << i << "/8000; expected left time: " <<  timer.getLeftTime(double(i)/8000.)  << endl;
 			executeAll(bcV);
 			writer.write();
 			timer.resume();
@@ -240,15 +234,15 @@ int main(int argc, char *argv[])
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+		 <<  timer.getClockTime() <<  "; load=" 
+		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 
-	std::cout<<"Output...";
-	std::cout<<"Finished"<<endl;	
-	std::cout<<"Ok"<<endl;
+	std::cout << "Output...";
+	std::cout << "Finished" << endl;	
+	std::cout << "Ok" << endl;
 
 	return 0;
 }

@@ -25,10 +25,8 @@
 	\example poroelastic.cc
  */
 
-#include <math/aslVectors.h>
-#include <data/aslDataWithGhostNodes.h>
-#include <aslGenerators.h>
-#include<acl/aclGenerators.h>
+#include <aslDataInc.h>
+#include <acl/aclGenerators.h>
 #include <num/aslFDPoroElasticity.h>
 #include <num/aslFDElasticityBC.h>
 #include <num/aslFDPoroElasticityBC.h>
@@ -38,9 +36,8 @@
 #include <aslGeomInc.h>
 #include <math/aslDistanceFunction.h>
 #include <acl/aclMath/aclVectorOfElements.h>
-#include "acl/aclUtilities.h"
+#include <acl/aclUtilities.h>
 #include <math/aslIndex2Position.h>
-
 #include <readers/aslVTKFormatReaders.h>
 #include <writers/aslVTKFormatWriters.h>
 
@@ -52,7 +49,7 @@ typedef asl::UValue<FlT> Param;
 
 int main(int argc, char* argv[])
 {
-	asl::ParametersManager parametersManager;
+	asl::ApplicationParametersManager appParamsManager("poroelastic", "1.0");
 	asl::Parameter<asl::AVec<int> > size("size", "size 3D");
 	asl::Parameter<cl_float> dx("dx", "dx");
 	asl::Parameter<cl_float> dt("dt", "dt");
@@ -65,11 +62,11 @@ int main(int argc, char* argv[])
 	asl::Parameter<unsigned int> tsim("num_iterations", "number of iterations");
 	asl::Parameter<unsigned int> tout("num_it_out", "number of iterations between outputs");
 	
-	parametersManager.load(argc, argv, "poroelastic");
+	appParamsManager.load(argc, argv);
 		
-	std::cout<<"Jumping Box: Data initialization...";
+	std::cout << "Data initialization... ";
 
-	asl::SPDataWithGhostNodesACLData map0(asl::read(parametersManager.getFolderWithSlash()+
+	asl::SPDataWithGhostNodesACLData map0(asl::read(appParamsManager.getDir() + 
 	                                                "brain.vti", 0));
 //	asl::Block block(size.v(), dx.v());
 	asl::Block block(map0->getInternalBlock());
@@ -81,7 +78,7 @@ int main(int argc, char* argv[])
 	asl::AVec<FlT> gNum(g.v()/dx.v());
 	Param hydraulicConductivityNum(hydraulicConductivity.v()/dx.v()/dx.v()/dx.v());
 
-	cout<<gNum<<"; "<<bulkModulusNum.v()<<"; "<<hydraulicConductivityNum.v()<<endl;
+	cout << gNum << "; " << bulkModulusNum.v() << "; " << hydraulicConductivityNum.v() << endl;
 
 	
 	auto displacement(asl::generateDataContainerACL_SP<FlT>(block, 3, 1u));
@@ -95,7 +92,7 @@ int main(int argc, char* argv[])
 //	initData(mapX->getEContainer(), map->getEContainer());
 	initData(mapX->getEContainer(), map0->getEContainer()*2.-1., acl::KERNEL_BASIC);
 	
-	asl::WriterVTKXML writer(parametersManager.getFolderWithSlash() + "displacement");
+	asl::WriterVTKXML writer(appParamsManager.getDir() + "poroelastic");
 	writer.addVector("displacement", *displacement);
 	writer.addScalars("pressure", *pressure);
 	writer.addScalars("map", *mapX);
@@ -103,7 +100,7 @@ int main(int argc, char* argv[])
 
 	std::cout << "Finished" << endl;
 	
-	std::cout << "Jumping Box: Numerics initialization...";
+	std::cout << "Numerics initialization... ";
 
 	auto elasticity(make_shared<asl::FDPoroElasticity>(displacement,
 	                                                   pressure,
@@ -118,7 +115,7 @@ int main(int argc, char* argv[])
 	                   displacement->getBlock().position);
 	asl::SPDistanceFunction scf(asl::generateDFPlane(asl::AVec<>(g.v()),center));
 	
-	auto force ((1.-acl::sign(scf->getDistance(i2p.positionWithInit)))/2.*
+	auto force((1.-acl::sign(scf->getDistance(i2p.positionWithInit)))/2.*
 	            acl::generateVEConstant(gNum));
 	auto forceField(asl::generateDataContainer_SP(block, force, 1u));
 	
@@ -134,7 +131,7 @@ int main(int argc, char* argv[])
 	initAll(bcl);
 
 	std::cout << "Finished" << endl;
-	std::cout << "Computing..."<<flush;
+	std::cout << "Computing..." << flush;
 	asl::Timer timer;
 
 	executeAll(bcl);
@@ -146,16 +143,16 @@ int main(int argc, char* argv[])
 	{
 		elasticity->execute();
 		executeAll(bcl);
-		if(!(i % tout.v()))
+		if (!(i % tout.v()))
 			writer.write();
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
-	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+	cout << "time: " << timer.getTime() << "; clockTime: "
+		 <<  timer.getClockTime() <<  "; load: " 
+		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 
 	std::cout << "Output...";
 	std::cout << "Finished" << endl;	

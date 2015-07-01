@@ -25,8 +25,7 @@
 	\example flowKDPGrowth.cc
  */
 
-#include <utilities/aslUValue.h>
-#include <math/aslVectors.h>
+#include <utilities/aslParametersManager.h>
 #include <math/aslTemplates.h>
 #include <aslGeomInc.h>
 #include <math/aslPositionFunction.h>
@@ -39,7 +38,7 @@
 #include <num/aslBasicBC.h>
 #include <num/aslCrystalGrowthBC.h>
 #include <num/aslFDAdvectionDiffusion.h>
-#include "utilities/aslTimer.h"
+#include <utilities/aslTimer.h>
 
 using asl::AVec;
 using asl::makeAVec;
@@ -184,7 +183,6 @@ double getWRotation(double t)
 	if(tRel>4.*tAcceleration+2.*tPlato+tStop)
 		x = 0;
 	return wMax*x;
-	
 
 //	flux = -9.32e-5*(1.170 - c); c_0=0.326 ceq=0.267
 }
@@ -198,9 +196,14 @@ using asl::AVec;
 using asl::makeAVec;
 
 
-
-int main()
+int main(int argc, char* argv[])
 {
+	// Optionally add appParamsManager to be able to manipulate at least
+	// hardware parameters(platform/device) through command line/parameters file
+	asl::ApplicationParametersManager appParamsManager("flowKDPGrowth",
+	                                                   "1.0");
+	appParamsManager.load(argc, argv);
+
 	Param dx(.02);
 	Param dt(0.8e-2);
 	Param nu(1e-2);
@@ -221,7 +224,7 @@ int main()
 
 	AVec<> gSize(dx.v()*AVec<>(size));
 
-	std::cout<<"Flow: Data initialization...";
+	std::cout << "Data initialization...";
 
     auto templ(&asl::d3q19());	
 	asl::Block block(size,dx.v());
@@ -240,9 +243,9 @@ int main()
 	auto cField(asl::generateDataContainerACL_SP<FlT>(block, 1, 1u));
 	asl::initData(cField, c0.v());
 	
-	std::cout<<"Finished"<<endl;
+	std::cout << "Finished" << endl;
 	
-	std::cout<<"Flow: Numerics initialization...";
+	std::cout << "Numerics initialization...";
 
 	asl::SPLBGK lbgk(new asl::LBGK(block, 
 				               acl::generateVEConstant(FlT(nuNum.v())),  
@@ -287,8 +290,8 @@ int main()
 	initAll(bcV);
 	initAll(bcDif);
 
-	std::cout<<"Finished"<<endl;
-	std::cout<<"Computing...";
+	std::cout << "Finished" << endl;
+	std::cout << "Computing...";
 	asl::Timer timer;
 	asl::Timer timerBC;
 
@@ -309,7 +312,7 @@ int main()
 
 	timer.start();
 	timerBC.reset();
-	for(unsigned int i(0); i <= 8001  ; ++i)
+	for (unsigned int i(0); i <= 8001  ; ++i)
 	{
 		lbgk->execute();
 		timerBC.resume();
@@ -321,24 +324,24 @@ int main()
 		executeAll(bcDif);
 		timerBC.stop();
 		
-		if(!(i%2000))
+		if (!(i%2000))
 		{
-			cout<< i <<endl;
+			cout <<  i  << endl;
 			writer.write();
 		}
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%; timeBC = " 
-		<< timerBC.getTime() << endl;
+		 <<  timer.getClockTime() <<  "; load=" 
+		 <<  timer.getProcessorLoad() * 100 << "%; timeBC = " 
+		 <<  timerBC.getTime() << endl;
 
-	std::cout<<"Output...";
-	std::cout<<"Finished"<<endl;	
-	std::cout<<"Ok"<<endl;
+	std::cout << "Output...";
+	std::cout << "Finished" << endl;	
+	std::cout << "Ok" << endl;
 
 	return 0;
 }

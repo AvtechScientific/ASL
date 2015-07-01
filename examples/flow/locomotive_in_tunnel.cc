@@ -25,8 +25,7 @@
 	\example locomotive_in_tunnel.cc
  */
 
-#include <utilities/aslUValue.h>
-#include <math/aslVectors.h>
+#include <utilities/aslParametersManager.h>
 #include <math/aslTemplates.h>
 #include <aslGeomInc.h>
 #include <math/aslPositionFunction.h>
@@ -35,19 +34,18 @@
 #include <writers/aslVTKFormatWriters.h>
 #include <num/aslLBGK.h>
 #include <num/aslLBGKBC.h>
-#include "utilities/aslTimer.h"
-#include "acl/aclUtilities.h"
+#include <utilities/aslTimer.h>
 #include <readers/aslVTKFormatReaders.h>
 
 
-
-typedef float FlT;
+// typedef to switch to double precision
 //typedef double FlT;
-typedef asl::UValue<double> Param;
+typedef float FlT;
 
 using asl::AVec;
 using asl::makeAVec;
 
+// Generate geometry of the tunnel
 asl::SPDistanceFunction generateTunnel(asl::Block & bl)
 {
 
@@ -70,34 +68,46 @@ asl::SPDistanceFunction generateTunnel(asl::Block & bl)
 }
 
 
-int main()
+int main(int argc, char* argv[])
 {
-	Param dx(0.08);
-	Param dt(1.);
-	Param nu(.001);
+	/* Convenience facility to manage simulation parameters (and also
+	hardware parameters - platform/device to run the application on)
+	through command line and/or parameters file.
+	Run `locomotive_in_tunnel -h` for more information */
+	asl::ApplicationParametersManager appParamsManager("locomotive_in_tunnel",
+	                                                   "1.0");
 
-	
-	AVec<int> size(makeAVec(40., 10., 15.)*(1./dx.v()));
-	asl::Block bl(size,dx.v(),makeAVec(-30., 8.58, 1.53));
-	
-	Param nuNum(nu.v()*dt.v()/dx.v()/dx.v());
-	
-	std::cout << "Flow: Data initialization...";
+	/* Important: declare Parameters only after declaring
+	ApplicationParametersManager instance because each Parameter adds itself
+	to it automatically */
+	asl::Parameter<FlT> dx(0.08, "dx", "space step", "m");
+	asl::Parameter<FlT> dt(1., "dt", "time step", "s");
+	asl::Parameter<FlT> nu(.001, "nu", "viscosity", "Pa*s");
 
+	/* Load previously declared Parameters from command line and/or
+	parameters file. Use default values if neither is provided. */
+	appParamsManager.load(argc, argv);
 
-	auto object(asl::readSurface("locomotive.stl", bl));
+	AVec<int> size(makeAVec(40., 10., 15.) * (1. / dx.v()));
+	asl::Block bl(size, dx.v(), makeAVec(-30., 8.58, 1.53));
 	
-	asl::Block block(object->getInternalBlock());
+	asl::UValue<FlT> nuNum(nu.v() * dt.v() / dx.v() / dx.v());
+	
+	std::cout << "Data initialization... ";
+
+	auto locomotive(asl::readSurface("locomotive.stl", bl));
+	
+	asl::Block block(locomotive->getInternalBlock());
 
 	auto tunnelMap(asl::generateDataContainerACL_SP<FlT>(block, 1, 1u));
 	asl::initData(tunnelMap, generateTunnel(block));
 
 	auto forceField(asl::generateDataContainerACL_SP<FlT>(block, 3, 1u));
-	asl::initData(forceField, makeAVec(0.,0.,0.));
+	asl::initData(forceField, makeAVec(0., 0., 0.));
 	
 	std::cout << "Finished" << endl;
 	
-	std::cout << "Flow: Numerics initialization...";
+	std::cout << "Numerics initialization... ";
 
 	asl::SPLBGK lbgk(new asl::LBGKTurbulence(block, 
 	                                         acl::generateVEConstant(FlT(nu.v())),  
@@ -105,9 +115,9 @@ int main()
 	
 	lbgk->init();
 	asl::SPLBGKUtilities lbgkUtil(new asl::LBGKUtilities(lbgk));
-	lbgkUtil->initF(acl::generateVEConstant(.1,.0,.0));
+	lbgkUtil->initF(acl::generateVEConstant(.1, .0, .0));
 
-	auto vfTunnel(asl::generatePFConstant(makeAVec(0.1,0.,0.)));
+	auto vfTunnel(asl::generatePFConstant(makeAVec(0.1, 0., 0.)));
 
 	std::vector<asl::SPNumMethod> bc;
 	std::vector<asl::SPNumMethod> bcV;
@@ -115,24 +125,26 @@ int main()
 	bc.push_back(generateBCVelocity(lbgk, vfTunnel, tunnelMap));
 	bcV.push_back(generateBCVelocityVel(lbgk, vfTunnel, tunnelMap));
 //	bcV.push_back(generateBCNoSlipRho(lbgk, tunnelMap));
-	bc.push_back(generateBCNoSlip(lbgk,  object));
-	bcV.push_back(generateBCNoSlipVel(lbgk, object));
-//	bcV.push_back(generateBCNoSlipRho(lbgk, object));
-	bc.push_back(generateBCConstantPressureVelocity(lbgk, 1., makeAVec(0.1,0.,0.), {asl::X0, asl::XE}));
+	bc.push_back(generateBCNoSlip(lbgk,  locomotive));
+	bcV.push_back(generateBCNoSlipVel(lbgk, locomotive));
+//	bcV.push_back(generateBCNoSlipRho(lbgk, locomotive));
+	bc.push_back(generateBCConstantPressureVelocity(lbgk, 1.,
+	                                                makeAVec(0.1, 0., 0.),
+	                                                {asl::X0, asl::XE}));
 
 	initAll(bc);
 	initAll(bcV);
 
-	auto computeForce(generateComputeSurfaceForce(lbgk, forceField, object));
+	auto computeForce(generateComputeSurfaceForce(lbgk, forceField, locomotive));
 	computeForce->init();
 	
 
-	std::cout<<"Finished"<<endl;
-	std::cout<<"Computing...";
+	std::cout << "Finished" << endl;
+	std::cout << "Computing... ";
 	asl::Timer timer;
 
-	asl::WriterVTKXML writer("locomotive_in_tunnel");
-	writer.addScalars("map", *object);
+	asl::WriterVTKXML writer(appParamsManager.getDir() + "locomotive_in_tunnel");
+	writer.addScalars("map", *locomotive);
 	writer.addScalars("tunnel", *tunnelMap);
 	writer.addScalars("rho", *lbgk->getRho());
 	writer.addVector("v", *lbgk->getVelocity());
@@ -145,13 +157,13 @@ int main()
 	writer.write();
 
 	timer.start();
-	for(unsigned int i(1); i < 20001; ++i)
+	for (unsigned int i(1); i < 20001; ++i)
 	{
 		lbgk->execute();
 		executeAll(bc);
-		if(!(i%1000))
+		if (!(i%1000))
 		{
-			cout<<i<<endl;
+			cout << i << endl;
 			executeAll(bcV);
 			computeForce->execute();
 			writer.write();
@@ -159,15 +171,15 @@ int main()
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+		 << timer.getClockTime() << "; load=" 
+		 << timer.getProcessorLoad() * 100 << "%" << endl;
 
-	std::cout<<"Output...";
-	std::cout<<"Finished"<<endl;	
-	std::cout<<"Ok"<<endl;
+	std::cout << "Output...";
+	std::cout << "Finished" << endl;	
+	std::cout << "Ok" << endl;
 
 	return 0;
 }

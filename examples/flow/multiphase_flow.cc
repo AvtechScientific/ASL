@@ -27,17 +27,14 @@
  */
 
 #include <utilities/aslParametersManager.h>
-#include <math/aslVectors.h>
 #include <math/aslTemplates.h>
 #include <aslGeomInc.h>
-#include <data/aslDataWithGhostNodes.h>
-#include <aslGenerators.h>
+#include <aslDataInc.h>
 #include <acl/aclGenerators.h>
 #include <writers/aslVTKFormatWriters.h>
 #include <num/aslLBGK.h>
 #include <num/aslLBGKBC.h>
-#include "utilities/aslTimer.h"
-#include "acl/aclUtilities.h"
+#include <utilities/aslTimer.h>
 #include <num/aslFDMultiPhase.h>
 #include <num/aslBasicBC.h>
 
@@ -55,8 +52,7 @@ class Parameters
 		void init();
 
   public:
-		asl::ParametersManager parametersManager;
-		string folder;
+		asl::ApplicationParametersManager appParamsManager;
 
 		asl::Block::DV size;
 
@@ -79,15 +75,15 @@ class Parameters
 		asl::Parameter<double> gasInVel;
 		
 		
-		void load(int argc, char * argv[],
-		          string programName,
-		          string programVersion);
+		void load(int argc, char * argv[]);
+		string getDir();
 		Parameters();
 		void updateNumValues();
 };
 
 
 Parameters::Parameters():
+	appParamsManager("multiphase_flow", "0.1"),
 	size(3),
 	dx(0.002, "dx", "space step"),
 	dt(1., "dt", "time step"),
@@ -105,14 +101,17 @@ Parameters::Parameters():
 }
 
 
-void Parameters::load(int argc, char * argv[],
-                      string programName,
-                      string programVersion)
+void Parameters::load(int argc, char * argv[])
 {
-	parametersManager.load(argc, argv, programName, programVersion);
-	folder = parametersManager.getFolderWithSlash();
+	appParamsManager.load(argc, argv);
 
 	init();
+}
+
+
+string Parameters::getDir()
+{
+	return appParamsManager.getDir();
 }
 
 
@@ -153,9 +152,9 @@ asl::SPDistanceFunction generateMixer(asl::Block & block, Parameters &params)
 int main(int argc, char *argv[])
 {
 	Parameters params;
-	params.load(argc, argv, "multiphase_flow", "0.1");
+	params.load(argc, argv);
 	
-	std::cout<<"Flow: Data initialization...";
+	std::cout << "Data initialization...";
 
 	asl::Block block(params.size, params.dx.v());
 
@@ -165,9 +164,9 @@ int main(int argc, char *argv[])
 	auto waterFrac(asl::generateDataContainerACL_SP<FlT>(block, 1, 1u));
 	asl::initData(waterFrac, 0);
 	
-	std::cout<<"Finished"<<endl;
+	std::cout << "Finished" << endl;
 	
-	std::cout<<"Flow: Numerics initialization...";
+	std::cout << "Numerics initialization...";
 
 	auto templ(&asl::d3q15());	
 	
@@ -205,11 +204,11 @@ int main(int argc, char *argv[])
 	initAll(bcDif);
 	initAll(bcV);
 
-	std::cout<<"Finished"<<endl;
-	std::cout<<"Computing..."<<endl;
+	std::cout << "Finished" << endl;
+	std::cout << "Computing..." << endl;
 	asl::Timer timer;
 
-	asl::WriterVTKXML writer("multiphase_flow");
+	asl::WriterVTKXML writer(params.getDir() + "multiphase_flow");
 	writer.addScalars("map", *mpfMapMem);
 	writer.addScalars("water", *waterFrac);
 	writer.addScalars("rho", *lbgk->getRho());
@@ -222,17 +221,17 @@ int main(int argc, char *argv[])
 	writer.write();
 
 	timer.start();
-	for(unsigned int i(1); i < 2001; ++i)
+	for (unsigned int i(1); i < 2001; ++i)
 	{
 		lbgk->execute();
 		executeAll(bcDif);
 		nmWater->execute();
 		executeAll(bc);
 		
-		if(!(i%200))
+		if (!(i%200))
 		{
 			timer.stop();
-			cout<<i<<"/2000; expected left time: "<< timer.getLeftTime(double(i)/2000.) <<endl;
+			cout << i << "/2000; expected left time: " <<  timer.getLeftTime(double(i)/2000.)  << endl;
 			executeAll(bcV);
 			writer.write();
 			timer.resume();
@@ -240,15 +239,15 @@ int main(int argc, char *argv[])
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+		 <<  timer.getClockTime() <<  "; load=" 
+		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 
-	std::cout<<"Output...";
-	std::cout<<"Finished"<<endl;	
-	std::cout<<"Ok"<<endl;
+	std::cout << "Output...";
+	std::cout << "Finished" << endl;	
+	std::cout << "Ok" << endl;
 
 	return 0;
 }

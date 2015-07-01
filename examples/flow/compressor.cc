@@ -25,22 +25,17 @@
 	\example compressor.cc
  */
 
-#include <utilities/aslUValue.h>
-#include <math/aslVectors.h>
+#include <utilities/aslParametersManager.h>
 #include <math/aslTemplates.h>
 #include <aslGeomInc.h>
-#include<math/aslPositionFunction.h>
-#include <data/aslDataWithGhostNodes.h>
-#include <aslGenerators.h>
+#include <aslDataInc.h>
+#include <math/aslPositionFunction.h>
 #include <acl/aclGenerators.h>
 #include <writers/aslVTKFormatWriters.h>
 #include <num/aslLBGK.h>
 #include <num/aslLBGKBC.h>
-#include "utilities/aslTimer.h"
-#include "acl/aclUtilities.h"
+#include <utilities/aslTimer.h>
 #include <readers/aslVTKFormatReaders.h>
-
-
 
 typedef float FlT;
 //typedef double FlT;
@@ -61,8 +56,15 @@ asl::SPDistanceFunction generateCase(asl::Block & bl)
 	return normalize(comprCase, bl.dx);
 }
 
-int main()
+
+int main(int argc, char* argv[])
 {
+	// Optionally add appParamsManager to be able to manipulate at least
+	// hardware parameters(platform/device) through command line/parameters file
+	asl::ApplicationParametersManager appParamsManager("compressor",
+	                                                   "1.0");
+	appParamsManager.load(argc, argv);
+
 	Param dx(0.5);
 	Param dt(.001);
 	Param nu(.2);
@@ -77,7 +79,7 @@ int main()
 	// Angular velocity in one iteration
 	Param wNum(w.v()*dt.v());
 
-	std::cout<<"Compressor: Data initialization...";
+	std::cout << "Compressor: Data initialization...";
 
 
 	auto compressorMap(asl::readSurface("axial-compressor.stl", bl));
@@ -90,7 +92,7 @@ int main()
 	
 	std::cout << "Finished" << endl;
 	
-	std::cout<<"Compressor: Numerics initialization...";
+	std::cout << "Compressor: Numerics initialization...";
 
 	asl::SPLBGK lbgk(new asl::LBGK(block,
 	                               acl::generateVEConstant(FlT(nuNum.v())),
@@ -121,8 +123,8 @@ int main()
 	initAll(bcVis);
 
 
-	std::cout<<"Finished"<<endl;
-	std::cout<<"Computing...";
+	std::cout << "Finished" << endl;
+	std::cout << "Computing...";
 	asl::Timer timer;
 
 	asl::WriterVTKXML writer("compressor");
@@ -137,28 +139,28 @@ int main()
 	writer.write();
 
 	timer.start();
-	for(unsigned int i(1); i < 10001; ++i)
+	for (unsigned int i(1); i < 10001; ++i)
 	{
 		lbgk->execute();
 		executeAll(bc);
-		if(!(i%2000))
+		if (!(i%2000))
 		{
-			cout<<i<<endl;
+			cout << i << endl;
 			executeAll(bcVis);
 			writer.write();
 		}
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	std::cout << "Finished" << endl;	
 
 	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
+		 <<  timer.getClockTime() <<  "; load=" 
+		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
 
-	std::cout<<"Output...";
-	std::cout<<"Finished"<<endl;	
-	std::cout<<"Ok"<<endl;
+	std::cout << "Output...";
+	std::cout << "Finished" << endl;	
+	std::cout << "Ok" << endl;
 
 	return 0;
 }
