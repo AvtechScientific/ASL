@@ -1,5 +1,13 @@
 if (WITH_INTERNAL_DOC)
 	find_package(Doxygen REQUIRED)
+
+	if (DOXYGEN_DOT_FOUND)
+		set(DOXYGEN_HAVE_DOT "YES")
+	else (DOXYGEN_DOT_FOUND)
+		set(DOXYGEN_HAVE_DOT "NO")
+		message(WARNING "Graphviz dot was not found! Class inheritance diagrams generation will be limited.")
+	endif (DOXYGEN_DOT_FOUND)
+
 	# Configure Doxyfile
 	configure_file(
 		"${PROJECT_SOURCE_DIR}/doc/Developer-Guide/Doxyfile.in"
