@@ -63,6 +63,5 @@ set(aslacl_SOURCES
 )
 
 add_library(aslacl ${aslacl_SOURCES})
-set_target_properties(aslacl PROPERTIES VERSION ${ASL_VERSION} SOVERSION ${ASL_VERSION_MAJOR})
 target_link_libraries(aslacl aslCommon aslaclOperators aslaclMath ${OpenCL_LIBRARIES})
 INSTALL_SUBLIB(aslacl aslacl_PUBLIC_HEADERS)

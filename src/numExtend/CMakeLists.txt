@@ -13,5 +13,4 @@ set(aslExt_SOURCES
 )
 
 add_library(aslExt ${aslExt_SOURCES})
-set_target_properties(aslExt PROPERTIES VERSION ${ASL_VERSION} SOVERSION ${ASL_VERSION_MAJOR})
 INSTALL_SUBLIB(aslExt aslExt_PUBLIC_HEADERS)
