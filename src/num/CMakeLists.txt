@@ -68,6 +68,5 @@ set(aslnum_SOURCES
 )
 
 add_library(aslnum ${aslnum_SOURCES})
-set_target_properties(aslnum PROPERTIES VERSION ${ASL_VERSION} SOVERSION ${ASL_VERSION_MAJOR})
 target_link_libraries(aslnum aslacl)
 INSTALL_SUBLIB(aslnum aslnum_PUBLIC_HEADERS)
