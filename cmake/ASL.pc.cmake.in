@@ -4,8 +4,8 @@ libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
 includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@/asl
 
 Name: @PROJECT_NAME@
-Desription: @CPACK_PACKAGE_DESCRIPTION_SUMMARY@
+Description: @CPACK_PACKAGE_DESCRIPTION_SUMMARY@
 URL: http://asl.org.il
 Version: @ASL_VERSION@
-Libs: -L${libdir}@ASL_SUBLIBS@
-Cflags: -I${includedir}
+Libs: -L${libdir}@ASL_SUBLIBS@ @OpenCL_LIBRARIES@
+Cflags: -I${includedir} @CMAKE_CXX_FLAGS@
