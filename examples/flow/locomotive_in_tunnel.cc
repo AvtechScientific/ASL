@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
 	/* Convenience facility to manage simulation parameters (and also
 	hardware parameters - platform/device to run the application on)
 	through command line and/or parameters file.
-	Run `locomotive_in_tunnel -h` for more information */
+	See `locomotive_in_tunnel -h` for more information */
 	asl::ApplicationParametersManager appParamsManager("locomotive_in_tunnel",
 	                                                   "1.0");
 
@@ -177,7 +177,7 @@ int main(int argc, char* argv[])
 		 << timer.getClockTime() << "; load=" 
 		 << timer.getProcessorLoad() * 100 << "%" << endl;
 
-	std::cout << "Output...";
+	std::cout << "Output... ";
 	std::cout << "Finished" << endl;	
 	std::cout << "Ok" << endl;
 

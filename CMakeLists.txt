@@ -40,7 +40,34 @@ add_subdirectory(test)
 add_subdirectory(examples)
 add_subdirectory(doc)
 
-# Config
+# Packaging
+set(CPACK_GENERATOR "TGZ")
+set(CPACK_SOURCE_GENERATOR "TGZ")
+set(CPACK_PACKAGE_VERSION_MAJOR ${ASL_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${ASL_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${ASL_VERSION_PATCH})
+set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
+set(CPACK_RESOURCE_FILE_README "${PROJECT_SOURCE_DIR}/README.md")
+set(CPACK_PACKAGE_DESCRIPTION "Advanced Simulation Library (ASL) is a free and open source multiphysics simulation software package. Its computational engine is based, among others, on the Lattice Boltzmann Methods and is written in OpenCL which enable extraordinarily efficient deployment on a variety of massively parallel architectures, ranging from inexpensive FPGAs, DSPs and GPUs up to heterogeneous clusters and supercomputers. The engine is hidden entirely behind C++ classes, so that no OpenCL knowledge is required from application programmers. ASL can be utilized to model various coupled physical and chemical phenomena and employed in a multitude of fields: computational fluid dynamics, virtual sensing, industrial process data validation and reconciliation, image-guided surgery, computer-aided engineering, high-performance scientific computing, etc..")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Advanced Simulation Library is a free and open source OpenCL-based multiphysics simulation software package.")
+set(CPACK_PACKAGE_VENDOR "Avtech Scientific")
+set(CPACK_PACKAGE_CONTACT "http://avtechscientific.com/contact")
+
+# .deb-specific
+set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "http://asl.org.il")
+
+# .rpm-specific
+set(CPACK_RPM_PACKAGE_URL "http://asl.org.il")
+
+# NSIS-specific
+set(CPACK_NSIS_URL_INFO_ABOUT "http:\\\\\\\\asl.org.il")
+
+include(CPack)
+
+# Config (after package definitions, because CPACK_PACKAGE_DESCRIPTION_SUMMARY
+# is used for pkgconfig.
+
+## ASLConfig.cmake
 include(CMakePackageConfigHelpers)
 
 # ASL conforms to Semantic Versioning scheme <http://semver.org/>
@@ -60,7 +87,7 @@ export(EXPORT ASLTargets
 set(ConfigPackageLocation ${CMAKE_INSTALL_LIBDIR}/cmake/ASL)
 
 configure_package_config_file(
-	cmake/ASLConfig.cmake.in
+	${CMAKE_SOURCE_DIR}/cmake/ASLConfig.cmake.in
 	${CMAKE_CURRENT_BINARY_DIR}/ASLConfig.cmake
 	INSTALL_DESTINATION ${ConfigPackageLocation}
 	PATH_VARS CMAKE_INSTALL_INCLUDEDIR
@@ -84,26 +111,20 @@ install(FILES
 	Devel
 )
 
-# Packaging
-set(CPACK_GENERATOR "TGZ")
-set(CPACK_SOURCE_GENERATOR "TGZ")
-set(CPACK_PACKAGE_VERSION_MAJOR ${ASL_VERSION_MAJOR})
-set(CPACK_PACKAGE_VERSION_MINOR ${ASL_VERSION_MINOR})
-set(CPACK_PACKAGE_VERSION_PATCH ${ASL_VERSION_PATCH})
-set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
-set(CPACK_RESOURCE_FILE_README "${PROJECT_SOURCE_DIR}/README.md")
-set(CPACK_PACKAGE_DESCRIPTION "Advanced Simulation Library (ASL) is a free and open source multiphysics simulation software package. Its computational engine is based, among others, on the Lattice Boltzmann Methods and is written in OpenCL which enable extraordinarily efficient deployment on a variety of massively parallel architectures, ranging from inexpensive FPGAs, DSPs and GPUs up to heterogeneous clusters and supercomputers. The engine is hidden entirely behind C++ classes, so that no OpenCL knowledge is required from application programmers. ASL can be utilized to model various coupled physical and chemical phenomena and employed in a multitude of fields: computational fluid dynamics, virtual sensing, industrial process data validation and reconciliation, image-guided surgery, computer-aided engineering, high-performance scientific computing, etc..")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Advanced Simulation Library is an OpenCL-based multiphysics simulation software package.")
-set(CPACK_PACKAGE_VENDOR "Avtech Scientific")
-set(CPACK_PACKAGE_CONTACT "http://avtechscientific.com/contact")
 
-# .deb-specific
-set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "http://asl.org.il")
+## ASL.pc
 
-# .rpm-specific
-set(CPACK_RPM_PACKAGE_URL "http://asl.org.il")
+### Read the composed list of all sublibs from the ASL_SUBLIBS_GLOBAL_PROPERTY
+get_property(ASL_SUBLIBS GLOBAL PROPERTY ASL_SUBLIBS_GLOBAL_PROPERTY)
 
-# NSIS-specific
-set(CPACK_NSIS_URL_INFO_ABOUT "http:\\\\\\\\asl.org.il")
+configure_file(
+	${CMAKE_SOURCE_DIR}/cmake/ASL.pc.cmake.in
+	${CMAKE_CURRENT_BINARY_DIR}/ASL.pc
+	@ONLY
+)
 
-include(CPack)
+install(FILES
+	${CMAKE_CURRENT_BINARY_DIR}/ASL.pc
+	DESTINATION
+	${CMAKE_INSTALL_LIBDIR}/pkgconfig
+)

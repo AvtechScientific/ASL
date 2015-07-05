@@ -1,0 +1,11 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=${prefix}/@CMAKE_INSTALL_BINDIR@
+libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
+includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@/asl
+
+Name: @PROJECT_NAME@
+Desription: @CPACK_PACKAGE_DESCRIPTION_SUMMARY@
+URL: http://asl.org.il
+Version: @ASL_VERSION@
+Libs: -L${libdir}@ASL_SUBLIBS@
+Cflags: -I${includedir}
