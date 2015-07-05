@@ -57,6 +57,5 @@ set(aslaclOperators_SOURCES
 )
 
 add_library(aslaclOperators ${aslaclOperators_SOURCES})
-set_target_properties(aslaclOperators PROPERTIES VERSION ${ASL_VERSION} SOVERSION ${ASL_VERSION_MAJOR})
 target_link_libraries(aslaclOperators ${OpenCL_LIBRARIES})
 INSTALL_SUBLIB(aslaclOperators aslaclOperators_PUBLIC_HEADERS)
