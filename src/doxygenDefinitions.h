@@ -183,7 +183,7 @@
 /// \ingroup Numerics
 
 
-/// \defgroup Geom Geometric Objects and manipulations
+/// \defgroup Geom Geometric primitives and their manipulations
 
 
 /// \defgroup LDI Library Design Issues

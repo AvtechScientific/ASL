@@ -85,7 +85,7 @@ INSTALL_SUBLIB(aslvtk aslvtk_PUBLIC_HEADERS)
 
 if (WITH_MATIO)
 	find_package(MATIO 1.5.2 REQUIRED)
-	include_directories(SYSTEM ${MATIO_INCLUDE_DIRS} ${OpenCL_LIBRARIES})
+	include_directories(SYSTEM ${MATIO_INCLUDE_DIRS})
 	set(CMAKE_CXX_FLAGS "-fpermissive ${CMAKE_CXX_FLAGS}")
 
 	set(aslmatio_PUBLIC_HEADERS
