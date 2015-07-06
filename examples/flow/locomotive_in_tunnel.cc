@@ -54,7 +54,7 @@ asl::SPDistanceFunction generateTunnel(asl::Block & bl)
 	// Set radius of the tunnel to the ca. half of the block's height (Z size)
 	double rTunnel((bl.getBPosition()[2] - bl.position[2]) / 2.1);
 
-	// Center of the tunnel (described as cylinder cutted by a plane)
+	// Center of the tunnel (described as cylinder cut by a plane)
 	asl::AVec<> center(.5 * (bl.getBPosition() + bl.position));
 	center[1] = bl.position[1] + .25 * rTunnel;
 
@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
 	/* Convenience facility to manage simulation parameters (and also
 	 hardware parameters defining platform and device for computations)
 	 through command line and/or parameters file.
-	 See `locomotive_in_tunnel -h` for more information */
+	 See `locomotive_in_tunnel --help` for more information */
 	asl::ApplicationParametersManager appParamsManager("locomotive_in_tunnel",
 	                                                   "1.0");
 
