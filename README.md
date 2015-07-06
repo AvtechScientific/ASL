@@ -25,16 +25,17 @@ ASL is distributed under the free GNU Affero General Public License (AGPLv3) wit
 
 ### Running an example
 
-1. Go to tests: `cd examples/flow/locomotive_in_tunnel`
+1. Go to examples: `cd examples/flow/locomotive_in_tunnel`
 2. Copy the .stl input file: `cp ../../../../ASL/examples/input_data/locomotive.stl .`
 3. Run: `./locomotive_in_tunnel`. Optionally: change some parameters - `./locomotive_in_tunnel --dx 0.1 --dt 2` or write all of them into a file for later editing/reuse - `./locomotive_in_tunnel -g bigGrid.ini`. List all available options - `locomotive_in_tunnel -h`.
 4. Post-processing: [step by step example](https://github.com/AvtechScientific/ASL/wiki/User-Guide#post-processing).
 
 ### Writing your own code using ASL
 
-1. Take a look on examples, e.g. `examples/flow/locomotive_in_tunnel.cc`
-2. To build your program using `cmake` see e.g. `examples/flow/CMakeLists.txt`
-3. To build your program with tools others than `cmake` run `make VERBOSE=1` and/or consult `CMakeCache.txt` to get better understanding of the compiler flags, library paths and dependencies involved. The output of `make install` shows the location of installed public include headers and libraries (by default: `/usr/local/include/asl-X.Y.Z` and `/usr/local/lib`).
+1. Take a look on examples, e.g. [examples/flow/locomotive_in_tunnel.cc](http://asl.org.il/doc/Developer-Guide/locomotive_in_tunnel_8cc-example.html)
+2. ASL installation supplies `ASLConfig.cmake` and `ASL.pc` files. To build your program using
+	- `cmake`: `examples/flow/CMakeLists.txt`
+	- `pkg-config`: `c++ ``pkg-config --cflags --libs ASL`` -o flow flow.cc`
 
 
 ## Further information

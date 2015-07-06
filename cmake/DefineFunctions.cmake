@@ -2,6 +2,10 @@
 # (preserving source tree structure)
 function(INSTALL_SUBLIB _SUBLIB _SUBLIB_PUBLIC_HEADERS)
 
+	# Add current sublibrary to the list of all sublibs for inclusion in ASL.pc
+	# using global property ASL_SUBLIBS_GLOBAL_PROPERTY
+	set_property(GLOBAL APPEND_STRING PROPERTY ASL_SUBLIBS_GLOBAL_PROPERTY " -l${_SUBLIB}")
+
 	set_target_properties(
 		${_SUBLIB} PROPERTIES VERSION ${ASL_VERSION}
 		SOVERSION ${ASL_VERSION_MAJOR}
