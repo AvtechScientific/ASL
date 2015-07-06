@@ -32,9 +32,10 @@ ASL is distributed under the free GNU Affero General Public License (AGPLv3) wit
 
 ### Writing your own code using ASL
 
-1. Take a look on examples, e.g. `examples/flow/locomotive_in_tunnel.cc`
-2. To build your program using `cmake` see e.g. `examples/flow/CMakeLists.txt`
-3. To build your program with tools others than `cmake` run `make VERBOSE=1` and/or consult `CMakeCache.txt` to get better understanding of the compiler flags, library paths and dependencies involved. The output of `make install` shows the location of installed public include headers and libraries (by default: `/usr/local/include/asl-X.Y.Z` and `/usr/local/lib`).
+1. Take a look on examples, e.g. [examples/flow/locomotive_in_tunnel.cc](http://asl.org.il/doc/Developer-Guide/locomotive_in_tunnel_8cc-example.html)
+2. ASL installation supplies `ASLConfig.cmake` and `ASL.pc` files. To build your program using
+	- `cmake`: `examples/flow/CMakeLists.txt`
+	- `pkg-config`: `c++ ``pkg-config --cflags --libs ASL`` -o flow flow.cc`
 
 
 ## Further information

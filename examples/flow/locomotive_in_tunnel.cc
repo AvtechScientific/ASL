@@ -49,66 +49,96 @@ using asl::makeAVec;
 asl::SPDistanceFunction generateTunnel(asl::Block & bl)
 {
 
+	// Set length of the tunnel to the length (X size) of the block
 	double l(bl.getBPosition()[0] - bl.position[0] + bl.dx);
+	// Set radius of the tunnel to the ca. half of the block's height (Z size)
 	double rTunnel((bl.getBPosition()[2] - bl.position[2]) / 2.1);
 
-	double dx(bl.dx);
-
-	asl::AVec<int> size(bl.getSize());
-
-	asl::AVec<> center(.5 * (bl.getBPosition() + bl.position)); 
+	// Center of the tunnel (described as cylinder cutted by a plane)
+	asl::AVec<> center(.5 * (bl.getBPosition() + bl.position));
 	center[1] = bl.position[1] + .25 * rTunnel;
+
+	// Center of the ground plane (that cuts the cylinder) 
 	asl::AVec<> centerG(center); 
 	centerG[1] = bl.position[1];
 
+	/* DF = DistanceFunction (part of the geometrical module of ASL)
+	 1. Genarate cylinder
+	 2. Generate ground plane
+	 3. Conjunction of the cylinder and the plane ('&' - operator)
+	 4. Space inversion ('-' - operator) */
 	auto tunnel(-(generateDFCylinder(rTunnel, makeAVec(l, 0., 0.), center) &
 	             generateDFPlane(makeAVec(0., -1., 0.), centerG)));
 
-	return normalize(tunnel, dx);
+	// Normalize DistanceFunction to the range [-1; 1]
+	return normalize(tunnel, bl.dx);
 }
 
 
 int main(int argc, char* argv[])
 {
 	/* Convenience facility to manage simulation parameters (and also
-	hardware parameters - platform/device to run the application on)
-	through command line and/or parameters file.
-	See `locomotive_in_tunnel -h` for more information */
+	 hardware parameters defining platform and device for computations)
+	 through command line and/or parameters file.
+	 See `locomotive_in_tunnel -h` for more information */
 	asl::ApplicationParametersManager appParamsManager("locomotive_in_tunnel",
 	                                                   "1.0");
 
 	/* Important: declare Parameters only after declaring
-	ApplicationParametersManager instance because each Parameter adds itself
-	to it automatically */
+	 ApplicationParametersManager instance because each Parameter adds itself
+	 to it automatically!
+	 0.08 - default value; will be used if nothing else is provided during
+	 runtime through command line or parameters file.
+	 "dx" - option key; is used to specify this parameter through command line
+	 and/or parameters file, like `locomotive_in_tunnel --dx 0.05`
+	 "space step" - option description; is used in the help output:
+	 `locomotive_in_tunnel -h` and as comment on parameters file generation:
+	 `locomotive_in_tunnel -g ./defaultParameters.ini`
+	 "m" - parameter units; is used as part of the option description mentioned
+	 above. Might be used for automatic unit conversion in future (to this end
+	 it is recommended to use the notation of the Boost::Units library). */
 	asl::Parameter<FlT> dx(0.08, "dx", "space step", "m");
 	asl::Parameter<FlT> dt(1., "dt", "time step", "s");
-	asl::Parameter<FlT> nu(.001, "nu", "viscosity", "Pa*s");
+	asl::Parameter<FlT> nu(.001, "nu", "kinematic viscosity", "m^2 s^-1");
 
 	/* Load previously declared Parameters from command line and/or
 	parameters file. Use default values if neither is provided. */
 	appParamsManager.load(argc, argv);
 
+	/* Set the size of the block to 40x10x15 m (in accordance with the
+	 locomotive size read later on from the input file) */ 
 	AVec<int> size(makeAVec(40., 10., 15.) * (1. / dx.v()));
+
+	/* Create block and shift it in accordance with the
+	 position of the locomotive in the input file */
 	asl::Block bl(size, dx.v(), makeAVec(-30., 8.58, 1.53));
-	
-	asl::UValue<FlT> nuNum(nu.v() * dt.v() / dx.v() / dx.v());
+
+	// Define dimensionless viscosity value
+	FlT nuNum(nu.v() * dt.v() / dx.v() / dx.v());
 	
 	std::cout << "Data initialization... ";
 
+	// Read geometry of the locomotive from the file
 	auto locomotive(asl::readSurface("locomotive.stl", bl));
-	
+
+	// Create block for further use
 	asl::Block block(locomotive->getInternalBlock());
 
+	// Generate memory data container for the tunnel
 	auto tunnelMap(asl::generateDataContainerACL_SP<FlT>(block, 1, 1u));
+	// Place generated geometry of the tunnel into the tunnel data container
 	asl::initData(tunnelMap, generateTunnel(block));
 
+	// Data container for air friction field
 	auto forceField(asl::generateDataContainerACL_SP<FlT>(block, 3, 1u));
+	// Initialization
 	asl::initData(forceField, makeAVec(0., 0., 0.));
 	
 	std::cout << "Finished" << endl;
 	
 	std::cout << "Numerics initialization... ";
 
+	// Generate numerical method for air flow - LBGK (lattice Bhatnagar–Gross–Krook)
 	asl::SPLBGK lbgk(new asl::LBGKTurbulence(block, 
 	                                         acl::generateVEConstant(FlT(nu.v())),  
 	                                         &asl::d3q15()));
