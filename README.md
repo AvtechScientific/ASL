@@ -32,7 +32,7 @@ ASL is distributed under the free GNU Affero General Public License (AGPLv3) wit
 
 ### Writing your own code using ASL
 
-1. Take a look on examples, e.g. [examples/flow/locomotive_in_tunnel.cc](http://asl.org.il/doc/Developer-Guide/locomotive_in_tunnel_8cc-example.html)
+1. Take a look on examples, start with [examples/flow/locomotive_in_tunnel.cc](http://asl.org.il/doc/Developer-Guide/locomotive_in_tunnel_8cc-example.html)
 2. ASL installation supplies `ASLConfig.cmake` and `ASL.pc` files. To build your program using
 	- `cmake`: `examples/flow/CMakeLists.txt`
 	- `pkg-config`: `c++ ``pkg-config --cflags --libs ASL`` -o flow flow.cc`
