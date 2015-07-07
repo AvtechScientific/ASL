@@ -34,8 +34,14 @@ ASL is distributed under the free GNU Affero General Public License (AGPLv3) wit
 
 1. Take a look on examples, start with [examples/flow/locomotive_in_tunnel.cc](http://asl.org.il/doc/Developer-Guide/locomotive_in_tunnel_8cc-example.html)
 2. ASL installation supplies `ASLConfig.cmake` and `ASL.pc` files. To build your program using
-	- `cmake`: `examples/flow/CMakeLists.txt`
-	- `pkg-config`: `c++ ``pkg-config --cflags --libs ASL`` -o flow flow.cc`
+	- `cmake`: write a basic `CMakeLists.txt`
+		project(locomotive)
+		cmake_minimum_required(VERSION 3.0.2 FATAL_ERROR)
+		find_package(ASL 0.1.4 CONFIG REQUIRED)
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fpermissive -std=c++11")
+		add_executable(locomotive_in_tunnel locomotive_in_tunnel.cc)
+		target_link_libraries(locomotive_in_tunnel PRIVATE ASL::aslnum ASL::aslvtk ASL::asl)
+	- `pkg-config`: ``c++ `pkg-config --cflags --libs ASL` -o locomotive_in_tunnel locomotive_in_tunnel.cc``
 
 
 ## Further information

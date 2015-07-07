@@ -57,5 +57,5 @@ set(aslaclOperators_SOURCES
 )
 
 add_library(aslaclOperators ${aslaclOperators_SOURCES})
-target_link_libraries(aslaclOperators ${OpenCL_LIBRARIES})
+target_link_libraries(aslaclOperators PRIVATE ${OpenCL_LIBRARIES})
 INSTALL_SUBLIB(aslaclOperators aslaclOperators_PUBLIC_HEADERS)
