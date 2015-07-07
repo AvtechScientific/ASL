@@ -33,7 +33,8 @@ ASL is distributed under the free GNU Affero General Public License (AGPLv3) wit
 ### Writing your own code using ASL
 
 1. Take a look on examples, start with [examples/flow/locomotive_in_tunnel.cc](http://asl.org.il/doc/Developer-Guide/locomotive_in_tunnel_8cc-example.html)
-2. ASL installation supplies `ASLConfig.cmake` and `ASL.pc` files. To build your program using
+2. ASL installation supplies `ASL.pc` and `ASLConfig.cmake` files. To build your program using
+	- `pkg-config`: launch ``c++ `pkg-config --cflags --libs ASL` -o locomotive_in_tunnel locomotive_in_tunnel.cc``
 	- `cmake`: write a basic `CMakeLists.txt`
 		```
 		project(locomotive)
@@ -43,7 +44,6 @@ ASL is distributed under the free GNU Affero General Public License (AGPLv3) wit
 		add_executable(locomotive_in_tunnel locomotive_in_tunnel.cc)
 		target_link_libraries(locomotive_in_tunnel PRIVATE ASL::aslnum ASL::aslvtk ASL::asl)
 		```
-	- `pkg-config`: ``c++ `pkg-config --cflags --libs ASL` -o locomotive_in_tunnel locomotive_in_tunnel.cc``
 
 
 ## Further information
