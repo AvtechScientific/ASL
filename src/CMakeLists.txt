@@ -11,24 +11,24 @@ add_subdirectory(numExtend)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/acl)
 
 
-# aslCommon
+# aslcommon
 
-set(aslCommon_PUBLIC_HEADERS
+set(aslcommon_PUBLIC_HEADERS
 	utilities/aslParametersManager.h
 	utilities/aslTimeStamp.h
 	aslUtilities.h
 )
 
-set(aslCommon_SOURCES
-	${aslCommon_PUBLIC_HEADERS}
+set(aslcommon_SOURCES
+	${aslcommon_PUBLIC_HEADERS}
 	utilities/aslParametersManager.cxx
 	utilities/aslTimeStamp.cxx
 	aslUtilities.cxx
 )
 
-add_library(aslCommon ${aslCommon_SOURCES})
-target_link_libraries(aslCommon PRIVATE ${Boost_LIBRARIES})
-INSTALL_SUBLIB(aslCommon aslCommon_PUBLIC_HEADERS)
+add_library(aslcommon ${aslcommon_SOURCES})
+target_link_libraries(aslcommon PRIVATE ${Boost_LIBRARIES})
+INSTALL_SUBLIB(aslcommon aslcommon_PUBLIC_HEADERS)
 
 
 # asl
@@ -55,7 +55,7 @@ set(asl_SOURCES
 )
 
 add_library(asl ${asl_SOURCES})
-target_link_libraries(asl PUBLIC aslCommon aslacl asldata aslmath ${Boost_LIBRARIES})
+target_link_libraries(asl PUBLIC aslcommon aslacl asldata aslmath ${Boost_LIBRARIES})
 INSTALL_SUBLIB(asl asl_PUBLIC_HEADERS)
 
 

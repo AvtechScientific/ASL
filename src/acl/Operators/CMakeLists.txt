@@ -1,9 +1,9 @@
 include_directories(${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/src/acl)
 
 
-# aslaclOperators
+# aslacloperators
 
-set(aslaclOperators_PUBLIC_HEADERS
+set(aslacloperators_PUBLIC_HEADERS
 	aclElementAssignmentSafe.h
 	aclElementIfElse.h
 	aclElementSum.h
@@ -29,8 +29,8 @@ set(aslaclOperators_PUBLIC_HEADERS
 	aclElementConvert.h
 )
 
-set(aslaclOperators_SOURCES
-	${aslaclOperators_PUBLIC_HEADERS}
+set(aslacloperators_SOURCES
+	${aslacloperators_PUBLIC_HEADERS}
 	aclElementAssignmentSafe.cxx
 	aclElementIfElse.cxx
 	aclElementSum.cxx
@@ -56,6 +56,6 @@ set(aslaclOperators_SOURCES
 	aclElementConvert.cxx
 )
 
-add_library(aslaclOperators ${aslaclOperators_SOURCES})
-target_link_libraries(aslaclOperators PRIVATE ${OpenCL_LIBRARIES})
-INSTALL_SUBLIB(aslaclOperators aslaclOperators_PUBLIC_HEADERS)
+add_library(aslacloperators ${aslacloperators_SOURCES})
+target_link_libraries(aslacloperators PRIVATE ${OpenCL_LIBRARIES})
+INSTALL_SUBLIB(aslacloperators aslacloperators_PUBLIC_HEADERS)
