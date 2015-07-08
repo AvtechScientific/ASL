@@ -49,7 +49,7 @@ namespace asl
 			  command line and/or parameters file.
 			  \p description_ is used in the help output and as comment on
 			  parameters file generation.
-			  \units_ - parameter units; is used to complement the option
+			  \p units_ - parameter units; is used to complement the option
 			  description mentioned above. Might be used for automatic unit
 			  conversion in future (to this end it is recommended to use the
 			  notation of the Boost::Units library).
@@ -60,14 +60,14 @@ namespace asl
 			          const char* description_,
 			          const char* units_ = "");
 			/**
-			  \defaultValue - default parameter value. Since a default value is
+			  \p defaultValue - default parameter value. Since a default value is
 			  specified, the parameter is not required to be specified in the
 			  parameters file or command line.
 			  \p key_ - option key; is used to specify this parameter through
 			  command line and/or parameters file.
 			  \p description_ is used in the help output and as comment on
 			  parameters file generation.
-			  \units_ - parameter units; is used to complement the option
+			  \p units_ - parameter units; is used to complement the option
 			  description mentioned above. Might be used for automatic unit
 			  conversion in future (to this end it is recommended to use the
 			  notation of the Boost::Units library).
