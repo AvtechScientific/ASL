@@ -8,6 +8,11 @@ __Advanced Simulation Library (ASL)__ is a free and open source multiphysics sim
 ASL is distributed under the free GNU Affero General Public License (AGPLv3) with an optional [commercial license](http://asl.org.il/licensing). Professional support and consulting services are provided by [Avtech Scientific](http://avtechscientific.com), whose team created and continues to extend the library. The company offers [innovative R&D solutions and services](http://avtechscientific.com/services) and is involved in diverse academic and industrial [collaborative projects](http://avtechscientific.com/projects) dealing with complex multidisciplinary problems.
 
 
+## Further information
+
+For more information, please visit <http://asl.org.il>.
+
+
 ## Quick Start
 
 ### Installation
@@ -33,11 +38,14 @@ ASL is distributed under the free GNU Affero General Public License (AGPLv3) wit
 ### Writing your own code using ASL
 
 1. Take a look on examples, start with [examples/flow/locomotive_in_tunnel.cc](http://asl.org.il/doc/Developer-Guide/locomotive_in_tunnel_8cc-example.html)
-2. ASL installation supplies `ASLConfig.cmake` and `ASL.pc` files. To build your program using
-	- `cmake`: `examples/flow/CMakeLists.txt`
-	- `pkg-config`: `c++ ``pkg-config --cflags --libs ASL`` -o flow flow.cc`
-
-
-## Further information
-
-For more information, please visit <http://asl.org.il>.
+2. ASL installation supplies `ASL.pc` and `ASLConfig.cmake` files. To build your program using:
+	- `pkg-config` - launch ``c++ `pkg-config --cflags --libs ASL` -o locomotive_in_tunnel locomotive_in_tunnel.cc``
+	- `cmake` - write a basic `CMakeLists.txt` file:
+			```
+			project(locomotive)
+			cmake_minimum_required(VERSION 3.0.2 FATAL_ERROR)
+			find_package(ASL 0.1.4 CONFIG REQUIRED)
+			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+			add_executable(locomotive_in_tunnel locomotive_in_tunnel.cc)
+			target_link_libraries(locomotive_in_tunnel PRIVATE ASL::aslnum ASL::aslvtk ASL::asl)
+			```

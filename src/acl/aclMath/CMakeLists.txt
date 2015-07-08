@@ -1,8 +1,8 @@
 include_directories(${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/src/acl)
 
-# aslaclMath
+# aslaclmath
 
-set(aslaclMath_PUBLIC_HEADERS
+set(aslaclmath_PUBLIC_HEADERS
 	aclVectorOfElements.h
 	aclVectorOfElementsDef.h
 	aclVectorOfElementsOperations.h
@@ -14,8 +14,8 @@ set(aslaclMath_PUBLIC_HEADERS
 	aclMathAlg.h
 )
 
-set(aslaclMath_SOURCES
-	${aslaclMath_PUBLIC_HEADERS}
+set(aslaclmath_SOURCES
+	${aslaclmath_PUBLIC_HEADERS}
 	aclVectorOfElementsDef.cxx
 	aclVectorOfElementsOperations.cxx
 	aclMatrixOfElements.cxx
@@ -26,5 +26,5 @@ set(aslaclMath_SOURCES
 	aclMathAlg.cxx
 )
 
-add_library(aslaclMath ${aslaclMath_SOURCES})
-INSTALL_SUBLIB(aslaclMath aslaclMath_PUBLIC_HEADERS)
+add_library(aslaclmath ${aslaclmath_SOURCES})
+INSTALL_SUBLIB(aslaclmath aslaclmath_PUBLIC_HEADERS)

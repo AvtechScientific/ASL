@@ -22,7 +22,7 @@
 
 
 /**
-	\example cubeGravity.cc
+	\example cubeIncompressibleGravity.cc
  */
 
 #include <aslDataInc.h>

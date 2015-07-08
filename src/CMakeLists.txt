@@ -11,24 +11,24 @@ add_subdirectory(numExtend)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/acl)
 
 
-# aslCommon
+# aslcommon
 
-set(aslCommon_PUBLIC_HEADERS
+set(aslcommon_PUBLIC_HEADERS
 	utilities/aslParametersManager.h
 	utilities/aslTimeStamp.h
 	aslUtilities.h
 )
 
-set(aslCommon_SOURCES
-	${aslCommon_PUBLIC_HEADERS}
+set(aslcommon_SOURCES
+	${aslcommon_PUBLIC_HEADERS}
 	utilities/aslParametersManager.cxx
 	utilities/aslTimeStamp.cxx
 	aslUtilities.cxx
 )
 
-add_library(aslCommon ${aslCommon_SOURCES})
-target_link_libraries(aslCommon ${Boost_LIBRARIES})
-INSTALL_SUBLIB(aslCommon aslCommon_PUBLIC_HEADERS)
+add_library(aslcommon ${aslcommon_SOURCES})
+target_link_libraries(aslcommon PRIVATE ${Boost_LIBRARIES})
+INSTALL_SUBLIB(aslcommon aslcommon_PUBLIC_HEADERS)
 
 
 # asl
@@ -55,7 +55,7 @@ set(asl_SOURCES
 )
 
 add_library(asl ${asl_SOURCES})
-target_link_libraries(asl aslCommon aslacl asldata aslmath ${Boost_LIBRARIES})
+target_link_libraries(asl PUBLIC aslcommon aslacl asldata aslmath ${Boost_LIBRARIES})
 INSTALL_SUBLIB(asl asl_PUBLIC_HEADERS)
 
 
@@ -77,7 +77,7 @@ set(aslvtk_SOURCES
 )
 
 add_library(aslvtk ${aslvtk_SOURCES})
-target_link_libraries(aslvtk ${VTK_LIBRARIES} ${OpenCL_LIBRARIES})
+target_link_libraries(aslvtk PRIVATE ${VTK_LIBRARIES} PRIVATE ${OpenCL_LIBRARIES})
 INSTALL_SUBLIB(aslvtk aslvtk_PUBLIC_HEADERS)
 
 
@@ -86,7 +86,6 @@ INSTALL_SUBLIB(aslvtk aslvtk_PUBLIC_HEADERS)
 if (WITH_MATIO)
 	find_package(MATIO 1.5.2 REQUIRED)
 	include_directories(SYSTEM ${MATIO_INCLUDE_DIRS})
-	set(CMAKE_CXX_FLAGS "-fpermissive ${CMAKE_CXX_FLAGS}")
 
 	set(aslmatio_PUBLIC_HEADERS
 		utilities/aslMATLABCasters.h
@@ -100,7 +99,7 @@ if (WITH_MATIO)
 	)
 
 	add_library(aslmatio ${aslmatio_SOURCES})
-	target_link_libraries(aslmatio ${MATIO_LIBRARIES})
+	target_link_libraries(aslmatio PRIVATE ${MATIO_LIBRARIES})
 	INSTALL_SUBLIB(aslmatio aslmatio_PUBLIC_HEADERS)
 endif (WITH_MATIO)
 
