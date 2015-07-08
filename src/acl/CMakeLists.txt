@@ -63,5 +63,5 @@ set(aslacl_SOURCES
 )
 
 add_library(aslacl ${aslacl_SOURCES})
-target_link_libraries(aslacl aslCommon aslaclOperators aslaclMath ${OpenCL_LIBRARIES})
+target_link_libraries(aslacl PUBLIC aslcommon aslacloperators aslaclmath ${OpenCL_LIBRARIES})
 INSTALL_SUBLIB(aslacl aslacl_PUBLIC_HEADERS)

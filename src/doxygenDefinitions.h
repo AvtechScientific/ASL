@@ -116,7 +116,7 @@
  */
 
 /**
- \defgroup NumMethods NumericalMethods
+ \defgroup NumMethods Numerical Methods
  \ingroup Numerics
  */
 
@@ -132,7 +132,7 @@
 
 
 /**
- \defgroup TransportProcesses Transport processes
+ \defgroup TransportProcesses Transport Processes
  \ingroup Physics
 */
 
@@ -142,13 +142,13 @@
 */
 
 /**
- \defgroup GenericBC Generic boundary conditions
+ \defgroup GenericBC Generic Boundary Conditions
  \ingroup BoundaryConditions
 */
 
 
 /**
- \defgroup TransportProcessesBC Transport processes boundary conditions
+ \defgroup TransportProcessesBC Transport Processes Boundary Conditions
  \ingroup TransportProcesses
  \ingroup BoundaryConditions
  */
@@ -169,7 +169,7 @@
  */
 
 
-/// \defgroup DataAnalysis Data analysis tools
+/// \defgroup DataAnalysis Data Analysis Tools
 /// \ingroup Numerics
 
 
@@ -194,6 +194,12 @@
 
 /// \defgroup ErrorMessaging Error Messaging
 /// \ingroup Utilities
+
+
+/**
+  \defgroup Splines Splines
+*/
+
 
 
 namespace boost

@@ -459,7 +459,7 @@ namespace asl
 				{
 					// Only warn, since all options might have default values, or required values
 					// provided through the command line - so no configuration file is required
-					warningMessage("ApplicationParametersManager::load() - no parameters file provided, " + p.string() + " is a directory");
+					warningMessage("ApplicationParametersManager::load() - no parameters file provided, " + p.string() + " is a directory. Using default values");
 				}
 				else
 				{
@@ -473,7 +473,7 @@ namespace asl
 					}
 					else
 					{
-						warningMessage("ApplicationParametersManager::load() - can not open configuration file: " + p.string());
+						warningMessage("ApplicationParametersManager::load() - can not open configuration file: " + p.string() + " . Using default values");
 						// Get directory, cutting file name, after using p for warning
 						p = p.parent_path();
 					}
@@ -481,7 +481,7 @@ namespace asl
 			}
 			else
 			{
-				warningMessage("ApplicationParametersManager::load() - no parameters file provided");
+				warningMessage("ApplicationParametersManager::load() - no parameters file provided. Using default values");
 			}
 
 			// Generate `parametersFileDirectory`

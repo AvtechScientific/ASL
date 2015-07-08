@@ -26,16 +26,6 @@
 
 #include "aslNumMethod.h"
 
-/**
- \defgroup TransportProcesses Transport Processes
- \ingroup Physics
- */
-
-/**
- \defgroup NumMethods NumericalMethods
- \ingroup Numerics
- */
-
 
 namespace acl{
 	class Kernel;
@@ -50,13 +40,13 @@ namespace asl
 	typedef std::shared_ptr<DataWithGhostNodesACLData> SPDataWithGhostNodesACLData;
 	class AbstractDataWithGhostNodes;
 	typedef std::shared_ptr<AbstractDataWithGhostNodes> SPAbstractDataWithGhostNodes;
-	
+
 	/// Numerical method which computes multicomponent transport processes; \f$O^2(dt)\f$
 	/**
 		 \ingroup TransportProcesses
 		 \ingroup NumMethods
-		 
-		 \f[ \partial_t c_i= D_i \Delta c_i 
+
+		 \f[ \partial_t c_i= D_i \Delta c_i
 		    					-\nabla\left(\frac{c_i q}{k} \nabla(\phi+f_2)  \right)\f]
 		 where
 		 \param cData corresponds to \f$c_i\f$
@@ -64,7 +54,7 @@ namespace asl
 		 \param efFactor1 corresponds to \f$k\f$
 		 \param efFactor2 corresponds to \f$f_2\f$
 		 \param efPhi corresponds to \f$\phi\f$
-		 \param efChargeAnd corresponds to \f$q\f$	 
+		 \param efChargeAnd corresponds to \f$q\f$ 
 	*/
 	class FDAdvectionDiffusion2: public NumMethod
 	{
@@ -72,17 +62,16 @@ namespace asl
 			typedef SPDataWithGhostNodesACLData Data;
 			typedef SPAbstractDataWithGhostNodes ScalarField;
 		private:
-			std::unique_ptr<acl::Kernel> kernel; 
-			
+			std::unique_ptr<acl::Kernel> kernel;
 			std::vector<Data> cData;
-			std::vector<Data> cInternalData;			
+			std::vector<Data> cInternalData;
 
 			bool electricField;
 			ScalarField efPhi;
 			ScalarField efFactor1;
 			ScalarField efFactor2;
 			std::vector<ScalarField> efChargeAnd;
-				
+
 			const VectorTemplate* vectorTemplate;
 
 			int t;
