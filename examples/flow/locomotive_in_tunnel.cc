@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
 	 "space step" - option description; is used in the help output:
 	 `locomotive_in_tunnel -h` and as comment on parameters file generation:
 	 `locomotive_in_tunnel -g ./defaultParameters.ini`
-	 "m" - parameter units; is used as part of the option description mentioned
+	 "m" - parameter units; is used to complement the option description mentioned
 	 above. Might be used for automatic unit conversion in future (to this end
 	 it is recommended to use the notation of the Boost::Units library). */
 	asl::Parameter<FlT> dx(0.08, "dx", "space step", "m");

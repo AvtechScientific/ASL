@@ -34,22 +34,44 @@ namespace asl
 
 	class PrefixStore;
 
-	/// This class stores parameter's value and the information
-	/// needed to extract it from command line and/or parameters file
-	/// \ingroup LDI
+	/** This class stores parameter's value and the information
+	 needed to extract it from command line and/or parameters file.
+	 Important: declare Parameters only after declaring ParametersManager or
+	 ApplicationParametersManager instance and before calling 
+	 ParametersManager::load() because each Parameter adds itself
+	 to the instance automatically!
+	\ingroup LDI */
 	template <typename T> class Parameter
 	{
 		public:
-			/// \p key is the parameter's identification key in the
-			/// parameters file. If no default value is specified, then the
-			/// parameter is required to be specified in the parameters file
-			/// or command line.
+			/**
+			  \p key_ - option key; is used to specify this parameter through
+			  command line and/or parameters file.
+			  \p description_ is used in the help output and as comment on
+			  parameters file generation.
+			  \units_ - parameter units; is used to complement the option
+			  description mentioned above. Might be used for automatic unit
+			  conversion in future (to this end it is recommended to use the
+			  notation of the Boost::Units library).
+			  Since no default value is specified, the parameter is required
+			  to be specified in the parameters file or command line.
+			*/
 			Parameter(const char* key_,
 			          const char* description_,
 			          const char* units_ = "");
-			/// \p key is the parameter's identification key in the parameters file
-			/// If a default value is specified, then the parameter is not
-			/// required to be specified in the parameters file or command line.	
+			/**
+			  \defaultValue - default parameter value. Since a default value is
+			  specified, the parameter is not required to be specified in the
+			  parameters file or command line.
+			  \p key_ - option key; is used to specify this parameter through
+			  command line and/or parameters file.
+			  \p description_ is used in the help output and as comment on
+			  parameters file generation.
+			  \units_ - parameter units; is used to complement the option
+			  description mentioned above. Might be used for automatic unit
+			  conversion in future (to this end it is recommended to use the
+			  notation of the Boost::Units library).
+			*/
 			Parameter(T defaultValue,
 			          const char* key_,
 			          const char* description_,
@@ -67,9 +89,9 @@ namespace asl
 
 
 	/** This class automatically accomodates newly created Parameters and then
-	can load them from a parameters file.
-	It has to be declared before declaring all the parameters it will manage!
-	\ingroup Utilities */
+	 can load them from a parameters file.
+	 It has to be declared before declaring all the parameters it will manage!
+	 \ingroup Utilities */
 	class ParametersManager
 	{
 		public:
