@@ -36,22 +36,18 @@ namespace asl
 	class ElementBase;
 	typedef std::shared_ptr<ElementBase> Element;
 
-	/**
-	 \defgroup Splines
-	 */
-	
 	template <class Func> class UniversalFunction
 	{
 		public:
 			inline double operator()(double x);
 			inline double operator()(Element x);
-	};	
-	
+	};
+
 	///Linear spline function
-	/**	
+	/**
 	 \ingroup Splines
 
-	this class defines a spline function \f$ (1-|x/r_0|),~~~ |x|<r_0 \f$	 
+	this class defines a spline function \f$ (1-|x/r_0|),~~~ |x|<r_0 \f$
 	 \image html linearS.png ""
 	*/
 	class LinearSpline
@@ -64,10 +60,10 @@ namespace asl
 	};
 
 	///Quadratic spline function
-	/**	
+	/**
 	 \ingroup Splines
 
-	this class defines a spline function \f$ (1-|x|/r_0)^2,~~~ |x|<r_0 \f$	 
+	this class defines a spline function \f$ (1-|x|/r_0)^2,~~~ |x|<r_0 \f$
 	 \image html quadraticS.png ""
 	*/
 	class QuadraticSpline

@@ -26,12 +26,9 @@
 
 #include "aslNumMethod.h"
 
-/**
- \defgroup TransportProcesses Transport Processes
- */
 
-
-namespace acl{
+namespace acl
+{
 	class Kernel;
 	class VectorOfElementsData;
 }
