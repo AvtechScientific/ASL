@@ -37,8 +37,14 @@ include_directories(SYSTEM ${OpenCL_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 add_subdirectory(src)
 add_subdirectory(test)
-add_subdirectory(examples)
-add_subdirectory(doc)
+
+if (WITH_EXAMPLES)
+	add_subdirectory(examples)
+endif (WITH_EXAMPLES)
+
+if (WITH_API_DOC)
+	add_subdirectory(doc)
+endif (WITH_API_DOC)
 
 # Packaging
 set(CPACK_GENERATOR "TGZ")

@@ -1,6 +1,4 @@
 option(BUILD_SHARED_LIBS "Build shared libraries" ON)
-option(WITH_MATIO "Build with MATIO (Matlab) support" ON)
-option(WITH_INTERNAL_DOC "Compile doxygen internal documentation" ON)
-option(WITH_TESTING "Build with unit tests" OFF)
-
-
+option(WITH_MATIO "Build with Matlab support" OFF)
+option(WITH_EXAMPLES "Build with examples" ON)
+option(WITH_API_DOC "Compile doxygen API documentation" OFF)
