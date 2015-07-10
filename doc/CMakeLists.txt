@@ -9,7 +9,7 @@ endif (DOXYGEN_DOT_FOUND)
 
 # Configure Doxyfile
 configure_file(
-	"${PROJECT_SOURCE_DIR}/doc/Developer-Guide/Doxyfile.in"
+	"${PROJECT_SOURCE_DIR}/doc/Developer-Guide/Doxyfile.cmake.in"
 	"${PROJECT_BINARY_DIR}/doc/Developer-Guide/Doxyfile"
 )
 add_custom_target(docs ${DOXYGEN_EXECUTABLE} ${PROJECT_BINARY_DIR}/doc/Developer-Guide/Doxyfile)

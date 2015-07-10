@@ -21,10 +21,11 @@ endif()
 # Enable supplied cmake includes and modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/" "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
-# Add definitions
-include(DefineOptions)
-include(DefineFunctions)
 include(GNUInstallDirs)
+
+# Add ASL definitions
+include(ASLBuildOptions)
+include(ASLBuildFunctions)
 
 # Find dependencies
 find_package(OpenCL 1.1 REQUIRED)
