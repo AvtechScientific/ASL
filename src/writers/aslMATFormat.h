@@ -78,5 +78,5 @@ namespace asl {
 
 }// asl
 
-#endif //ASLVTKFORMAT_H
+#endif //ASLMATFORMAT_H
 

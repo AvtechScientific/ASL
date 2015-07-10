@@ -55,7 +55,7 @@ set(asl_SOURCES
 )
 
 add_library(asl ${asl_SOURCES})
-target_link_libraries(asl PUBLIC aslcommon aslacl asldata aslmath ${Boost_LIBRARIES})
+target_link_libraries(asl PUBLIC aslcommon aslacl asldata aslmath PRIVATE ${Boost_LIBRARIES})
 INSTALL_SUBLIB(asl asl_PUBLIC_HEADERS)
 
 

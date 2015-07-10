@@ -21,10 +21,11 @@ endif()
 # Enable supplied cmake includes and modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/" "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
-# Add definitions
-include(DefineOptions)
-include(DefineFunctions)
 include(GNUInstallDirs)
+
+# Add ASL definitions
+include(ASLBuildOptions)
+include(ASLBuildFunctions)
 
 # Find dependencies
 find_package(OpenCL 1.1 REQUIRED)
@@ -37,8 +38,14 @@ include_directories(SYSTEM ${OpenCL_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 add_subdirectory(src)
 add_subdirectory(test)
-add_subdirectory(examples)
-add_subdirectory(doc)
+
+if (WITH_EXAMPLES)
+	add_subdirectory(examples)
+endif (WITH_EXAMPLES)
+
+if (WITH_API_DOC)
+	add_subdirectory(doc)
+endif (WITH_API_DOC)
 
 # Packaging
 set(CPACK_GENERATOR "TGZ")
