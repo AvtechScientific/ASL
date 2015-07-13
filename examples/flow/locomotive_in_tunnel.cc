@@ -116,7 +116,7 @@ int main(int argc, char* argv[])
 	// Define dimensionless viscosity value
 	FlT nuNum(nu.v() * dt.v() / dx.v() / dx.v());
 	
-	std::cout << "Data initialization... ";
+	cout << "Data initialization..." << endl;
 
 	// Read geometry of the locomotive from the file
 	auto locomotive(asl::readSurface("locomotive.stl", bl));
@@ -134,9 +134,11 @@ int main(int argc, char* argv[])
 	// Initialization
 	asl::initData(forceField, makeAVec(0., 0., 0.));
 	
-	std::cout << "Finished" << endl;
-	
-	std::cout << "Numerics initialization... ";
+	cout << "Finished" << endl;
+
+	cout << "Numerics initialization..." << endl;
+
+	// NOTE: the problem is considered in the reference frame related to the locomotive
 
 	// Generate numerical method for air flow - LBGK (lattice Bhatnagar–Gross–Krook)
 	asl::SPLBGK lbgk(new asl::LBGKTurbulence(block, 
@@ -144,7 +146,9 @@ int main(int argc, char* argv[])
 	                                         &asl::d3q15()));
 	
 	lbgk->init();
+	// Generate an instance for LBGK data initialization
 	asl::SPLBGKUtilities lbgkUtil(new asl::LBGKUtilities(lbgk));
+	// Initialize the LBGK internal data so that the flow velocity of (0.1, 0, 0) in lattice units
 	lbgkUtil->initF(acl::generateVEConstant(.1, .0, .0));
 
 	auto vfTunnel(asl::generatePFConstant(makeAVec(0.1, 0., 0.)));
@@ -152,27 +156,39 @@ int main(int argc, char* argv[])
 	std::vector<asl::SPNumMethod> bc;
 	std::vector<asl::SPNumMethod> bcV;
 
+
+        // Generate boundary conditions for the tunnel geometry. Constant velocity BC
 	bc.push_back(generateBCVelocity(lbgk, vfTunnel, tunnelMap));
+        // Generate boundary conditions for the tunnel geometry. Constant velocity BC
+	// This BC is used for visualization.
 	bcV.push_back(generateBCVelocityVel(lbgk, vfTunnel, tunnelMap));
-//	bcV.push_back(generateBCNoSlipRho(lbgk, tunnelMap));
+	bcV.push_back(generateBCNoSlipRho(lbgk, tunnelMap));
+
+        // Generate boundary conditions for the locomotive geometry. Non-slip BC
 	bc.push_back(generateBCNoSlip(lbgk,  locomotive));
 	bcV.push_back(generateBCNoSlipVel(lbgk, locomotive));
-//	bcV.push_back(generateBCNoSlipRho(lbgk, locomotive));
+	bcV.push_back(generateBCNoSlipRho(lbgk, locomotive));
+
+	// Generate constant presure BC for in and out planes of the tunnel
 	bc.push_back(generateBCConstantPressureVelocity(lbgk, 1.,
 	                                                makeAVec(0.1, 0., 0.),
 	                                                {asl::X0, asl::XE}));
 
+	// Initialization and building of all BC
 	initAll(bc);
 	initAll(bcV);
 
+	// Generate an object for force field of air on the locomotive
 	auto computeForce(generateComputeSurfaceForce(lbgk, forceField, locomotive));
 	computeForce->init();
 	
 
-	std::cout << "Finished" << endl;
-	std::cout << "Computing... ";
+	cout << "Finished" << endl;
+	cout << "Computing..." << endl;
 	asl::Timer timer;
 
+	// Initialization of the output system
+	// Write the output to the directory containing the input parameters file (default "./")
 	asl::WriterVTKXML writer(appParamsManager.getDir() + "locomotive_in_tunnel");
 	writer.addScalars("map", *locomotive);
 	writer.addScalars("tunnel", *tunnelMap);
@@ -180,36 +196,42 @@ int main(int argc, char* argv[])
 	writer.addVector("v", *lbgk->getVelocity());
 	writer.addVector("force", *forceField);
 
+	// Execute all BC
 	executeAll(bc);
 	executeAll(bcV);
 	computeForce->execute();
 
+	// First data output
 	writer.write();
 
 	timer.start();
+	// Iteration loop 
 	for (unsigned int i(1); i < 20001; ++i)
 	{
+		// One iteration (timestep) of bulk numerical procedure
 		lbgk->execute();
+		// Execution of the BC procedures
 		executeAll(bc);
+		// Output and analysis scope
 		if (!(i%1000))
 		{
 			cout << i << endl;
+			// Execution of the visualization BC procedures
 			executeAll(bcV);
+			// Computation of the force field
 			computeForce->execute();
+			// Data writing
 			writer.write();
 		}
 	}
 	timer.stop();
 	
-	std::cout << "Finished" << endl;	
+	cout << "Finished" << endl;	
 
-	cout << "time=" << timer.getTime() << "; clockTime="
-		 << timer.getClockTime() << "; load=" 
+	cout << "Computation statistic:" << endl;
+	cout << "time = " << timer.getTime() << "; clockTime = "
+		 << timer.getClockTime() << "; load = "
 		 << timer.getProcessorLoad() * 100 << "%" << endl;
-
-	std::cout << "Output... ";
-	std::cout << "Finished" << endl;	
-	std::cout << "Ok" << endl;
 
 	return 0;
 }
