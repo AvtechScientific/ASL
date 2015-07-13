@@ -116,8 +116,8 @@ namespace acl
 
 
 	/**
-	Returns the minimum amount of private memory, in bytes, used by each work-
-	item in the kernel. This value may include any private memory needed by
+	Returns the minimum amount of private memory, in bytes, used by each work-item
+	in the kernel. This value may include any private memory needed by
 	an implementation to execute the kernel, including that used by the language
 	built-ins and variable declared inside the kernel with the __private qualifier.
 
@@ -138,7 +138,7 @@ namespace acl
 			/// identified by \p platform and \p device.
 			/// Warns if requested combination is not found.
 			void setDefaultQueue(const std::string & platform = "",
-					     const std::string & device = "");
+			                     const std::string & device = "");
 			std::vector<CommandQueue> queues;
 			CommandQueue defaultQueue;
 			std::string getDevicesInfo();
