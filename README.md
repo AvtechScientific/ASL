@@ -21,8 +21,8 @@ ASL is distributed under the free GNU Affero General Public License (AGPLv3) wit
 	- [C++ bindings for OpenCL](https://www.khronos.org/registry/cl/api/1.1/cl.hpp) (OpenCL Specification License)
 	- [boost](http://www.boost.org) (Boost Software License)
 	- [VTK](http://vtk.org) (BSD License)
-	- [optional](https://github.com/AvtechScientific/ASL/blob/master/cmake/ASLBuildOptions.cmake#L3): Matlab support - [matio](https://sourceforge.net/projects/matio) (BSD License)
-	- [optional](https://github.com/AvtechScientific/ASL/blob/master/cmake/ASLBuildOptions.cmake#L4): API documentation - [doxygen](http://doxygen.org) (preferably with [graphviz](http://www.graphviz.org))
+	- [optional](https://github.com/AvtechScientific/ASL/blob/master/cmake/ASLBuildOptions.cmake#L3): Matlab support with [matio](https://sourceforge.net/projects/matio) (BSD License)
+	- [optional](https://github.com/AvtechScientific/ASL/blob/master/cmake/ASLBuildOptions.cmake#L4): API documentation with [doxygen](http://doxygen.org) (preferably with [graphviz](http://www.graphviz.org))
 2. Download and extract the [ASL source code archive](https://github.com/AvtechScientific/ASL/releases/latest).
 3. Create a build directory: `mkdir build-asl; cd build-asl`
 4. Use [cmake generator](http://www.cmake.org/cmake/help/v3.2/manual/cmake-generators.7.html) to produce Makefiles: `cmake -G "Unix Makefiles" ../ASL` or project files for your IDE (Visual Studio, Xcode, Eclipse, etc.): `cmake -G "Visual Studio 10" ../ASL`
@@ -42,7 +42,7 @@ ASL is distributed under the free GNU Affero General Public License (AGPLv3) wit
 	- `pkg-config`: launch ``c++ `pkg-config --cflags --libs ASL` -o locomotive_in_tunnel locomotive_in_tunnel.cc``
 	- `cmake`: write a basic `CMakeLists.txt` file:
 
-```CMakeLists.txt
+```cmake
 project(locomotive)
 cmake_minimum_required(VERSION 3.0.2 FATAL_ERROR)
 find_package(ASL 0.1.4 CONFIG REQUIRED)
