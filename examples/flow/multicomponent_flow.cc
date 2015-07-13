@@ -146,7 +146,7 @@ int main(int argc, char *argv[])
 	Parameters params;
 	params.load(argc, argv);
 	
-	std::cout << "Data initialization...";
+	cout << "Data initialization..." << endl;
 
 	asl::Block block(params.size, params.dx.v());
 
@@ -159,9 +159,9 @@ int main(int argc, char *argv[])
 	asl::initData(component3Frac, 0);
 	
 	
-	std::cout << "Finished" << endl;
-	
-	std::cout << "Numerics initialization...";
+	cout << "Finished" << endl;
+
+	cout << "Numerics initialization..." << endl;
 
 	auto templ(&asl::d3q15());	
 	
@@ -211,8 +211,8 @@ int main(int argc, char *argv[])
 	initAll(bcDif);
 	initAll(bcV);
 
-	std::cout << "Finished" << endl;
-	std::cout << "Computing..." << endl;
+	cout << "Finished" << endl;
+	cout << "Computing..." << endl;
 	asl::Timer timer;
 
 	asl::WriterVTKXML writer("multicomponent_flow");
@@ -240,7 +240,7 @@ int main(int argc, char *argv[])
 		if (!(i%100))
 		{
 			timer.stop();
-			cout << i << "/10000; expected left time: " <<  timer.getLeftTime(double(i)/10000.)  << endl;
+			cout << i << "/10000; time left (expected): " <<  timer.getLeftTime(double(i)/10000.)  << endl;
 			executeAll(bcV);
 			writer.write();
 			timer.resume();
@@ -248,15 +248,12 @@ int main(int argc, char *argv[])
 	}
 	timer.stop();
 	
-	std::cout << "Finished" << endl;	
+	cout << "Finished" << endl;	
 
-	cout << "time=" << timer.getTime() << "; clockTime="
-		 <<  timer.getClockTime() <<  "; load=" 
-		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
-
-	std::cout << "Output...";
-	std::cout << "Finished" << endl;	
-	std::cout << "Ok" << endl;
+	cout << "Computation statistic:" << endl;
+	cout << "time = " << timer.getTime() << "; clockTime = "
+		 << timer.getClockTime() << "; load = "
+		 << timer.getProcessorLoad() * 100 << "%" << endl;
 
 	return 0;
 }
