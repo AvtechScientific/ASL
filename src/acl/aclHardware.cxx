@@ -104,12 +104,12 @@ namespace acl
 			    (device == getDeviceName(queues[i])))
 			{
 				// Choose requested device on requested platform
-				defaultQueue = queues.back();
+				defaultQueue = queues[i];
 			}
 		}
 
 		// Warn if requested combination of platform and device was not found
-		if (defaultQueue.get() == 0)
+		if (defaultQueue == NULL)
 		{
 			// Choose first available device
 			defaultQueue = queues.front();
@@ -144,15 +144,18 @@ namespace acl
 		return getDevice(queue).getInfo<CL_DEVICE_NAME>();
 	}
 
+
 	cl_device_type getDeviceType(const CommandQueue & queue)
 	{
 		return getDevice(queue).getInfo<CL_DEVICE_TYPE>();
 	}
-		
+
+
 	cl_uint getNComputeUnits(const CommandQueue & queue)
 	{
 		return getDevice(queue).getInfo<CL_DEVICE_MAX_COMPUTE_UNITS>();
 	}
+
 
 	cl::Device getDevice(const CommandQueue & queue)
 	{
