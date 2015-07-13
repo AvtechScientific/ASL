@@ -23,7 +23,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/" "${CMAKE
 
 include(GNUInstallDirs)
 
-# Add ASL definitions
+# Add ASL cmake definitions
 include(ASLBuildOptions)
 include(ASLBuildFunctions)
 
