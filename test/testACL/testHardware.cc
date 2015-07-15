@@ -63,6 +63,7 @@ void printHardwareInfo(const CommandQueue & queue)
 		 << extensionAvailable(queue, CL_KHR_FP64) << endl;
 	cout << "\t\textension CL_KHR_INT64_EXTENDED_ATOMICS: "
 		 << extensionAvailable(queue, CL_KHR_INT64_EXTENDED_ATOMICS) << endl;
+	cout << "\t\tsupported OpenCL version: " << getDeviceVersion(queue) << endl;
 }
 
 
@@ -110,7 +111,6 @@ int main()
 			cout << endl;
 		}
 	}
-
 
 	return 0;
 }

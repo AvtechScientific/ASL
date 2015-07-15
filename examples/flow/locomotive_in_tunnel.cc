@@ -148,7 +148,7 @@ int main(int argc, char* argv[])
 	lbgk->init();
 	// Generate an instance for LBGK data initialization
 	asl::SPLBGKUtilities lbgkUtil(new asl::LBGKUtilities(lbgk));
-	// Initialize the LBGK internal data so that the flow velocity of (0.1, 0, 0) in lattice units
+	// Initialize the LBGK internal data with the flow velocity of (0.1, 0, 0) [in lattice units]
 	lbgkUtil->initF(acl::generateVEConstant(.1, .0, .0));
 
 	auto vfTunnel(asl::generatePFConstant(makeAVec(0.1, 0., 0.)));
@@ -157,14 +157,14 @@ int main(int argc, char* argv[])
 	std::vector<asl::SPNumMethod> bcV;
 
 
-        // Generate boundary conditions for the tunnel geometry. Constant velocity BC
+	// Generate boundary conditions for the tunnel geometry. Constant velocity BC
 	bc.push_back(generateBCVelocity(lbgk, vfTunnel, tunnelMap));
-        // Generate boundary conditions for the tunnel geometry. Constant velocity BC
+	// Generate boundary conditions for the tunnel geometry. Constant velocity BC
 	// This BC is used for visualization.
 	bcV.push_back(generateBCVelocityVel(lbgk, vfTunnel, tunnelMap));
 	bcV.push_back(generateBCNoSlipRho(lbgk, tunnelMap));
 
-        // Generate boundary conditions for the locomotive geometry. Non-slip BC
+	// Generate boundary conditions for the locomotive geometry. Non-slip BC
 	bc.push_back(generateBCNoSlip(lbgk,  locomotive));
 	bcV.push_back(generateBCNoSlipVel(lbgk, locomotive));
 	bcV.push_back(generateBCNoSlipRho(lbgk, locomotive));
@@ -178,7 +178,7 @@ int main(int argc, char* argv[])
 	initAll(bc);
 	initAll(bcV);
 
-	// Generate an object for force field of air on the locomotive
+	// Generate a numerical method for computation of the air force field that acts on the locomotive
 	auto computeForce(generateComputeSurfaceForce(lbgk, forceField, locomotive));
 	computeForce->init();
 	
