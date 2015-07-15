@@ -44,9 +44,13 @@ namespace acl
 	/// Returns vendor name.
 	/// \ingroup HardwareInformation
 	std::string getPlatformVendor(const CommandQueue & queue);
+
 	/// Returns device name.
 	/// \ingroup HardwareInformation
 	std::string getDeviceName(const CommandQueue & queue);
+
+	/** Returns the OpenCL version supported by the device */
+	std::string getDeviceVersion(const CommandQueue & queue);
 
 	/// Returns device type.
 	/// \ingroup HardwareInformation
