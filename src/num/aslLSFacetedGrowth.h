@@ -51,7 +51,7 @@ namespace asl
 			acl::VectorOfElements betaDislACL;	
 		public:
 
-			/// generates code which resullts the number corresponds to nearest direction
+			/// generates code which results the number corresponds to nearest direction
 			void directionCode(acl::VectorOfElements normal,
 				               acl::VectorOfElements direction,
 			                   acl::VectorOfElements cosTheta,
