@@ -27,6 +27,7 @@
 #include "../utilities/aslParametersManager.h"
 #include <fstream>
 
+
 using namespace std;
 using namespace asl;
 
@@ -58,14 +59,16 @@ namespace acl
 		
 		cl_int status = 0;	
 		status = cl::Platform::get(&platforms);
-		errorMessage(status, "Platform::get()");
+		errorMessage(status, "acl::Platform::get()");
 		
 		if (platforms.size() > 0)
 		{
 			for (unsigned int i = 0; i < platforms.size(); ++i)
 			{
+				// Probably not needed, since getDevices() seems to call clear() internally
+				devices.clear();
 				status = platforms[i].getDevices(CL_DEVICE_TYPE_ALL, &devices);
-				errorMessage(status, "Platform::getDevices()");
+				errorMessage(status, "acl::Platform::getDevices()");
 				devicesInfo += "Platform: " + platforms[i].getInfo<CL_PLATFORM_VENDOR>()
 					    + "\nNumber of devices: " + numToStr(devices.size()) + "\n";
 
@@ -77,12 +80,12 @@ namespace acl
 				{
 					// Create an OpenCL context for the current device
 					context = cl::Context(vector<cl::Device>(1, devices[j]), cps, NULL, NULL, &status);
-					errorMessage(status, "Context::Context()");
+					errorMessage(status, "acl::Context::Context()");
 
 					// Create an OpenCL command queue for current context and device
 					queues.push_back(CommandQueue(new cl::CommandQueue(context, devices[j], 0, &status)));
-					errorMessage(status, "CommandQueue::CommandQueue()");
-					
+					errorMessage(status, "acl::CommandQueue::CommandQueue()");
+ 					
 					devicesInfo += "\t" + devices[j].getInfo<CL_DEVICE_NAME>() + "\n";
 				}
 			}
@@ -96,7 +99,7 @@ namespace acl
 	void Hardware::setDefaultQueue(const std::string & platform,
 								   const std::string & device)
 	{
-		defaultQueue = NULL;
+		defaultQueue = nullptr;
 
 		for (unsigned int i(0); i < queues.size(); ++i)
 		{
@@ -109,11 +112,11 @@ namespace acl
 		}
 
 		// Warn if requested combination of platform and device was not found
-		if (defaultQueue == NULL)
+		if (defaultQueue.get() == nullptr)
 		{
 			// Choose first available device
 			defaultQueue = queues.front();
-			warningMessage("Requested device not found! Using:\n" + getDefaultDeviceInfo());
+			warningMessage("Requested combination of platform(" + platform + ") and device(" + device + ") not found! Using:\n" + getDefaultDeviceInfo());
 		}
 	}
 
@@ -142,6 +145,12 @@ namespace acl
 	string getDeviceName(const CommandQueue & queue)
 	{
 		return getDevice(queue).getInfo<CL_DEVICE_NAME>();
+	}
+
+
+	string getDeviceVersion(const CommandQueue & queue)
+	{
+		return getDevice(queue).getInfo<CL_DEVICE_VERSION>();
 	}
 
 
