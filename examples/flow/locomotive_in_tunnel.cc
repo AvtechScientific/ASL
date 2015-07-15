@@ -100,6 +100,7 @@ int main(int argc, char* argv[])
 	asl::Parameter<FlT> dx(0.08, "dx", "space step", "m");
 	asl::Parameter<FlT> dt(1., "dt", "time step", "s");
 	asl::Parameter<FlT> nu(.001, "nu", "kinematic viscosity", "m^2 s^-1");
+	asl::Parameter<unsigned int> iterations(20001, "iterations number", "");
 
 	/* Load previously declared Parameters from command line and/or
 	parameters file. Use default values if neither is provided. */
@@ -144,18 +145,16 @@ int main(int argc, char* argv[])
 	asl::SPLBGK lbgk(new asl::LBGKTurbulence(block, 
 	                                         acl::generateVEConstant(FlT(nu.v())),  
 	                                         &asl::d3q15()));
-	
 	lbgk->init();
 	// Generate an instance for LBGK data initialization
 	asl::SPLBGKUtilities lbgkUtil(new asl::LBGKUtilities(lbgk));
-	// Initialize the LBGK internal data with the flow velocity of (0.1, 0, 0) [in lattice units]
+	// Initialize the LBGK internal data with the flow velocity of (0.1, 0, 0) in [lattice units]
 	lbgkUtil->initF(acl::generateVEConstant(.1, .0, .0));
 
 	auto vfTunnel(asl::generatePFConstant(makeAVec(0.1, 0., 0.)));
 
 	std::vector<asl::SPNumMethod> bc;
 	std::vector<asl::SPNumMethod> bcV;
-
 
 	// Generate boundary conditions for the tunnel geometry. Constant velocity BC
 	bc.push_back(generateBCVelocity(lbgk, vfTunnel, tunnelMap));
@@ -182,7 +181,6 @@ int main(int argc, char* argv[])
 	auto computeForce(generateComputeSurfaceForce(lbgk, forceField, locomotive));
 	computeForce->init();
 	
-
 	cout << "Finished" << endl;
 	cout << "Computing..." << endl;
 	asl::Timer timer;
@@ -206,7 +204,7 @@ int main(int argc, char* argv[])
 
 	timer.start();
 	// Iteration loop 
-	for (unsigned int i(1); i < 20001; ++i)
+	for (unsigned int i(1); i < iterations.v(); ++i)
 	{
 		// One iteration (timestep) of bulk numerical procedure
 		lbgk->execute();

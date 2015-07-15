@@ -86,7 +86,7 @@ int main(int argc, char* argv[])
 	
 	Param nuNum(nu.v()*dt.v()/dx.v()/dx.v());
 	
-	std::cout<<"Flow: Data initialization...";
+	std::cout << "Data initialization..." << endl;
 
 
 	auto object(asl::readSurface("locomotive.stl", bl));
@@ -99,9 +99,9 @@ int main(int argc, char* argv[])
 	auto forceField(asl::generateDataContainerACL_SP<FlT>(block, 3, 1u));
 	asl::initData(forceField, makeAVec(0.,0.,0.));
 	
-	std::cout<<"Finished"<<endl;
+	std::cout << "Finished"<<endl;
 	
-	std::cout<<"Flow: Numerics initialization...";
+	std::cout << "Numerics initialization..." << endl;
 
 	asl::SPLBGK lbgk(new asl::LBGK(block,
 	                               acl::generateVEConstant(FlT(nuNum.v())),
@@ -111,13 +111,13 @@ int main(int argc, char* argv[])
 	asl::SPLBGKUtilities lbgkUtil(new asl::LBGKUtilities(lbgk));
 	lbgkUtil->initF(acl::generateVEConstant(.1,.0,.0));
 
-	auto vfTunel(asl::generatePFConstant(makeAVec(0.1,0.,0.)));
+	auto vfTunnel(asl::generatePFConstant(makeAVec(0.1,0.,0.)));
 
 	std::vector<asl::SPNumMethod> bc;
 	std::vector<asl::SPNumMethod> bcV;
 
-	bc.push_back(generateBCVelocity(lbgk, vfTunel, tunelMap));
-	bcV.push_back(generateBCVelocityVel(lbgk, vfTunel, tunelMap));
+	bc.push_back(generateBCVelocity(lbgk, vfTunnel, tunelMap));
+	bcV.push_back(generateBCVelocityVel(lbgk, vfTunnel, tunelMap));
 //	bcV.push_back(generateBCNoSlipRho(lbgk, tunelMap));
 	bc.push_back(generateBCNoSlip(lbgk,  object));
 	bcV.push_back(generateBCNoSlipVel(lbgk, object));
@@ -130,12 +130,11 @@ int main(int argc, char* argv[])
 	auto computeForce(generateComputeSurfaceForce(lbgk, forceField, object));
 	computeForce->init();
 	
-
-	std::cout<<"Finished"<<endl;
-	std::cout<<"Computing...";
+	cout << "Finished" << endl;
+	cout << "Computing..." << endl;
 	asl::Timer timer;
 
-	asl::WriterVTKXML writer("flowAroundObjRes");
+	asl::WriterVTKXML writer(appParamsManager.getDir() + "locomotive_laminar");
 	writer.addScalars("map", *object);
 	writer.addScalars("tunel", *tunelMap);
 	writer.addScalars("rho", *lbgk->getRho());
@@ -163,15 +162,12 @@ int main(int argc, char* argv[])
 	}
 	timer.stop();
 	
-	std::cout<<"Finished"<<endl;	
+	cout << "Finished" << endl;	
 
-	cout << "time=" << timer.getTime() << "; clockTime="
-		<< timer.getClockTime()	<< "; load=" 
-		<< timer.getProcessorLoad() * 100 << "%" << endl;
-
-	std::cout<<"Output...";
-	std::cout<<"Finished"<<endl;	
-	std::cout<<"Ok"<<endl;
+	cout << "Computation statistic:" << endl;
+	cout << "time = " << timer.getTime() << "; clockTime = "
+		 << timer.getClockTime() << "; load = "
+		 << timer.getProcessorLoad() * 100 << "%" << endl;
 
 	return 0;
 }
