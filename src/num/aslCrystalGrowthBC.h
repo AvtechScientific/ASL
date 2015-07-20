@@ -29,12 +29,11 @@
 #include <acl/aclMath/aclVectorOfElementsDef.h>
 
 
-namespace acl{
+namespace acl
+{
 	class Kernel;
 	typedef std::shared_ptr<Kernel> SPKernel;
 }
-
-
 
 namespace asl
 {
@@ -42,7 +41,8 @@ namespace asl
 	typedef std::shared_ptr<PositionFunction> SPPositionFunction;
 
 	
-	/// Bondary condition that makes gradient	proportional to a surface concentration \ingroup BoundaryConditions		 
+	/** Boundary condition that makes gradient proportional to a surface concentration
+		\ingroup BoundaryConditions */		 
 	class BCLinearGrowthMap:public BCondWithMap
 	{		
 		public:
@@ -69,7 +69,7 @@ namespace asl
 			virtual void init();			
 	};
 
-	/// Bondary condition that makes gradient proportional to a surface concentration 
+	/// Boundary condition that makes gradient proportional to a surface concentration 
 	/**	
 		 \ingroup BoundaryConditions
 		 The boundary condition corresponds to different system with surface reaction. 
@@ -143,7 +143,8 @@ namespace asl
 			virtual void init();			
 	};
 
-	/// Bondary condition that makes gradient proportional to a surface concentration, second order \ingroup BoundaryConditions		 
+	/** Boundary condition that makes gradient proportional to a surface concentration, second order
+	 \ingroup BoundaryConditions */		 
 	class BCLinearGrowthMap2:public BCondWithMap
 	{		
 		public:

@@ -130,7 +130,7 @@ int main(int argc, char* argv[])
 	
 
 	std::cout << "Finished" << endl;
-	std::cout << "Computing...";
+	std::cout << "Computing..." << endl;
 
 	asl::WriterVTKXML writer("locomotive_stability");
 	writer.addScalars("train", *object);
