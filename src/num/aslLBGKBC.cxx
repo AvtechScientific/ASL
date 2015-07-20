@@ -59,6 +59,7 @@ namespace asl
 			kernels[i].reset(new acl::Kernel(acl::KERNEL_BASIC));
 	}
 
+
 	void BCLBGKCommon::sortDirections()
 	{
 		sortTwoVectors(directions, indices);
@@ -74,7 +75,8 @@ namespace asl
 			directionGroupsSizes[i]=directionGroupsSizes[i]<0 ? 0 : directionGroupsSizes[i];
 		}
 	}
-		
+
+
 	void BCLBGKCommon::execute()
 	{
 		km->compute();
@@ -84,7 +86,8 @@ namespace asl
 	BCNoSlip::BCNoSlip(SPLBGK nm):
 		BCLBGKCommon(nm)
 	{}
-		
+
+
 	void BCNoSlip::init()
 	{
 
@@ -108,6 +111,7 @@ namespace asl
 		}
 		km->setup();
 	}
+
 
 	BCConstantPressure::BCConstantPressure(SPLBGK nm, const acl::VectorOfElements & p):
 		BCLBGKCommon(nm),
@@ -234,7 +238,7 @@ namespace asl
 
 			auto vGhost(subVE(fX->getEContainer(), i));
 			int directionShift(block.c2i(templ->vectors[i]));
-			auto vBulk(subVE(num->getF()->getEContainer(), 
+			auto vBulk(subVE(fX->getEContainer(), 
 			                                             templ->invertVectors[i]));			                                       
 			vBulk[0] = acl::generateShiftedElement(vBulk[0],directionShift);
 			kk << (acl::assignmentSafe(vGhost, select(vGhost, vBulk, isBoundary, type)));
@@ -312,7 +316,7 @@ namespace asl
 		{
 			kk << (isBoundary = isComputationNode(i) );
 			int directionShift(block.c2i(templ->vectors[i]));
-			auto vBulk(subVE(num->getF()->getEContainer(), 
+			auto vBulk(subVE(fX->getEContainer(), 
 			                 templ->invertVectors[i]));			                                       
 			vBulk[0] = acl::generateShiftedElement(vBulk[0],directionShift);
 			auto w(templ->quasiparticlesCoefs[i]);
@@ -480,7 +484,7 @@ namespace asl
 		{
 			kk << (isBoundary = isComputationNode(i) );
 			int directionShift(block.c2i(templ->vectors[i]));
-			auto vBulk(subVE(num->getF()->getEContainer(), 
+			auto vBulk(subVE(fX->getEContainer(), 
 			                 templ->invertVectors[i]));			                                       
 			vBulk[0] = acl::generateShiftedElement(vBulk[0],directionShift);
 			auto w(templ->quasiparticlesCoefs[i]);
@@ -564,7 +568,7 @@ namespace asl
 		{
 			kk << (isBoundary = isComputationNode(i) );
 			int directionShift(block.c2i(templ->vectors[i]));
-			auto vBulk(subVE(num->getF()->getEContainer(), 
+			auto vBulk(subVE(fX->getEContainer(), 
 			                 templ->invertVectors[i]));			                                       
 			vBulk[0] = acl::generateShiftedElement(vBulk[0],directionShift);
 			auto w(templ->quasiparticlesCoefs[i]);
@@ -604,7 +608,7 @@ namespace asl
 	                                                 SPDataWithGhostNodesACLData fF,
 			                                         SPAbstractDataWithGhostNodes map):
 		BCondWithMap(map,nm->vectorTemplate),
-//		kernel(new acl::Kernel(acl::KERNEL_SIMDUA)),//< Important _BASIC has better performance
+//		kernel(new acl::Kernel(acl::KERNEL_SIMDUA)), //< Important _BASIC has better performance
 		kernel(new acl::Kernel(acl::KERNEL_BASIC)),
 		num(nm),
 		fluxField(fF)		
@@ -634,7 +638,7 @@ namespace asl
 		unsigned int nDir(templ->vectors.size());
 		auto & block(fX->getBlock());
 
-		kk<< (flux = acl::generateVEConstant(0));
+		kk << (flux = acl::generateVEConstant(0));
 		for(unsigned int i(1); i < nDir; ++i)
 		{
 			kk << (isBoundary0 = isGhostNode(0) && isComputationNode(i) );
@@ -642,7 +646,7 @@ namespace asl
 			
 			auto f0(subVE(fX->getEContainer(), i));
 			int directionShift(block.c2i(templ->vectors[i]));
-			auto fI(subVE(num->getF()->getEContainer(), 
+			auto fI(subVE(fX->getEContainer(), 
 			              templ->invertVectors[i]));
 			fI[0] = acl::generateShiftedElement(fI[0],directionShift);
 			
@@ -664,7 +668,9 @@ namespace asl
 	void ComputeSurfaceFluxMap::execute()
 	{
 		kernel->compute();
-	}		
+	}
+
+
 	ComputeSurfaceForceMap::ComputeSurfaceForceMap(SPLBGK nm,
 	                                                 SPDataWithGhostNodesACLData fF,
 			                                         SPAbstractDataWithGhostNodes map):
@@ -675,6 +681,7 @@ namespace asl
 		forceField(fF)		
 	{	
 	}
+
 
 	ComputeSurfaceForceMap::~ComputeSurfaceForceMap()
 	{
@@ -710,7 +717,7 @@ namespace asl
 			
 			auto f0(subVE(fX->getEContainer(), i));
 			int directionShift(block.c2i(templ->vectors[i]));
-			auto fI(subVE(num->getF()->getEContainer(), 
+			auto fI(subVE(fX->getEContainer(), 
 			              templ->invertVectors[i]));
 			fI[0] = acl::generateShiftedElement(fI[0],directionShift);
 			auto wc((templ->quasiparticlesCoefs[i]*AVec<double>(templ->vectors[i])));
@@ -741,8 +748,20 @@ namespace asl
 		auto bc(make_shared<BCNoSlip>(nm));
 		addSlices(*bc, sl);	
 		return bc;
-		
 	}
+
+/*
+	SPBCond generateBCNoSlipVel(SPLBGK nm, 
+	                            const std::vector<SlicesNames> & sl)
+	{
+		unsigned int nd(nD(nm->getVectorTemplate()->vectors[0]));
+		
+		return generateBCConstantValueMiddlePoint(nm->getVelocity(),
+		                                          AVec<double>(nd,0.),
+		                                          sl,
+		                                          nearestNeigboursVT(nd));	
+	}
+*/
 
 	SPBCond generateBCConstantVelocity(SPLBGK nm,
 	                                   AVec<> v,
@@ -754,6 +773,7 @@ namespace asl
 		
 	}
 
+
 	SPBCond generateBCConstantPressure(SPLBGK nm,
 	                                   double p,
 	                                   const std::vector<SlicesNames> & sl)
@@ -763,6 +783,7 @@ namespace asl
 		return bc;
 		
 	}
+
 
 	SPBCond generateBCConstantPressureVelocity(SPLBGK nm,
 	                                   double p,
@@ -775,12 +796,14 @@ namespace asl
 		addSlices(*bc, sl);	
 		return bc;		
 	}
-		
+
+
 	SPNumMethod generateBCNoSlip(SPLBGK nm, 
 	                             SPAbstractDataWithGhostNodes map)
 	{
 		return make_shared<BCNoSlipMap>(nm,map);
 	}
+
 
 	SPNumMethod generateBCNoSlipVel(SPLBGK nm, 
 	                                SPAbstractDataWithGhostNodes map)
@@ -792,6 +815,7 @@ namespace asl
 		                                          nm->vectorTemplate);
 	}
 
+
 	SPNumMethod generateBCNoSlipRho(SPLBGK nm, 
 	                                SPAbstractDataWithGhostNodes map)
 	{
@@ -801,13 +825,15 @@ namespace asl
 		                                  map,
 		                                  nm->vectorTemplate);
 	}
-		
+
+
 	SPNumMethod generateBCVelocity(SPLBGK nm, 
 	                               SPPositionFunction v, 
 	                               SPAbstractDataWithGhostNodes map)
 	{
 		return make_shared<BCVelocityMap>(nm,v,map);
 	}
+
 
 	SPNumMethod generateBCVelocity(SPLBGK nm, 
 	                               SPPositionFunction v, 
@@ -816,14 +842,16 @@ namespace asl
 	{
 		return make_shared<BCVelocityMap>(nm,v,map,computationalDomain);
 	}
-		
+
+
 	SPNumMethod generateBCVelocityVel(SPLBGK nm, 
 	                                  SPPositionFunction v, 
 	                                  SPAbstractDataWithGhostNodes map)
 	{
 		return generateBCConstantValue(nm->getVelocity(), v, map);
 	}
-		
+
+
 	SPNumMethod generateBCConstantPressure(SPLBGK nm,
 	                                   double p,
 	                                   SPAbstractDataWithGhostNodes map)
@@ -832,6 +860,7 @@ namespace asl
 		return bc;
 		
 	}
+
 
 	SPNumMethod generateBCConstantPressureVelocity(SPLBGK nm,
 	                                   double p,
@@ -845,6 +874,7 @@ namespace asl
 		return bc;		
 	}
 
+
 	SPNumMethod generateBCTransportLimitedDeposition(SPLBGK nm, 
 	                                                 double p0,
 	                                                 double limitingFactor,            
@@ -856,6 +886,7 @@ namespace asl
 		                                                   map));
 		return bc;		
 	}
+
 
 	SPNumMethod generateBCKineticsLimitedDeposition(SPLBGK nm, 
 	                                                double p0,
@@ -880,6 +911,7 @@ namespace asl
 		return a;
 	}
 
+
 	SPNumMethod generateComputeSurfaceForce(SPLBGK nm, 
 	                                       SPDataWithGhostNodesACLData fF, 
 	                                       SPAbstractDataWithGhostNodes map)
@@ -887,7 +919,5 @@ namespace asl
 		auto a(make_shared<ComputeSurfaceForceMap>(nm, fF, map));
 		return a;
 	}
-		
-		
-} // asl
 
+} // asl

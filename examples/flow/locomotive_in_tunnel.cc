@@ -99,8 +99,8 @@ int main(int argc, char* argv[])
 	 it is recommended to use the notation of the Boost::Units library). */
 	asl::Parameter<FlT> dx(0.08, "dx", "space step", "m");
 	asl::Parameter<FlT> dt(1., "dt", "time step", "s");
-	asl::Parameter<FlT> nu(.001, "nu", "kinematic viscosity", "m^2 s^-1");
-	asl::Parameter<unsigned int> iterations(20001, "iterations number", "");
+	asl::Parameter<FlT> nu(.001, "nu", "kinematic viscosity", "m^2/s");
+	asl::Parameter<unsigned int> iterations(20001, "iterations", "iterations number");
 
 	/* Load previously declared Parameters from command line and/or
 	parameters file. Use default values if neither is provided. */
@@ -117,7 +117,7 @@ int main(int argc, char* argv[])
 	// Define dimensionless viscosity value
 	FlT nuNum(nu.v() * dt.v() / dx.v() / dx.v());
 	
-	cout << "Data initialization..." << endl;
+	cout << "Data initialization... " << flush;
 
 	// Read geometry of the locomotive from the file
 	auto locomotive(asl::readSurface("locomotive.stl", bl));
@@ -137,7 +137,7 @@ int main(int argc, char* argv[])
 	
 	cout << "Finished" << endl;
 
-	cout << "Numerics initialization..." << endl;
+	cout << "Numerics initialization... " << flush;
 
 	// NOTE: the problem is considered in the reference frame related to the locomotive
 
