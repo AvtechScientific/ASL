@@ -14,7 +14,7 @@ All files, and specifically the images in `doc/Developer-Guide/pics` are part of
 
 ## Optional commercial license
 
-ASL is distributed under the free GNU Affero General Public License (AGPLv3) with an optional [commercial license](http://asl.org.il/licensing).
+Optional [commercial license](http://asl.org.il/licensing) is available for closed-source ventures wishing to make a financial contribution to the development of ASL.
 
 ## Media files
 
