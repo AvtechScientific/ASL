@@ -16,12 +16,12 @@ ASL is distributed under the free GNU Affero General Public License (AGPLv3) wit
 
 ### Installation
 
-1. Install [cmake](http://cmake.org) (BSD License) and the required libraries:
-	- [OpenCL](https://www.khronos.org/opencl) (OpenCL Specification License)
-	- [C++ bindings for OpenCL](https://www.khronos.org/registry/cl/api/1.1/cl.hpp) (OpenCL Specification License)
-	- [boost](http://www.boost.org) (Boost Software License)
-	- [VTK](http://vtk.org) (BSD License)
-	- [optional](https://github.com/AvtechScientific/ASL/blob/master/cmake/ASLBuildOptions.cmake#L3): Matlab support with [matio](https://sourceforge.net/projects/matio) (BSD License)
+1. Install [cmake](http://cmake.org) (>=3.0.2, BSD License) and the required libraries:
+	- [OpenCL](https://www.khronos.org/opencl) (>=1.1, OpenCL Specification License)
+	- [C++ bindings for OpenCL](https://www.khronos.org/registry/cl/api/1.1/cl.hpp) (>=1.1, OpenCL Specification License)
+	- [boost](http://www.boost.org) (>=1.55, Boost Software License)
+	- [VTK](http://vtk.org) (>=6.1, BSD License)
+	- [optional](https://github.com/AvtechScientific/ASL/blob/master/cmake/ASLBuildOptions.cmake#L3): Matlab support with [matio](https://sourceforge.net/projects/matio) (>=1.5.2, BSD License)
 	- [optional](https://github.com/AvtechScientific/ASL/blob/master/cmake/ASLBuildOptions.cmake#L4): API documentation with [doxygen](http://doxygen.org) (preferably with [graphviz](http://www.graphviz.org))
 2. Download and extract the [ASL source code archive](https://github.com/AvtechScientific/ASL/releases/latest).
 3. Create a build directory: `mkdir build-asl; cd build-asl`
