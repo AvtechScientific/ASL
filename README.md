@@ -14,7 +14,7 @@ ASL is distributed under the free GNU Affero General Public License (AGPLv3) wit
 
 ## Support
 
-Professional support, training and consulting services are provided by [Avtech Scientific](http://avtechscientific.com), whose team created and continues to extend the library. The company offers [innovative R&D solutions and services](http://avtechscientific.com/services) and is involved in diverse academic and industrial [collaborative projects](http://avtechscientific.com/projects) dealing with complex multidisciplinary problems.
+Professional consulting, training and integration services are provided by [Avtech Scientific](http://avtechscientific.com), whose team created and continues to extend the library. The company offers [innovative R&D solutions](http://avtechscientific.com/services) and is involved in diverse academic and industrial [collaborative projects](http://avtechscientific.com/projects) dealing with complex multidisciplinary problems.
 
 
 ## Quick Start
@@ -42,7 +42,7 @@ Professional support, training and consulting services are provided by [Avtech S
 
 ### Writing your own code using ASL
 
-1. Take a look on examples, start with [examples/flow/locomotive_in_tunnel.cc](http://asl.org.il/doc/Developer-Guide/locomotive_in_tunnel_8cc-example.html)
+1. Take a look on [examples](http://asl.org.il/doc/Developer-Guide/examples.html) and the [API documentation](http://asl.org.il/doc/Developer-Guide/), start with [examples/flow/locomotive_in_tunnel.cc](http://asl.org.il/doc/Developer-Guide/locomotive_in_tunnel_8cc-example.html)
 2. ASL installation supplies `ASL.pc` and `ASLConfig.cmake` files. To build your program using:
 	- `pkg-config`: launch ``c++ `pkg-config --cflags --libs ASL` -o locomotive_in_tunnel locomotive_in_tunnel.cc``
 	- `cmake`: write a basic `CMakeLists.txt` file:
