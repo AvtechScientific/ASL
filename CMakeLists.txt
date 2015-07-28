@@ -37,15 +37,21 @@ include(${VTK_USE_FILE})
 include_directories(SYSTEM ${OpenCL_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 add_subdirectory(src)
-add_subdirectory(test)
+
+# ToDo: move installation of asl-hardware out of the tests
+# and add/enable WITH_TESTS option
+# if (WITH_TESTS)
+	enable_testing()
+	add_subdirectory(test)
+# endif()
 
 if (WITH_EXAMPLES)
 	add_subdirectory(examples)
-endif (WITH_EXAMPLES)
+endif()
 
 if (WITH_API_DOC)
 	add_subdirectory(doc)
-endif (WITH_API_DOC)
+endif()
 
 # Packaging
 set(CPACK_GENERATOR "TGZ")

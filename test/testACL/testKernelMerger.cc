@@ -40,7 +40,7 @@ using namespace std;
 
 bool testKernelMerger()
 {
-	cout << "Test of \"KernelMerger\" functionality...";
+	cout << "Test of \"KernelMerger\" functionality..." << flush;
 	ElementData vec0(new Array<cl_float> (10));
 	ElementData vec1(new Array<cl_float> (5));
 	ElementData vec2(new Array<cl_float> (8));
@@ -70,7 +70,6 @@ bool testKernelMerger()
 //	km.addKernel(k3);
 
 	km.setup();
-	cout<<km.getKernelSource()<<endl;
 	km.compute();
 
 	bool status((acl::map<float>(vec0).get()[9] == 2) && 
@@ -78,7 +77,7 @@ bool testKernelMerger()
 	            (acl::map<float>(vec2).get()[7] == 4));// &&
 //	            (acl::map<float>(vec3).get()[19] == 7));
 	errorMessage(status);
-
+	cout << km.getKernelSource() << endl;
 	return status;		
 }
 
