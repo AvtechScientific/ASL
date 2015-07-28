@@ -71,7 +71,7 @@ bool testInitData()
 
 bool testUploadToLocalMem()
 {
-	cout << "Test of UploadToLocalMem()...";
+	cout << "Test of UploadToLocalMem()..." << flush;
 
 	unsigned int componentsNum = 2;
 	unsigned int groupSize = 27;
@@ -124,7 +124,7 @@ bool testUploadToLocalMem()
 	kernel.compute();
 
 
-	bool status = true;
+	bool status(true);
 	vector<cl_float> src(totalSize);
 	vector<cl_float> dst(totalSize);
 	for (unsigned int i = 0; i < componentsNum; ++i)
@@ -139,14 +139,16 @@ bool testUploadToLocalMem()
 	
 	errorMessage(status);
 
-	return true;
+	return status;
 }
 
 int main()
 {
-	testSimpleKernel();
-	testInitData();
-	testUploadToLocalMem();
+	bool allTestsPassed(true);
+
+	allTestsPassed &= testSimpleKernel();
+	allTestsPassed &= testInitData();
+	allTestsPassed &= testUploadToLocalMem();
 		
-	return 0;
+	return allTestsPassed ? EXIT_SUCCESS : EXIT_FAILURE;
 }

@@ -39,7 +39,7 @@ using namespace std;
 
 bool testSimpleKernel()
 {
-	cout << "Test of \"Simple kernel\" function...";
+	cout << "Test of \"Simple kernel\" function..." << flush;
 
 	VectorOfElements vec0(3);
 	VectorOfElements vec1(1);
@@ -62,16 +62,16 @@ bool testSimpleKernel()
 	copy(vec0[2], output2);
 	copy(vec1[0], output3);
 	
-	bool testResult(output0[9]<0.101 && output1[2] ==1 && output2[5] ==2. && output3[1] ==6.);
-	if (testResult)	cout << " Ok" << endl;
-	else cout << " Error" << endl;
+	bool status(output0[9]<0.101 && output1[2] ==1 && output2[5] ==2. && output3[1] ==6.);
+	errorMessage(status);
 
-	return testResult;		
+	return status;		
 }
+
 
 bool testAdvancedOperations()
 {
-	cout << "Test of advanced operations...";
+	cout << "Test of advanced operations..." << flush;
 	VectorOfElements vec0(2);
 	VectorOfElements vec1(2);
 	VectorOfElements res(2);
@@ -111,8 +111,10 @@ bool testAdvancedOperations()
 
 int main()
 {
-	testSimpleKernel();
-	testAdvancedOperations();
+	bool allTestsPassed(true);
 
-	return 0;
+	allTestsPassed &= testSimpleKernel();
+	allTestsPassed &= testAdvancedOperations();
+
+	return allTestsPassed ? EXIT_SUCCESS : EXIT_FAILURE;
 }

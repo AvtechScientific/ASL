@@ -41,7 +41,7 @@ const acl::KernelConfiguration & kConf(acl::KERNEL_BASIC);
 
 bool testKernelUnoptimized()
 {
-	cout << "Test of \"Simple kernel\" function...";
+	cout << "Test of \"Simple kernel\" function..." << flush;
 
 	auto vec1(acl::generateVEData<float>(nLength,1u));
 	acl::Kernel k(kConf);
@@ -67,9 +67,10 @@ bool testKernelUnoptimized()
 	return true;		
 }
 
+
 bool testKernelUnoptimizedPlus()
 {
-	cout << "Test of \"Simple kernel\" function...";
+	cout << "Test of \"Simple kernel\" function..." << flush;
 
 	auto vec1(acl::generateVEData<float>(nLength,1u));
 	acl::Kernel k(kConf);
@@ -96,9 +97,11 @@ bool testKernelUnoptimizedPlus()
 
 	return true;		
 }
+
+
 bool testKernelOptimized()
 {
-	cout << "Test of \"Simple kernel\" function...";
+	cout << "Test of \"Simple kernel\" function..." << flush;
 
 	auto vec1(acl::generateVEData<float>(nLength,1u));
 	acl::Kernel k(kConf);
