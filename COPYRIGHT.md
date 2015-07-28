@@ -21,5 +21,4 @@ Optional [commercial license](http://asl.org.il/licensing) is available for clos
 Some examples require input files (like .vti or .stl) that can be found in `examples/input_data`.
 
 1. All .stl files were originally obtained from [GrabCAD](https://grabcad.com/) and are subject to their [Terms of Service](https://grabcad.com/terms); some of them were modified.
-
 2. brain.vti was generated using  [BrainWeb](http://brainweb.bic.mni.mcgill.ca/brainweb/).

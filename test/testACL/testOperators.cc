@@ -49,7 +49,7 @@ using namespace std;
 
 bool testIfElse()
 {
-	cout << "Test of If-Else...";
+	cout << "Test of If-Else..." << flush;
 
 	using namespace elementOperators;
 	shared_ptr<Variable<cl_int> > a(new Variable<cl_int> (15));
@@ -89,7 +89,7 @@ bool testIfElse()
 
 bool testParser()
 {
-	cout << "Test of Parser...";
+	cout << "Test of Parser..." << flush;
 
 	using namespace elementOperators;
 	shared_ptr<Variable<cl_int> > a(new Variable<cl_int> (15));
@@ -126,7 +126,7 @@ bool testParser()
 
 bool testAtomicSum()
 {
-	cout << "Test of Atomic Sum...";
+	cout << "Test of Atomic Sum..." << flush;
 
 	using namespace elementOperators;
 	Element c(new Constant<cl_int> (6));
@@ -153,10 +153,11 @@ bool testAtomicSum()
 
 int main()
 {
+	bool allTestsPassed(true);
 
-	testIfElse();
-	testParser();
-	testAtomicSum();
+	allTestsPassed &= testIfElse();
+	allTestsPassed &= testParser();
+	allTestsPassed &= testAtomicSum();
 
-	return 0;
+	return allTestsPassed ? EXIT_SUCCESS : EXIT_FAILURE;
 }

@@ -32,13 +32,14 @@
 
 bool testNumbers()
 {
+	cout << "Test of Numbers..." << flush;
 	unsigned int aui(3);
 	int ai(-2);	
 	float af(5);
 	double ad(4);	
 	
 	asl::ABDFileOut afO("test.abd");
-	afO<<aui<<ai<<af<<ad;
+	afO << aui << ai << af << ad;
 	afO.close();
 		
 	asl::ABDFileIn afI("test.abd");
@@ -47,28 +48,31 @@ bool testNumbers()
 	float bf(0);
 	double bd(0);	
 
-	afI>>bui>>bi>>bf>>bd;
+	afI >> bui >> bi >> bf >> bd;
 
 	bool status((aui==bui) && (ai==bi) && (af==bf) && (ad==bd));
 	asl::errorMessage(status);
 
-	return status;		
+	return status;
 }
 
 bool testAVec()
 {
+	cout << "Test of AVec..." << flush;
 	asl::Block b(asl::makeAVec (10,15),0.1,asl::makeAVec (.1,1.));
 
 	asl::ABDFileOut afO("test.abd");
-	afO<<b;
+	afO << b;
 	afO.close();
 		
 	asl::ABDFileIn afI("test.abd");
 	asl::Block bn;
 
-	afI>>bn;
+	afI >> bn;
 
-	bool status((b.getSize()==bn.getSize()) && (b.dx==bn.dx) && (b.position==bn.position));
+	bool status((b.getSize() == bn.getSize()) &&
+	            (b.dx == bn.dx) &&
+	            (b.position == bn.position));
 	asl::errorMessage(status);
 
 	return status;		
@@ -76,18 +80,19 @@ bool testAVec()
 
 bool testString()
 {
+	cout << "Test of String..." << flush;
 	std::string b("Hello!!");
 
 	asl::ABDFileOut afO("test.abd");
-	afO<<b;
+	afO << b;
 	afO.close();
 		
 	asl::ABDFileIn afI("test.abd");
 	std::string bn;
 
-	afI>>bn;
+	afI >> bn;
 
-	bool status(b==bn);
+	bool status(b == bn);
 	asl::errorMessage(status);
 
 	return status;		
@@ -96,12 +101,13 @@ bool testString()
 
 bool testBlock()
 {
+	cout << "Test of Block..." << flush;
 	asl::AVec<int> ai(asl::makeAVec(2,3));	
 	asl::AVec<float> af(asl::makeAVec(2.f,3.f));	
 	asl::AVec<double> ad(asl::makeAVec(4.,5.));	
 
 	asl::ABDFileOut afO("test.abd");
-	afO<<ai<<af<<ad;
+	afO << ai << af << ad;
 	afO.close();
 		
 	asl::ABDFileIn afI("test.abd");
@@ -109,27 +115,22 @@ bool testBlock()
 	asl::AVec<float> bf(1);
 	asl::AVec<double> bd(1);	
 
-	afI>>bi>>bf>>bd;
+	afI >> bi >> bf >> bd;
 
-	bool status((ai==bi) && (af==bf) && (ad==bd));
+	bool status((ai == bi) && (af == bf) && (ad == bd));
 	asl::errorMessage(status);
 
-	return status;		
+	return status;
 }
 
 int main()
 {
-	cout<<"Test of Numbers...";
-	testNumbers();
+	bool allTestsPassed(true);
 
-	cout<<"Test of String...";
-	testString();
+	allTestsPassed &= testNumbers();
+	allTestsPassed &= testAVec();
+	allTestsPassed &= testString();
+	allTestsPassed &= testBlock();
 
-	cout<<"Test of AVec...";	
-	testAVec();
-
-	cout<<"Test of Block...";	
-	testBlock();
-
-	return 0;
+	return allTestsPassed ? EXIT_SUCCESS : EXIT_FAILURE;
 }

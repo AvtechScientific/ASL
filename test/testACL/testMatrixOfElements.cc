@@ -40,7 +40,7 @@ using namespace std;
 
 bool testMatrixOperations()
 {
-	cout << "Test of \"Matrix Operations\" function...";
+	cout << "Test of \"Matrix Operations\" function..." << flush;
 
 	VectorOfElements vec0(3);
 	VectorOfElements vec1(1);
@@ -59,17 +59,16 @@ bool testMatrixOperations()
 	vector<cl_float> output(10);
 	copy(vec1[0], output);
 	
-	bool testResult(output[1] == 20.5);
-	if (testResult)	cout << " Ok" << endl;
-	else cout << " Error" << output[1] << endl;
+	bool status(output[1] == 20.5);
+	errorMessage(status);
 
-	return testResult;		
+	return status;
 }
 
 
 bool testSystemSolve()
 {
-	cout << "Test of \"System Solve Cramer's rule\" function...";
+	cout << "Test of \"System Solve Cramer's rule\" function..." << flush;
 
 	VectorOfElements vecB(2);
 	VectorOfElements vecX(2);
@@ -90,16 +89,15 @@ bool testSystemSolve()
 	vector<cl_float> output(10);
 	copy(vecX[0], output);
 	
-	bool testResult(output[1] > 0.09 && output[1] < .1);
-	if (testResult)	cout << " Ok" << endl;
-	else cout << " Error" << output[1] << endl;
+	bool status(output[1] > 0.09 && output[1] < .1);
+	errorMessage(status);
 
-	return testResult;		
+	return status;
 }
 
 bool testSystemSolveCG()
 {
-	cout << "Test of \"System Solve congugate gradient method\" function...";
+	cout << "Test of \"System Solve congugate gradient method\" function..." << flush;
 
 	VectorOfElements vecB(2);
 	VectorOfElements vecX(2);
@@ -120,19 +118,20 @@ bool testSystemSolveCG()
 	vector<cl_float> output(10);
 	copy(vecX[0], output);
 	
-	bool testResult(output[1] > 0.09 && output[1] < .1);
-	if (testResult)	cout << " Ok" << endl;
-	else cout << " Error" << output[1] << endl;
+	bool status(output[1] > 0.09 && output[1] < .1);
+	errorMessage(status);
 
-	return testResult;		
+	return status;		
 }
 
 
 int main()
 {
-	testMatrixOperations();
-	testSystemSolve();
-	testSystemSolveCG();
+	bool allTestsPassed(true);
 
-	return 0;
+	allTestsPassed &= testMatrixOperations();
+	allTestsPassed &= testSystemSolve();
+	allTestsPassed &= testSystemSolveCG();
+
+	return allTestsPassed ? EXIT_SUCCESS : EXIT_FAILURE;
 }
