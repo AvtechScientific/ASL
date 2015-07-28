@@ -53,7 +53,7 @@ using namespace std;
 
 bool testCopy()
 {
-	cout << "Test of \"copy\" function...";
+	cout << "Test of \"copy\" function..." << flush;
 	Element vec0(new Array<cl_float> (10));
 	
 	vector<cl_float> input(10, 3);
@@ -71,7 +71,7 @@ bool testCopy()
 
 bool testKernel()
 {
-	cout << "Test of Kernel with double...";
+	cout << "Test of Kernel with double..." << flush;
 
 	Element vec0(new Array<cl_double>(10));
 	Element vec1(new Array<cl_double>(10));
@@ -103,7 +103,7 @@ bool testKernel()
 
 bool testKernelSIMD()
 {
-	cout << "Test of KernelSIMD...";
+	cout << "Test of KernelSIMD..." << flush;
 
 	Element vec0(new Array<cl_float>(11));
 	Element vec1(new Array<cl_float>(11));
@@ -135,7 +135,7 @@ bool testKernelSIMD()
 
 bool testKernelSIMDUA()
 {
-	cout << "Test of KernelSIMDUA...";
+	cout << "Test of KernelSIMDUA..." << flush;
 
 	Element vec0(new Array<cl_float> (11));
 	Element vec1(new Array<cl_float> (11));
@@ -170,7 +170,7 @@ bool testKernelSIMDUA()
 
 bool testPrivateVariable()
 {
-	cout << "Test of kernel with PrivateVariable...";
+	cout << "Test of kernel with PrivateVariable..." << flush;
 
 	Element vec0(new Array<cl_float>(10));
 	Element vec1(new Array<cl_float>(10));
@@ -205,7 +205,7 @@ bool testPrivateVariable()
 
 bool testPrivateArray()
 {
-	cout << "Test of kernel with PrivateArray...";
+	cout << "Test of kernel with PrivateArray..." << flush;
 	
 	vector<cl_int> inputGaIn({0, 4, 5});
 	vector<cl_float> inputGaOut(3, 0);
@@ -241,7 +241,7 @@ bool testPrivateArray()
 
 bool testVariable()
 {
-	cout << "Test of Variable functionality...";
+	cout << "Test of Variable functionality..." << flush;
 
 	Element vec0(new Array<cl_float> (10));
 	shared_ptr<Variable<cl_float> > a(new Variable<cl_float> (1.));	
@@ -266,7 +266,7 @@ bool testVariable()
 
 bool testVariableReference()
 {
-	cout << "Test of VariableReference functionality...";
+	cout << "Test of VariableReference functionality..." << flush;
 
 	Element vec0(new Array<cl_float> (10));
 	float v(1.);
@@ -293,7 +293,7 @@ bool testVariableReference()
 
 bool testSelect()
 {
-	cout << "Test of select function...";
+	cout << "Test of select function..." << flush;
 
 	Element vec0(new Array<cl_double> (10));
 	Element c0(new Constant<cl_double> (2.1));
@@ -327,7 +327,7 @@ bool testSelect()
 
 bool testSubvector()
 {
-	cout << "Test of Subvector...";
+	cout << "Test of Subvector..." << flush;
 	cl_float init[] = {16, 2, 77, 29, 23, 16, 2, 77, 29, 23};
 	shared_ptr<Array<cl_float> > vec0(new Array<cl_float>(10));
 	
@@ -347,7 +347,7 @@ bool testSubvector()
 
 bool testSwapBuffers()
 {
-	cout << "Test of Swap functionality...";
+	cout << "Test of Swap functionality..." << flush;
 	shared_ptr<Array<cl_float> > vec0(new Array<cl_float>(10));
 	shared_ptr<Array<cl_float> > vec1(new Array<cl_float>(10));
 	
@@ -369,7 +369,7 @@ bool testSwapBuffers()
 
 bool testLocalArray()
 {
-	cout << "Test of LocalArray and syncCopy with barrier()...";
+	cout << "Test of LocalArray and syncCopy with barrier()..." << flush;
 
 	KernelConfiguration kConf(KERNEL_BASIC);
 	kConf.local = true;
@@ -419,18 +419,20 @@ bool testLocalArray()
 
 int main()
 {
-	testCopy();
-	testKernel();
-	testKernelSIMD();
-	testKernelSIMDUA();
-	testPrivateVariable();
-	testPrivateArray();
-	testVariable();
-	testVariableReference();
-	testSelect();
-	testSwapBuffers();
-	testLocalArray();
-	testSubvector();
+	bool allTestsPassed(true);
+
+	allTestsPassed &= testCopy();
+	allTestsPassed &= testKernel();
+	allTestsPassed &= testKernelSIMD();
+	allTestsPassed &= testKernelSIMDUA();
+	allTestsPassed &= testPrivateVariable();
+	allTestsPassed &= testPrivateArray();
+	allTestsPassed &= testVariable();
+	allTestsPassed &= testVariableReference();
+	allTestsPassed &= testSelect();
+	allTestsPassed &= testSwapBuffers();
+	allTestsPassed &= testLocalArray();
+	allTestsPassed &= testSubvector();
 	
-	return 0;
+	return allTestsPassed ? EXIT_SUCCESS : EXIT_FAILURE;
 }

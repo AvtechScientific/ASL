@@ -26,7 +26,7 @@
  */
 
 #include "acl/Kernels/aclKernel.h"
-#include <acl/aclUtilities.h>
+#include "acl/aclUtilities.h"
 #include "acl/aclMath/aclReductionAlgGenerator.h"
 #include "acl/aclGenerators.h"
 #include "aslUtilities.h"
@@ -34,20 +34,25 @@
 
 using namespace acl;
 
-void testSum()
+bool testSum()
 {
+	cout << "testSum..." << flush;
 	unsigned int n(101);
 	auto v(generateVEData<float>(n,1u));
 	initData(v, generateVEConstant(2));
 	auto summator(generateSumAlg<float>(v));
 	summator->generateAlg();
 	summator->compute();
-	bool b(asl::approxEqual(summator->res.v()[0],2.f*n));
-	cout<<"testSum: "<<(b? "Ok": "Error ")<<endl;
+	bool status(asl::approxEqual(summator->res.v()[0],2.f*n));
+	asl::errorMessage(status);
+
+	return status;
 }
 
-void testSum1()
+
+bool testSum1()
 {
+	cout << "testSum1..." << flush;
 	unsigned int n(100001);
 	VectorOfElements v1(generateVEData<float>(n,1u));
 	VectorOfElements v2(generateVEData<float>(n,1u));
@@ -56,38 +61,47 @@ void testSum1()
 	auto summator(generateSumAlg<float>(v1*v2));
 	summator->generateAlg();
 	summator->compute();
-	bool b(asl::approxEqual(summator->res.v()[0],6.f*n));
-	cout<<"testSum1: "<<(b? "Ok": "Error")<<endl;
+	bool status(asl::approxEqual(summator->res.v()[0],6.f*n));
+	asl::errorMessage(status);
+
+	return status;
 }
+
 
 bool testMin()
 {
+	cout << "testMin..." << flush;
 	VectorOfElements vI(generateVEIndex());
 	VectorOfElements v1(generateVEData<float>(101u,1u));
 	initData(v1, generateVEConstant(2));
 	auto minimizer(generateMinAlg<float>(v1*((vI-100)*(vI-100)+3)));
 	minimizer->generateAlg();
 	minimizer->compute();
-	bool b(asl::approxEqual(minimizer->res.v()[0],6.f));
-	cout<<"testMin: "<<(b? "Ok": "Error")<<endl;
-	return b;
+	bool status(asl::approxEqual(minimizer->res.v()[0],6.f));
+	asl::errorMessage(status);
+
+	return status;
 }
+
 
 bool testMax()
 {
+	cout << "testMax..." << flush;
 	VectorOfElements vI(generateVEIndex());
 	VectorOfElements v1(generateVEData<float>(100001u,1u));
 	initData(v1, generateVEConstant(2));
 	auto maximizer(generateMaxAlg<float>(v1*((1000.-vI)*(vI-1000.)-10.)));
 	maximizer->generateAlg();
 	maximizer->compute();
-	bool b(asl::approxEqual(maximizer->res.v()[0],-20.f));
-	cout<<"testMax: "<<(b? "Ok": "Error")<<endl;
-	return b;
+	bool status(asl::approxEqual(maximizer->res.v()[0],-20.f));
+	asl::errorMessage(status);
+
+	return status;
 }
 
 bool testProduct()
 {
+	cout << "testProduct..." << flush;
 	typedef double FT;
 	VectorOfElements vI(generateVEIndex());
 	VectorOfElements v1(generateVEData<FT>(100001u,1u));
@@ -98,18 +112,22 @@ bool testProduct()
 	                                       acl::typeToTypeID<FT>())));
 	alg->generateAlg();
 	alg->compute();
-	bool b(asl::approxEqual(alg->res.v()[0],256));
-	cout<<"testProduct: "<<(b? "Ok": "Error")<<endl;
-	return b;
+	bool status(asl::approxEqual(alg->res.v()[0],256));
+	asl::errorMessage(status);
+
+	return status;
 }
 
 
 int main()
 {
-	testSum();
-	testSum1();
-	testMin();
-	testMax();
-	testProduct();
-	return 0;
+	bool allTestsPassed(true);
+
+	allTestsPassed &= testSum();
+	allTestsPassed &= testSum1();
+	allTestsPassed &= testMin();
+	allTestsPassed &= testMax();
+	allTestsPassed &= testProduct();
+
+	return allTestsPassed ? EXIT_SUCCESS : EXIT_FAILURE;
 }
