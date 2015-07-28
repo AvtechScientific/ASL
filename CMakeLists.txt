@@ -41,6 +41,10 @@ add_subdirectory(src)
 # ToDo: move installation of asl-hardware out of the tests
 # and add/enable WITH_TESTS option
 # if (WITH_TESTS)
+	# Input/Output tests are labled "IO" and may require input files
+	# Performance tests are labled "Performance"
+	# Run them: ctest [-C Release|Debug] -L Performance
+	# Exclude them: ctest [-C Release|Debug] -LE Performance
 	enable_testing()
 	add_subdirectory(test)
 # endif()

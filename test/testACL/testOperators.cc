@@ -153,10 +153,11 @@ bool testAtomicSum()
 
 int main()
 {
+	bool allTestsPassed(true);
 
-	testIfElse();
-	testParser();
-	testAtomicSum();
+	allTestsPassed &= testIfElse();
+	allTestsPassed &= testParser();
+	allTestsPassed &= testAtomicSum();
 
-	return 0;
+	return allTestsPassed ? EXIT_SUCCESS : EXIT_FAILURE;
 }

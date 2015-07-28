@@ -33,7 +33,7 @@
 
 void testMINC()
 {
-	cout << "Test of MINC files reader..." << endl;
+	cout << "Test of MINC files reader..." << flush;
 
 	auto data(asl::read("subject04_crisp_v.mnc", 0));
 	
@@ -44,7 +44,7 @@ void testMINC()
 
 void testMINCplus()
 {
-	cout << "Test of MINC files reader +..." << endl;
+	cout << "Test of MINC files reader +..." << flush;
 
 	auto data(asl::read("subject04_crisp_v.mnc", 0));
 	
@@ -59,7 +59,7 @@ void testMINCplus()
 
 void testSurfaceSTL()
 {
-	cout << "Test of Surface STL files reader..." << endl;
+	cout << "Test of Surface STL files reader..." << flush;
 
 	auto data(asl::readSurface("bus.stl", 5));
 //	auto data(asl::readSurface("xx.vtp", .01));

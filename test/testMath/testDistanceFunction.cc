@@ -25,16 +25,15 @@
 	\example testDistanceFunction.cc
  */
 
-#include <math/aslVectors.h>
-#include <aslGenerators.h>
-#include <writers/aslVTKFormatWriters.h>
-#include <aslGeomInc.h>
+#include "math/aslVectors.h"
+#include "aslGenerators.h"
+#include "writers/aslVTKFormatWriters.h"
+#include "aslGeomInc.h"
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>
-#include <data/aslDataWithGhostNodes.h>
-
-#include <num/aslDFOptimizer.h>
-#include <math/aslTemplates.h>
+#include "data/aslDataWithGhostNodes.h"
+#include "num/aslDFOptimizer.h"
+#include "math/aslTemplates.h"
 
 //typedef float FlT;
 typedef double FlT;
@@ -338,11 +337,12 @@ bool testDistFAdvanced3D()
 	asl::WriterVTKXML writer("distFAdvanced3D");
 	writer.addScalars("Bath", *mBath);
 	writer.addScalars("Platform", *mPlatform);
-	writer.addScalars("Crysstal", *mCrystal);
+	writer.addScalars("Crystal", *mCrystal);
 	writer.write();
 
 	return true;	
 }
+
 
 bool testDistFOptimizer()
 {

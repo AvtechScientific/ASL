@@ -53,7 +53,7 @@ bool testNumbers()
 	bool status((aui==bui) && (ai==bi) && (af==bf) && (ad==bd));
 	asl::errorMessage(status);
 
-	return status;		
+	return status;
 }
 
 bool testAVec()
@@ -120,7 +120,7 @@ bool testBlock()
 	bool status((ai == bi) && (af == bf) && (ad == bd));
 	asl::errorMessage(status);
 
-	return status;		
+	return status;
 }
 
 int main()

@@ -83,7 +83,9 @@ bool testKernelMerger()
 
 int main()
 {
-	testKernelMerger();
+	bool allTestsPassed(true);
+
+	allTestsPassed &= testKernelMerger();
 	
-	return 0;
+	return allTestsPassed ? EXIT_SUCCESS : EXIT_FAILURE;
 }
