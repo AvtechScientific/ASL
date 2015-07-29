@@ -22,8 +22,8 @@ Professional consulting, training and integration services are provided by [Avte
 ### Installation
 
 1. Install [cmake](http://cmake.org) (>=3.0.2, BSD License) and the required libraries:
-	- [OpenCL](https://www.khronos.org/opencl) (>=1.1, OpenCL Specification License)
-	- [C++ bindings for OpenCL](https://www.khronos.org/registry/cl/api/1.1/cl.hpp) (>=1.1, OpenCL Specification License)
+	- [OpenCL](https://www.khronos.org/opencl) (1.1 or 1.2 (2.0 supplies no C++ bindings), OpenCL Specification License)
+	- [C++ bindings for OpenCL](https://www.khronos.org/registry/cl/api/1.1/cl.hpp) (1.1 or 1.2 (2.0 supplies no C++ bindings), OpenCL Specification License)
 	- [boost](http://www.boost.org) (>=1.55, Boost Software License)
 	- [VTK](http://vtk.org) (>=6.1, BSD License)
 	- [optional](https://github.com/AvtechScientific/ASL/blob/master/cmake/ASLBuildOptions.cmake#L3): Matlab support with [matio](https://sourceforge.net/projects/matio) (>=1.5.2, BSD License)
