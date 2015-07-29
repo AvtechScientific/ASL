@@ -3,3 +3,4 @@
 ## 0.1.5
 
 - bug fixes
+- improved tests
