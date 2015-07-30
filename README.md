@@ -35,9 +35,8 @@ Professional consulting, training and integration services are provided by [Avte
 ### Running an example
 
 1. Go to examples: `cd examples/flow/locomotive`
-2. Copy the .stl input file: `cp ../../../../ASL/examples/input_data/locomotive.stl .`
-3. Run: `./locomotive`. Optionally: change some parameters - `./locomotive --dx 0.1 --dt 2` or write all of them into a file for later editing/reuse - `./locomotive -g bigGrid.ini`. List all available options - `locomotive -h`.
-4. Post-processing: see [step by step example](https://github.com/AvtechScientific/ASL/wiki/User-Guide#post-processing) and the ParaView state file `examples/input_data/locomotive.pvsm`.
+2. Run: `./locomotive --input ../../../../ASL/examples/input_data/locomotive.stl`. Optionally: change some parameters - `./locomotive --input locomotive.stl --dx 0.1 --dt 2` or write all of them into a file for later editing/reuse - `./locomotive -g bigGrid.ini`. List all available options - `locomotive -h`.
+3. Post-processing: see [step by step example](https://github.com/AvtechScientific/ASL/wiki/User-Guide#post-processing) and the ParaView state file `examples/input_data/locomotive.pvsm`.
 
 ### Writing your own code using ASL
 

@@ -101,6 +101,7 @@ int main(int argc, char* argv[])
 	asl::Parameter<FlT> dt(1., "dt", "time step", "s");
 	asl::Parameter<FlT> nu(.001, "nu", "kinematic viscosity", "m^2/s");
 	asl::Parameter<unsigned int> iterations(20001, "iterations", "iterations number");
+	asl::Parameter<string> input("input", "path to the geometry input file");
 
 	/* Load previously declared Parameters from command line and/or
 	parameters file. Use default values if neither is provided. */
@@ -120,7 +121,7 @@ int main(int argc, char* argv[])
 	cout << "Data initialization... " << flush;
 
 	// Read geometry of the locomotive from the file
-	auto locomotive(asl::readSurface("locomotive.stl", bl));
+	auto locomotive(asl::readSurface(input.v(), bl));
 
 	// Create block for further use
 	asl::Block block(locomotive->getInternalBlock());

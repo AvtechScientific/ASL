@@ -5,4 +5,4 @@
 - supplying cl.hpp, since not provided by OpenCL 2.0
 - bug fixes
 - improved tests
-- improved application parameters management
+- improved examples

@@ -131,7 +131,7 @@ int main(int argc, char* argv[])
 	std::cout << "Computing..." << flush;
 	asl::Timer timer;
 
-	asl::WriterVTKXML writer("testSMPhiBV");
+	asl::WriterVTKXML writer(appParamsManager.getDir() + "testSMPhiBV");
 	writer.addScalars("c1", *c1Field);
 	writer.addScalars("c2", *c2Field);
 	writer.addScalars("c1a", *c1aField);	

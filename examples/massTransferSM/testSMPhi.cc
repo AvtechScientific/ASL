@@ -110,7 +110,7 @@ int main(int argc, char* argv[])
 	std::cout << "Computing..." << flush;
 	asl::Timer timer;
 
-	asl::WriterVTKXML writer("testSMPhi");
+	asl::WriterVTKXML writer(appParamsManager.getDir() + "testSMPhi");
 	writer.addScalars("c1", *c1Field);
 	writer.addScalars("c2", *c2Field);
 	writer.addScalars("phi", *phiField);
