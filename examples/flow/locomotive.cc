@@ -100,7 +100,7 @@ int main(int argc, char* argv[])
 	asl::Parameter<FlT> dx(0.08, "dx", "space step", "m");
 	asl::Parameter<FlT> dt(1., "dt", "time step", "s");
 	asl::Parameter<FlT> nu(.001, "nu", "kinematic viscosity", "m^2/s");
-	asl::Parameter<unsigned int> iterations(20001, "iterations", "iterations number");
+	asl::Parameter<unsigned int> iterations(10001, "iterations", "iterations number");
 	asl::Parameter<string> input("input", "path to the geometry input file");
 
 	/* Load previously declared Parameters from command line and/or
