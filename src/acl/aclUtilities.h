@@ -24,7 +24,7 @@
 #ifndef ACLUTILITIES_H
 #define ACLUTILITIES_H
 
-#include <aslUtilities.h>
+#include "aslUtilities.h"
 #include "Kernels/aclKernelConfiguration.h"
 //#include "aclHardware.h"
 #include "aclTypes.h"

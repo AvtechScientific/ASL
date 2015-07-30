@@ -22,7 +22,8 @@
 
 
 /**
-	\example testHardware.cc
+	asl-hardware utility.
+	Displays hardware information.
  */
 
 #include "acl/aclHardware.h"
