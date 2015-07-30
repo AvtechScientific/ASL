@@ -26,7 +26,10 @@
 
 
 #include <boost/preprocessor/seq.hpp>
-#include <CL/cl.hpp>
+//#include <CL/cl.hpp>
+// Supply "cl.hpp" with ASL, since it is not present in OpenCL 2.0
+// Remove the file after switching to OpenCL 2.1
+#include "acl/cl.hpp"
 
 #define BOOST_TT_acl_types (cl_int)(cl_uint)(cl_float)(cl_double)(cl_long)
 

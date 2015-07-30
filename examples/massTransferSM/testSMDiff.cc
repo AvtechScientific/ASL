@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
 	std::cout << "Computing..." << flush;
 	asl::Timer timer;
 
-	asl::WriterVTKXML writer("testSMDiff");
+	asl::WriterVTKXML writer(appParamsManager.getDir() + "testSMDiff");
 	writer.addScalars("c1", *c1Field);
 	writer.addScalars("c2", *c2Field);
 

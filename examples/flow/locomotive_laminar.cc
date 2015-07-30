@@ -46,25 +46,25 @@ typedef asl::UValue<double> Param;
 using asl::AVec;
 using asl::makeAVec;
 
-asl::SPDistanceFunction generateTunel(asl::Block & bl)
+asl::SPDistanceFunction generateTunnel(asl::Block & bl)
 {
 
 	double l(bl.getBPosition()[0]-bl.position[0]+bl.dx);
-	double rTunel((bl.getBPosition()[2]-bl.position[2])/2.);
+	double rTunnel((bl.getBPosition()[2]-bl.position[2])/2.);
 
 	double dx(bl.dx);
 
 	asl::AVec<int> size(bl.getSize());
 
 	asl::AVec<> center(.5*(bl.getBPosition()+bl.position)); 
-	center[1]=bl.position[1]+.25*rTunel;
+	center[1]=bl.position[1]+.25*rTunnel;
 	asl::AVec<> centerG(center); 
 	centerG[1]=bl.position[1];
 
-	auto tunel(-(generateDFCylinder(rTunel, makeAVec(l,0.,0.), center) &
+	auto tunnel(-(generateDFCylinder(rTunnel, makeAVec(l,0.,0.), center) &
 	             generateDFPlane(makeAVec(0.,-1.,0.), centerG)));
 
-	return normalize(tunel, dx);
+	return normalize(tunnel, dx);
 }
 
 
@@ -74,6 +74,7 @@ int main(int argc, char* argv[])
 	// hardware parameters(platform/device) through command line/parameters file
 	asl::ApplicationParametersManager appParamsManager("locomotive_laminar",
 	                                                   "1.0");
+	asl::Parameter<string> input("input", "path to the geometry input file");
 	appParamsManager.load(argc, argv);
 
 	Param dx(0.5);
@@ -89,12 +90,12 @@ int main(int argc, char* argv[])
 	std::cout << "Data initialization..." << endl;
 
 
-	auto object(asl::readSurface("locomotive.stl", bl));
+	auto locomotive(asl::readSurface(input.v(), bl));
 	
-	asl::Block block(object->getInternalBlock());
+	asl::Block block(locomotive->getInternalBlock());
 
-	auto tunelMap(asl::generateDataContainerACL_SP<FlT>(block, 1, 1u));
-	asl::initData(tunelMap, generateTunel(block));
+	auto tunnelMap(asl::generateDataContainerACL_SP<FlT>(block, 1, 1u));
+	asl::initData(tunnelMap, generateTunnel(block));
 
 	auto forceField(asl::generateDataContainerACL_SP<FlT>(block, 3, 1u));
 	asl::initData(forceField, makeAVec(0.,0.,0.));
@@ -116,18 +117,18 @@ int main(int argc, char* argv[])
 	std::vector<asl::SPNumMethod> bc;
 	std::vector<asl::SPNumMethod> bcV;
 
-	bc.push_back(generateBCVelocity(lbgk, vfTunnel, tunelMap));
-	bcV.push_back(generateBCVelocityVel(lbgk, vfTunnel, tunelMap));
-//	bcV.push_back(generateBCNoSlipRho(lbgk, tunelMap));
-	bc.push_back(generateBCNoSlip(lbgk,  object));
-	bcV.push_back(generateBCNoSlipVel(lbgk, object));
-//	bcV.push_back(generateBCNoSlipRho(lbgk, object));
+	bc.push_back(generateBCVelocity(lbgk, vfTunnel, tunnelMap));
+	bcV.push_back(generateBCVelocityVel(lbgk, vfTunnel, tunnelMap));
+//	bcV.push_back(generateBCNoSlipRho(lbgk, tunnelMap));
+	bc.push_back(generateBCNoSlip(lbgk,  locomotive));
+	bcV.push_back(generateBCNoSlipVel(lbgk, locomotive));
+//	bcV.push_back(generateBCNoSlipRho(lbgk, locomotive));
 	bc.push_back(generateBCConstantPressureVelocity(lbgk, 1., makeAVec(0.1,0.,0.), {asl::X0, asl::XE}));
 
 	initAll(bc);
 	initAll(bcV);
 
-	auto computeForce(generateComputeSurfaceForce(lbgk, forceField, object));
+	auto computeForce(generateComputeSurfaceForce(lbgk, forceField, locomotive));
 	computeForce->init();
 	
 	cout << "Finished" << endl;
@@ -135,8 +136,8 @@ int main(int argc, char* argv[])
 	asl::Timer timer;
 
 	asl::WriterVTKXML writer(appParamsManager.getDir() + "locomotive_laminar");
-	writer.addScalars("map", *object);
-	writer.addScalars("tunel", *tunelMap);
+	writer.addScalars("locomotive", *locomotive);
+	writer.addScalars("tunnel", *tunnelMap);
 	writer.addScalars("rho", *lbgk->getRho());
 	writer.addVector("v", *lbgk->getVelocity());
 	writer.addVector("force", *forceField);

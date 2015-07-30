@@ -77,6 +77,7 @@ int main(int argc, char* argv[])
 	// hardware parameters(platform/device) through command line/parameters file
 	asl::ApplicationParametersManager appParamsManager("locomotive_stability",
 	                                                   "1.0");
+	asl::Parameter<string> input("input", "path to the geometry input file");
 	appParamsManager.load(argc, argv);
 	
 	Param dx(0.25);
@@ -87,10 +88,9 @@ int main(int argc, char* argv[])
 	
 	std::cout << "Data initialization... ";
 
-
-	auto object(asl::readSurface("locomotive.stl", dx.v(), .5, 1., 0., 1., 2., 4.));
+	auto locomotive(asl::readSurface(input.v(), dx.v(), .5, 1., 0., 1., 2., 4.));
 	
-	asl::Block block(object->getInternalBlock());
+	asl::Block block(locomotive->getInternalBlock());
 
 	auto forceField(asl::generateDataContainerACL_SP<FlT>(block, 3, 1u));
 	asl::initData(forceField, makeAVec(0., 0., 0.));
@@ -116,8 +116,8 @@ int main(int argc, char* argv[])
 	asl::initData(nozzelsMap, generateNozzels(block));
 
 	
-	bc.push_back(generateBCNoSlip(lbgk,  object));
-	bcV.push_back(generateBCNoSlipVel(lbgk, object));
+	bc.push_back(generateBCNoSlip(lbgk,  locomotive));
+	bcV.push_back(generateBCNoSlipVel(lbgk, locomotive));
 	bc.push_back(generateBCConstantPressureVelocity(lbgk, 1., 
 	                                                makeAVec(0.1,0.,0.05), 
 	                                                {asl::X0, asl::XE,asl::Y0,asl::YE,asl::Z0,asl::ZE}));
@@ -125,15 +125,15 @@ int main(int argc, char* argv[])
 	initAll(bc);
 	initAll(bcV);
 
-	auto computeForce(generateComputeSurfaceForce(lbgk, forceField, object));
+	auto computeForce(generateComputeSurfaceForce(lbgk, forceField, locomotive));
 	computeForce->init();
 	
 
 	std::cout << "Finished" << endl;
 	std::cout << "Computing..." << endl;
 
-	asl::WriterVTKXML writer("locomotive_stability");
-	writer.addScalars("train", *object);
+	asl::WriterVTKXML writer(appParamsManager.getDir() + "locomotive_stability");
+	writer.addScalars("locomotive", *locomotive);
 	writer.addScalars("nozzels", *nozzelsMap);
 	writer.addScalars("rho", *lbgk->getRho());
 	writer.addVector("v", *lbgk->getVelocity());

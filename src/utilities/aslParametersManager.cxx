@@ -23,11 +23,11 @@
 #include "aslParametersManager.h"
 #include "../aslUtilities.h"
 #include "../acl/aclHardware.h"
-#include <math/aslVectorsDynamicLength.h>
+#include "math/aslVectorsDynamicLength.h"
 #include <iostream>
 #include <fstream>
 #include <boost/filesystem.hpp>
-#include <acl/aclTypesList.h>
+#include "acl/aclTypesList.h"
 #include <map>
 #include <memory>
 
@@ -421,14 +421,14 @@ namespace asl
 				cout << "Usage: " + applicationName + " [PARAMETERS_FILE] [OPTION]...\n"
 					 << allOptions
 					 << endl;
-				exit(0);
+				exit(EXIT_SUCCESS);
 			}
 
 			if (vm.count("version"))
 			{
 				cout << applicationName + " " + applicationVersion
 					 << endl;
-				exit(0);
+				exit(EXIT_SUCCESS);
 			}
 
 			if (vm.count("devices"))
@@ -439,7 +439,7 @@ namespace asl
 					<< "List of all available platforms and their devices:\n"
 					<< acl::hardware.getDevicesInfo()
 					<< endl;
-				exit(0);
+				exit(EXIT_SUCCESS);
 			}
 
 			if (vm.count("generate"))
@@ -449,7 +449,7 @@ namespace asl
 					 << gp.string() << endl;
 
 				writeParametersFile(gp.string());
-				exit(0);
+				exit(EXIT_SUCCESS);
 			}
 
 			if (vm.count("parameters"))
@@ -505,7 +505,7 @@ namespace asl
 			if (vm.count("check"))
 			{
 				cout << "Parameters consistency check - successful." << endl;
-				exit(0);
+				exit(EXIT_SUCCESS);
 			}
 		}
 		catch(exception& e)

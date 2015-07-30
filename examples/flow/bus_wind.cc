@@ -53,6 +53,7 @@ int main(int argc, char* argv[])
 	// hardware parameters(platform/device) through command line/parameters file
 	asl::ApplicationParametersManager appParamsManager("bus_wind",
 	                                                   "1.0");
+	asl::Parameter<string> input("input", "path to the bus geometry input file");
 	appParamsManager.load(argc, argv);
 
 	Param dx(8);
@@ -64,7 +65,7 @@ int main(int argc, char* argv[])
 	std::cout << "Data initialization... ";
 
 
-	auto object(asl::readSurface("bus.stl", dx.v(), 1.5,.25,0.,1.,3.,1.));
+	auto object(asl::readSurface(input.v(), dx.v(), 1.5,.25,0.,1.,3.,1.));
 	
 	asl::Block block(object->getInternalBlock());
 

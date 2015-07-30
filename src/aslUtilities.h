@@ -26,8 +26,11 @@
 #ifndef ASLUTILITIES_H
 #define ASLUTILITIES_H
 
-#include <acl/aclStdIncludes.h>
-#include <CL/cl.hpp>
+//#include <CL/cl.hpp>
+// Supply "cl.hpp" with ASL, since it is not present in OpenCL 2.0
+// Remove the file after switching to OpenCL 2.1
+#include "acl/cl.hpp"
+#include "acl/aclStdIncludes.h"
 #include <math.h>
 #include <iostream>
 #include <sstream>
