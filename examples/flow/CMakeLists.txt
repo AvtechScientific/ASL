@@ -29,9 +29,9 @@ add_executable(compressor compressor.cc)
 target_link_libraries(compressor aslnum aslvtk asl)
 set_property(TARGET compressor PROPERTY RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/compressor)
 
-add_executable(locomotive_in_tunnel locomotive_in_tunnel.cc)
-target_link_libraries(locomotive_in_tunnel aslnum aslvtk asl)
-set_property(TARGET locomotive_in_tunnel PROPERTY RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/locomotive_in_tunnel)
+add_executable(locomotive locomotive.cc)
+target_link_libraries(locomotive aslnum aslvtk asl)
+set_property(TARGET locomotive PROPERTY RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/locomotive)
 
 add_executable(locomotive_stability locomotive_stability.cc)
 target_link_libraries(locomotive_stability aslnum aslvtk asl)

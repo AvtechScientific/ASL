@@ -22,7 +22,7 @@
 
 
 /**
-	\example locomotive_in_tunnel.cc
+	\example locomotive.cc
  */
 
 #include <utilities/aslParametersManager.h>
@@ -80,8 +80,8 @@ int main(int argc, char* argv[])
 	/* Convenience facility to manage simulation parameters (and also
 	 hardware parameters defining platform and device for computations)
 	 through command line and/or parameters file.
-	 See `locomotive_in_tunnel --help` for more information */
-	asl::ApplicationParametersManager appParamsManager("locomotive_in_tunnel",
+	 See `locomotive --help` for more information */
+	asl::ApplicationParametersManager appParamsManager("locomotive",
 	                                                   "1.0");
 
 	/* Important: declare Parameters only after declaring
@@ -90,10 +90,10 @@ int main(int argc, char* argv[])
 	 0.08 - default value; will be used if nothing else is provided during
 	 runtime through command line or parameters file.
 	 "dx" - option key; is used to specify this parameter through command line
-	 and/or parameters file, like `locomotive_in_tunnel --dx 0.05`
+	 and/or parameters file, like `locomotive --dx 0.05`
 	 "space step" - option description; is used in the help output:
-	 `locomotive_in_tunnel -h` and as comment on parameters file generation:
-	 `locomotive_in_tunnel -g ./defaultParameters.ini`
+	 `locomotive -h` and as comment on parameters file generation:
+	 `locomotive -g ./defaultParameters.ini`
 	 "m" - parameter units; is used to complement the option description mentioned
 	 above. Might be used for automatic unit conversion in future (to this end
 	 it is recommended to use the notation of the Boost::Units library). */
@@ -187,7 +187,7 @@ int main(int argc, char* argv[])
 
 	// Initialization of the output system
 	// Write the output to the directory containing the input parameters file (default "./")
-	asl::WriterVTKXML writer(appParamsManager.getDir() + "locomotive_in_tunnel");
+	asl::WriterVTKXML writer(appParamsManager.getDir() + "locomotive");
 	writer.addScalars("map", *locomotive);
 	writer.addScalars("tunnel", *tunnelMap);
 	writer.addScalars("rho", *lbgk->getRho());
