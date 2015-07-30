@@ -103,7 +103,7 @@ int main(int argc, char* argv[])
 	std::cout << "Computing..." << flush;
 	asl::Timer timer;
 
-	asl::WriterVTKXML writer("surfaceFlux");
+	asl::WriterVTKXML writer(appParamsManager.getDir() + "surfaceFlux");
 	writer.addScalars("map", *ballMapMem);
 	writer.addScalars("mapE", *ballBMapMem);
 	writer.addScalars("c", *cField);

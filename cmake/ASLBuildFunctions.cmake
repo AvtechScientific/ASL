@@ -35,3 +35,15 @@ function(INSTALL_SUBLIB _SUBLIB _SUBLIB_PUBLIC_HEADERS)
 		)
 	endforeach()
 endfunction(INSTALL_SUBLIB)
+
+
+# Installs examples: binary and the corresponding source code (preserving source tree structure)
+function(INSTALL_EXAMPLE _TARGET _SOURCE)
+	install(TARGETS ${_TARGET} RUNTIME DESTINATION  ${CMAKE_INSTALL_BINDIR})
+
+	# Determine relative path from ${CMAKE_SOURCE_DIR} to ${_SOURCE}
+	file(RELATIVE_PATH relative_path ${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/${_SOURCE})
+	# Extract directories of the relative path
+	get_filename_component(directories ${relative_path} DIRECTORY)
+	install(FILES ${_SOURCE} DESTINATION ${CMAKE_INSTALL_DOCDIR}/${directories})
+endfunction(INSTALL_EXAMPLE)

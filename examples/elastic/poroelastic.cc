@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
 	asl::Parameter<cl_float> hydraulicConductivity("hydraulic_conductivity", "hydraulic conductivity");
 	asl::Parameter<cl_float> rho("rho", "density");
 	asl::Parameter<asl::AVec<FlT> > g("g", "gravity vector");
-
+	asl::Parameter<string> input("input", "path to the brain geometry input file");
 	asl::Parameter<unsigned int> tsim("num_iterations", "number of iterations");
 	asl::Parameter<unsigned int> tout("num_it_out", "number of iterations between outputs");
 	
@@ -66,8 +66,7 @@ int main(int argc, char* argv[])
 		
 	std::cout << "Data initialization... ";
 
-	asl::SPDataWithGhostNodesACLData map0(asl::read(appParamsManager.getDir() + 
-	                                                "brain.vti", 0));
+	asl::SPDataWithGhostNodesACLData map0(asl::read(input.v(), 0));
 //	asl::Block block(size.v(), dx.v());
 	asl::Block block(map0->getInternalBlock());
 	dx.v() = block.dx*1e-3;

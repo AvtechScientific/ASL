@@ -24,7 +24,11 @@
 #ifndef ACLHARDWARE_H
 #define ACLHARDWARE_H
 
-#include <CL/cl.hpp>
+
+//#include <CL/cl.hpp>
+// Supply "cl.hpp" with ASL, since it is not present in OpenCL 2.0
+// Remove the file after switching to OpenCL 2.1
+#include "cl.hpp"
 #include "aclStdIncludes.h"
 #include <memory>
 #include "aclTypes.h"
