@@ -18,7 +18,7 @@ function(INSTALL_SUBLIB _SUBLIB _SUBLIB_PUBLIC_HEADERS)
 		RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 		LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 		ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-		INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/asl
+		INCLUDES DESTINATION ${ASL_INSTALL_INCLUDEDIR}
 	)
 
 	# Install public headers preserving the source tree structure
@@ -30,7 +30,7 @@ function(INSTALL_SUBLIB _SUBLIB _SUBLIB_PUBLIC_HEADERS)
 		install(FILES
 			${header}
 			DESTINATION
-			${CMAKE_INSTALL_INCLUDEDIR}/asl/${directories}
+			${ASL_INSTALL_INCLUDEDIR}/${directories}
 			COMPONENT Devel
 		)
 	endforeach()
@@ -38,7 +38,13 @@ endfunction(INSTALL_SUBLIB)
 
 
 # Installs examples: binary and the corresponding source code (preserving source tree structure)
+# puts `asl-` preffix before binaries in order to avoid name collisions
+# creates a separate directory in the build tree to make experimenting easier
 function(INSTALL_EXAMPLE _TARGET _SOURCE)
+	# Add `asl-` preffix in order to avoid name collisions
+	set_property(TARGET ${_TARGET} PROPERTY OUTPUT_NAME "asl-${_TARGET}")
+	# Create a separate directory in the build tree for each example to make experimenting easier
+	set_property(TARGET ${_TARGET} PROPERTY RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${_TARGET})
 	install(TARGETS ${_TARGET} RUNTIME DESTINATION  ${CMAKE_INSTALL_BINDIR})
 
 	# Determine relative path from ${CMAKE_SOURCE_DIR} to ${_SOURCE}

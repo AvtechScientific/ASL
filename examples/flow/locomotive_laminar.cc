@@ -89,7 +89,6 @@ int main(int argc, char* argv[])
 	
 	std::cout << "Data initialization..." << endl;
 
-
 	auto locomotive(asl::readSurface(input.v(), bl));
 	
 	asl::Block block(locomotive->getInternalBlock());
