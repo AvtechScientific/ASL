@@ -21,9 +21,8 @@ endif()
 # Enable supplied cmake includes and modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/" "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
-include(GNUInstallDirs)
-
 # Add ASL cmake definitions
+include(ASLPaths)
 include(ASLBuildOptions)
 include(ASLBuildFunctions)
 
@@ -52,7 +51,6 @@ if (WITH_TESTS)
 	# Performance tests are labled "Performance"
 	# Run them: ctest [-C Release|Debug] -L Performance
 	# Exclude them: ctest [-C Release|Debug] -LE Performance
-	enable_testing()
 	add_subdirectory(test)
 endif()
 
