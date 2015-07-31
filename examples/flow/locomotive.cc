@@ -120,7 +120,7 @@ int main(int argc, char* argv[])
 	
 	cout << "Data initialization... " << flush;
 
-	// Read geometry of the locomotive from the file
+	// Read geometry of the locomotive from the file `locomotive.stl`
 	auto locomotive(asl::readSurface(input.v(), bl));
 
 	// Create block for further use

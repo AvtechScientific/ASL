@@ -35,15 +35,17 @@ Professional consulting, training and integration services are provided by [Avte
 ### Running an example
 
 1. Go to examples: `cd examples/flow/locomotive`
-2. Run: `./locomotive --input ../../../../ASL/examples/input_data/locomotive.stl`. Optionally: change some parameters - `./locomotive --input locomotive.stl --dx 0.1 --dt 2` or write all of them into a file for later editing/reuse - `./locomotive -g bigGrid.ini`. List all available options - `locomotive -h`.
-3. Post-processing: see [step by step example](https://github.com/AvtechScientific/ASL/wiki/User-Guide#post-processing) and the ParaView state file `examples/input_data/locomotive.pvsm`.
+2. `./asl-locomotive --input ../../../../ASL/examples/input_data/locomotive.stl`  
+Optionally: change parameters `./asl-locomotive --input locomotive.stl --dx 1 --dt 2` or write all of them into a file for later editing/reuse - `./asl-locomotive -g bigGrid.ini`. List all available options - `./asl-locomotive -h`.
+3. Post-processing: see [step by step example](https://github.com/AvtechScientific/ASL/wiki/User-Guide#post-processing) and `examples/input_data/locomotive.pvsm` - the ParaView state file.
 
 ### Writing your own code using ASL
 
 1. Take a look on [examples](http://asl.org.il/doc/Developer-Guide/examples.html) and the [API documentation](http://asl.org.il/doc/Developer-Guide/), start with [examples/flow/locomotive.cc](http://asl.org.il/doc/Developer-Guide/locomotive_8cc-example.html)
 2. ASL installation supplies `ASL.pc` and `ASLConfig.cmake` files. To build your program using:
-	- `pkg-config`: launch ``c++ `pkg-config --cflags --libs ASL` -o locomotive locomotive.cc``
-	- `cmake`: write a basic `CMakeLists.txt` file:
+
+- `pkg-config`: ``c++ `pkg-config --cflags --libs ASL` -o locomotive locomotive.cc``
+- `cmake`: write a basic `CMakeLists.txt` file:
 
 ```cmake
 project(locomotive)
