@@ -102,4 +102,3 @@ if (WITH_MATIO)
 	target_link_libraries(aslmatio PRIVATE ${MATIO_LIBRARIES})
 	INSTALL_SUBLIB(aslmatio aslmatio_PUBLIC_HEADERS)
 endif (WITH_MATIO)
-
