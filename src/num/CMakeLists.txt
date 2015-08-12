@@ -68,5 +68,5 @@ set(aslnum_SOURCES
 )
 
 add_library(aslnum ${aslnum_SOURCES})
-target_link_libraries(aslnum aslacl)
+target_link_libraries(aslnum aslacl asl)
 INSTALL_SUBLIB(aslnum aslnum_PUBLIC_HEADERS)
