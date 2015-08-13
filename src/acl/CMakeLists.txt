@@ -16,7 +16,8 @@ set(aslacl_PUBLIC_HEADERS
 	aclStdIncludes.h 
 	aclTypesList.h 
 	aclTypes.h 
-	acl.h 
+	acl.h
+	cl.hpp
 	aclHardware.h
 	aclUtilities.h
 	aclElementBase.h
