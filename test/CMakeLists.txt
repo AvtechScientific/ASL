@@ -1,5 +1,3 @@
-enable_testing()
-
 add_subdirectory(testABD)
 add_subdirectory(testACL)
 add_subdirectory(testAGL)

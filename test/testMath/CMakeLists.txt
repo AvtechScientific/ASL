@@ -1,11 +1,11 @@
 include_directories(${CMAKE_SOURCE_DIR}/src)
 
 add_executable(testASLData testASLData.cc)
-target_link_libraries(testASLData aslmath asl)
+target_link_libraries(testASLData asl)
 add_test(NAME testASLData COMMAND testASLData)
 
 add_executable(testDistanceFunction testDistanceFunction.cc)
-target_link_libraries(testDistanceFunction aslmath aslvtk aslnum asl)
+target_link_libraries(testDistanceFunction aslvtk aslnum asl)
 add_test(NAME testDistanceFunction COMMAND testDistanceFunction)
 
 add_executable(testReductionFunction testReductionFunction.cc)

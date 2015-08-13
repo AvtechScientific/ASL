@@ -51,6 +51,7 @@ if (WITH_TESTS)
 	# Performance tests are labled "Performance"
 	# Run them: ctest [-C Release|Debug] -L Performance
 	# Exclude them: ctest [-C Release|Debug] -LE Performance
+	enable_testing()
 	add_subdirectory(test)
 endif()
 
