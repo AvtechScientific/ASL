@@ -4,6 +4,7 @@
 
 - fixing linkage issues
 - fixing testing issues
+- fixing an installation bug
 
 
 ## 0.1.5
