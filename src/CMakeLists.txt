@@ -20,13 +20,12 @@ set(aslcommon_PUBLIC_HEADERS
 )
 
 set(aslcommon_SOURCES
-	${aslcommon_PUBLIC_HEADERS}
 	utilities/aslTimeStamp.cxx
 	aslUtilities.cxx
 )
 
-add_library(aslcommon ${aslcommon_SOURCES})
-target_link_libraries(aslcommon PRIVATE ${Boost_LIBRARIES} ${OpenCL_LIBRARIES})
+add_library(aslcommon ${aslcommon_PUBLIC_HEADERS} ${aslcommon_SOURCES})
+target_link_libraries(aslcommon PRIVATE ${OpenCL_LIBRARIES})
 INSTALL_SUBLIB(aslcommon aslcommon_PUBLIC_HEADERS)
 
 
@@ -73,14 +72,13 @@ set(aslvtk_PUBLIC_HEADERS
 )
 
 set(aslvtk_SOURCES
-	${aslvtk_PUBLIC_HEADERS}
 	utilities/aslVTKCasters.cxx
 	utilities/aslVTKDataGenerators.cxx
 	writers/aslVTKFormatWriters.cxx
 	readers/aslVTKFormatReaders.cxx
 )
 
-add_library(aslvtk ${aslvtk_SOURCES})
+add_library(aslvtk ${aslvtk_PUBLIC_HEADERS} ${aslvtk_SOURCES})
 target_link_libraries(aslvtk PRIVATE aslacl ${VTK_LIBRARIES} ${OpenCL_LIBRARIES})
 INSTALL_SUBLIB(aslvtk aslvtk_PUBLIC_HEADERS)
 
@@ -97,12 +95,11 @@ if (WITH_MATIO)
 	)
 
 	set(aslmatio_SOURCES
-		${aslmatio_PUBLIC_HEADERS}
 		utilities/aslMATLABCasters.cxx
 		writers/aslMATFormat.cxx
 	)
 
-	add_library(aslmatio ${aslmatio_SOURCES})
+	add_library(aslmatio ${aslmatio_PUBLIC_HEADERS} ${aslmatio_SOURCES})
 	target_link_libraries(aslmatio PRIVATE aslacl ${MATIO_LIBRARIES} ${OpenCL_LIBRARIES})
 	INSTALL_SUBLIB(aslmatio aslmatio_PUBLIC_HEADERS)
 endif (WITH_MATIO)
