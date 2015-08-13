@@ -19,23 +19,19 @@
 # along with ASL. If not, see <http://www.gnu.org/licenses/>.
 #
 
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=${prefix}/@CMAKE_INSTALL_BINDIR@
+libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
+includedir=${prefix}/@ASL_INSTALL_INCLUDEDIR@
 
-# asldata
-
-set(asldata_PUBLIC_HEADERS
-	data/aslMemElement.h
-	data/aslDataUtilities.h
-	data/aslBlocks.h
-	data/aslDataWrapper.h
-	data/aslDataWithGhostNodes.h
-	data/aslProbe.h
-)
-
-set(asldata_SOURCES
-	data/aslMemElement.cxx
-	data/aslDataUtilities.cxx
-	data/aslBlocks.cxx
-	data/aslDataWrapper.cxx
-	data/aslDataWithGhostNodes.cxx
-	data/aslProbe.cxx
-)
+Name: @PROJECT_NAME@
+Description: @CPACK_PACKAGE_DESCRIPTION_SUMMARY@
+URL: http://asl.org.il
+Version: @ASL_VERSION@
+# ToDo:
+# 1. use Requires?
+# 2. use Libs.private?
+# Libs.private: @OpenCL_LIBRARIES@
+# Libs: -L${libdir}@ASL_SUBLIBS@
+Libs: -L${libdir}@ASL_SUBLIBS@ @OpenCL_LIBRARIES@
+Cflags: -I${includedir}

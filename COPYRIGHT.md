@@ -32,10 +32,10 @@ To cite ASL in publications please adopt the following:
 
 _ASL: Advanced Simulation Library™, an open source multiphysics simulation software package._[^1] Version 0.1.5.[^2] 2015-08-01.[^3] <http://asl.org.il>.[^4] Avtech Scientific. Modiin Illit, Israel.
 
-[^1]: Additionally any sub-routines that were used may be specified.
-[^2]: Version number or commit hash (in the latter case write: Commit 794e49160c089c18a3b455e48bab6ad7c28bb685)
-[^3]: Release or commit date.
-[^4]: The URL should be an active hyperlink wherever technically possible.
+[^1]: Additionally any sub-routines that were used may be specified.  
+[^2]: Version number or commit hash (in the latter case write: Commit 794e49160c089c18a3b455e48bab6ad7c28bb685)  
+[^3]: Release or commit date.  
+[^4]: The URL should be an active hyperlink wherever technically possible.  
 
 ## Media files
 
