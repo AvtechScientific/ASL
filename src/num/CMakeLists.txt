@@ -1,4 +1,3 @@
-
 include_directories(${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/src/acl)
 
 
@@ -36,7 +35,6 @@ set(aslnum_PUBLIC_HEADERS
 )
 
 set(aslnum_SOURCES
-	${aslnum_PUBLIC_HEADERS}
 	aslNumMethod.cxx
 	aslSingleKernelNM.cxx
 	aslFDAdvectionDiffusion.cxx
@@ -67,6 +65,6 @@ set(aslnum_SOURCES
 	aslDataResampling.cxx
 )
 
-add_library(aslnum ${aslnum_SOURCES})
-target_link_libraries(aslnum aslacl)
+add_library(aslnum ${aslnum_PUBLIC_HEADERS} ${aslnum_SOURCES})
+target_link_libraries(aslnum PRIVATE asl aslacl aslcommon ${OpenCL_LIBRARIES})
 INSTALL_SUBLIB(aslnum aslnum_PUBLIC_HEADERS)

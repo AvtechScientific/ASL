@@ -5,7 +5,7 @@ target_link_libraries(testVectorOfElements aslacl)
 add_test(NAME testVectorOfElements COMMAND testVectorOfElements)
 
 add_executable(testMatrixOfElements testMatrixOfElements.cc)
-target_link_libraries(testMatrixOfElements aslacl aslmath asldata asl)
+target_link_libraries(testMatrixOfElements asl aslacl aslcommon)
 add_test(NAME testMatrixOfElements COMMAND testMatrixOfElements)
 
 add_executable(testPerformance testPerformance.cc)
