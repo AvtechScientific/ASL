@@ -44,7 +44,7 @@ Optionally: change parameters `./asl-locomotive --input locomotive.stl --dx 1 --
 1. Take a look on [examples](http://asl.org.il/doc/Developer-Guide/examples.html) and the [API documentation](http://asl.org.il/doc/Developer-Guide/), start with [examples/flow/locomotive.cc](http://asl.org.il/doc/Developer-Guide/locomotive_8cc-example.html)
 2. ASL installation supplies `ASL.pc` and `ASLConfig.cmake` files. To build your program using:
 
-- `pkg-config`: ``c++ `pkg-config --cflags --libs ASL` -o locomotive locomotive.cc``
+- `pkg-config`: ``c++ `pkg-config --cflags --libs ASL` -std=c++11 -o flow flow.cc``
 - `cmake`: write a basic `CMakeLists.txt` file:
 
 ```cmake
