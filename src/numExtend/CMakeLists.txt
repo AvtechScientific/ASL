@@ -13,4 +13,5 @@ set(aslnumext_SOURCES
 )
 
 add_library(aslnumext ${aslnumext_SOURCES})
+target_link_libraries(aslnumext PRIVATE ${OpenCL_LIBRARIES} aslacl aslcommon asl)
 INSTALL_SUBLIB(aslnumext aslnumext_PUBLIC_HEADERS)

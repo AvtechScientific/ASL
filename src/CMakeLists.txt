@@ -3,10 +3,11 @@
 # to the _SOURCES (or _PRIVATE_HEADERS?)
 
 add_subdirectory(acl)
-add_subdirectory(data)
-add_subdirectory(math)
 add_subdirectory(num)
 add_subdirectory(numExtend)
+
+include(data/asldata.cmake)
+include(math/aslmath.cmake)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/acl)
 
@@ -14,27 +15,28 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/acl)
 # aslcommon
 
 set(aslcommon_PUBLIC_HEADERS
-	utilities/aslParametersManager.h
 	utilities/aslTimeStamp.h
 	aslUtilities.h
 )
 
 set(aslcommon_SOURCES
 	${aslcommon_PUBLIC_HEADERS}
-	utilities/aslParametersManager.cxx
 	utilities/aslTimeStamp.cxx
 	aslUtilities.cxx
 )
 
 add_library(aslcommon ${aslcommon_SOURCES})
-target_link_libraries(aslcommon PRIVATE ${Boost_LIBRARIES})
+target_link_libraries(aslcommon PRIVATE ${Boost_LIBRARIES} ${OpenCL_LIBRARIES})
 INSTALL_SUBLIB(aslcommon aslcommon_PUBLIC_HEADERS)
 
 
 # asl
 
 set(asl_PUBLIC_HEADERS
+	${asldata_PUBLIC_HEADERS}
+	${aslmath_PUBLIC_HEADERS}
 	aslGenerators.h
+	utilities/aslParametersManager.h
 	utilities/aslTimer.h
 	utilities/aslUValue.h
 	utilities/aslGlobalSpace.h
@@ -46,16 +48,18 @@ set(asl_PUBLIC_HEADERS
 )
 
 set(asl_SOURCES
-	${asl_PUBLIC_HEADERS}
+	${asldata_SOURCES}
+	${aslmath_SOURCES}
 	aslGenerators.cxx
+	utilities/aslParametersManager.cxx
 	writers/aslABDFormat.cxx
 	writers/aslWriter.cxx
 	aslDataInc.cxx
 	aslGeomInc.cxx
 )
 
-add_library(asl ${asl_SOURCES})
-target_link_libraries(asl PUBLIC aslcommon aslacl asldata aslmath PRIVATE ${Boost_LIBRARIES})
+add_library(asl ${asl_PUBLIC_HEADERS} ${asl_SOURCES})
+target_link_libraries(asl PUBLIC aslcommon aslacl PRIVATE ${Boost_LIBRARIES})
 INSTALL_SUBLIB(asl asl_PUBLIC_HEADERS)
 
 
@@ -77,7 +81,7 @@ set(aslvtk_SOURCES
 )
 
 add_library(aslvtk ${aslvtk_SOURCES})
-target_link_libraries(aslvtk PRIVATE ${VTK_LIBRARIES} PRIVATE ${OpenCL_LIBRARIES})
+target_link_libraries(aslvtk PRIVATE aslacl ${VTK_LIBRARIES} ${OpenCL_LIBRARIES})
 INSTALL_SUBLIB(aslvtk aslvtk_PUBLIC_HEADERS)
 
 
@@ -99,6 +103,6 @@ if (WITH_MATIO)
 	)
 
 	add_library(aslmatio ${aslmatio_SOURCES})
-	target_link_libraries(aslmatio PRIVATE ${MATIO_LIBRARIES})
+	target_link_libraries(aslmatio PRIVATE aslacl ${MATIO_LIBRARIES} ${OpenCL_LIBRARIES})
 	INSTALL_SUBLIB(aslmatio aslmatio_PUBLIC_HEADERS)
 endif (WITH_MATIO)

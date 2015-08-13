@@ -7,5 +7,8 @@ Name: @PROJECT_NAME@
 Description: @CPACK_PACKAGE_DESCRIPTION_SUMMARY@
 URL: http://asl.org.il
 Version: @ASL_VERSION@
+# It should probably be like this:
+# Libs.private: @OpenCL_LIBRARIES@
+# Libs: -L${libdir}@ASL_SUBLIBS@
 Libs: -L${libdir}@ASL_SUBLIBS@ @OpenCL_LIBRARIES@
 Cflags: -I${includedir}
