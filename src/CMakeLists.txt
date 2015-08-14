@@ -101,7 +101,9 @@ set(aslvtk_SOURCES
 )
 
 add_library(aslvtk ${aslvtk_PUBLIC_HEADERS} ${aslvtk_SOURCES})
-target_link_libraries(aslvtk PRIVATE aslacl ${VTK_LIBRARIES} ${OpenCL_LIBRARIES})
+target_link_libraries(aslvtk PRIVATE aslacl asl ${VTK_LIBRARIES}
+	${OpenCL_LIBRARIES} ${Boost_FILESYSTEM_LIBRARY}
+	${Boost_SYSTEM_LIBRARY})
 INSTALL_SUBLIB(aslvtk aslvtk_PUBLIC_HEADERS)
 
 
