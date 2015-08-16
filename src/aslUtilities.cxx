@@ -20,9 +20,10 @@
  *
  */
 
+
 #include <stdexcept>
 #include "aslUtilities.h"
-#include "acl/aclUtilities.h"
+
 
 using namespace std;
 
@@ -33,22 +34,26 @@ namespace asl
 	{
 		istringstream i(s);
 		T x;
-		int decimal(0);
 		char c;
 
 		if (!(i >> x))
-			errorMessage("strToNum() - unable to convert " + s + " to " + acl::typeToStr<T>());
+			errorMessage("strToNum() - unable to convert " + s + " to the requested type");
 
 		if (i.get(c))
-			warningMessage("strToNum() - " + s + " contains character");
- 
+			warningMessage("strToNum() - " + s + " contains a character");
+
+/*
+		ToDo: check whether it is needed at all.
+		Commented out since it causes cyclic dependency aslcommon <-> aslacl through "aclUtilites.h"
+
+		int decimal(0);
 		if (acl::typeToTypeID<T>() == acl::TYPE_INT)
 		{
 			i >> decimal;
 			if (decimal != 0)
 				warningMessage("strToNum() - " + s + " is not an integer");
 		}
-
+*/
 		return x;
 	}
 

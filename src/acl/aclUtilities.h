@@ -36,7 +36,6 @@ namespace cl
 
 namespace acl
 {
-	
 	extern const std::string INDEX;
 	extern const KernelConfiguration KERNEL_BASIC;
 
@@ -62,7 +61,6 @@ namespace acl
 	unsigned int paddingBytes(unsigned int size,
 	                          unsigned int typeSize,
 	                          CommandQueue queue);
-
 
 	/// Adds padding in elements based on vector width
 	unsigned int paddingElements(unsigned int size,
