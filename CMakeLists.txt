@@ -69,10 +69,13 @@ if (WITH_API_DOC)
 endif()
 
 if (WITH_TESTS)
-	# Input/Output tests are labled "IO" and may require input files
-	# Performance tests are labled "Performance"
-	# Run them: ctest [-C Release|Debug] -L Performance
-	# Exclude them: ctest [-C Release|Debug] -LE Performance
+	# Test labels:
+	# DoublePrecision - tests that use double precision (will fail if device does not support it)
+	# IO - Input/Output tests (may require input files)
+	# Performance - performance tests
+	#
+	# Run them e.g.: `ctest [-C Release|Debug] -L Performance`
+	# Exclude some of them: `ctest -LE DoublePrecision -LE Performance`
 	enable_testing()
 	add_subdirectory(test)
 endif()

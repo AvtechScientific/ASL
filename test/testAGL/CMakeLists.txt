@@ -26,3 +26,8 @@ add_executable(testVTK_IO testVTK_IO.cc)
 target_link_libraries(testVTK_IO aslnum aslvtk asl)
 add_test(NAME testVTK_IO COMMAND testVTK_IO)
 set_tests_properties(testVTK_IO PROPERTIES LABELS IO)
+# Hardcode the path to the required input file `bus.stl`
+# (tests are not installed, so no need to be relocatable)
+# alternatively `bus.stl` can be copied to the test directory
+# by cmake (configure_file() for a configuration time copy or add_custom_command() for a build time copy)
+target_compile_definitions(testVTK_IO PRIVATE "INPUT_DATA_DIR=\"${CMAKE_SOURCE_DIR}/input_data/\"")
