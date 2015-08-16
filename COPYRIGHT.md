@@ -39,7 +39,7 @@ _ASL: Advanced Simulation Library™, an open source multiphysics simulation sof
 
 ## Media files
 
-Some examples require input files (like .vti or .stl) that can be found in `examples/input_data`.
+Some examples require input files (like .vti or .stl) that can be found in `input_data`.
 
 1. All .stl files were originally obtained from [GrabCAD](https://grabcad.com/) and are subject to their [Terms of Service](https://grabcad.com/terms); some of them were modified.
 2. brain.vti was generated using  [BrainWeb](http://brainweb.bic.mni.mcgill.ca/brainweb/).

@@ -25,15 +25,15 @@
 	\example testVTK_IO.cc
  */
 
-#include <writers/aslVTKFormatWriters.h>
-#include <readers/aslVTKFormatReaders.h>
-#include <aslGenerators.h>
-#include <num/aslDataResampling.h>
-#include <data/aslDataWithGhostNodes.h>
+#include "writers/aslVTKFormatWriters.h"
+#include "readers/aslVTKFormatReaders.h"
+#include "aslGenerators.h"
+#include "num/aslDataResampling.h"
+#include "data/aslDataWithGhostNodes.h"
 
 void testMINC()
 {
-	cout << "Test of MINC files reader..." << flush;
+	cout << "Test of MINC files reader..." << endl;
 
 	auto data(asl::read("subject04_crisp_v.mnc", 0));
 	
@@ -44,7 +44,7 @@ void testMINC()
 
 void testMINCplus()
 {
-	cout << "Test of MINC files reader +..." << flush;
+	cout << "Test of MINC files reader +..." << endl;
 
 	auto data(asl::read("subject04_crisp_v.mnc", 0));
 	
@@ -59,9 +59,13 @@ void testMINCplus()
 
 void testSurfaceSTL()
 {
-	cout << "Test of Surface STL files reader..." << flush;
+	cout << "Test of Surface STL files reader..." << endl;
 
-	auto data(asl::readSurface("bus.stl", 5));
+	// INPUT_DATA_DIR will be expanded by the preprocessor to e.g. "/path/to/dir/"
+	// and the compiler will merge adjacent string literals
+	// alternatively `bus.stl` can be copied to the test directory
+	// by cmake (configure_file() for a configuration time copy or add_custom_command() for a build time copy)
+	auto data(asl::readSurface(INPUT_DATA_DIR "bus.stl", 5));
 //	auto data(asl::readSurface("xx.vtp", .01));
 	
 	asl::writeVTKXML("dataSurfaceSTL.vti",

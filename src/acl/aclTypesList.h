@@ -33,5 +33,4 @@
 
 #define BOOST_TT_acl_types (cl_int)(cl_uint)(cl_float)(cl_double)(cl_long)
 
-
 #endif // ACLTYPESLIST_H
