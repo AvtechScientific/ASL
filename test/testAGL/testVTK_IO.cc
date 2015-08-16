@@ -63,6 +63,8 @@ void testSurfaceSTL()
 
 	// INPUT_DATA_DIR will be expanded by the preprocessor to e.g. "/path/to/dir/"
 	// and the compiler will merge adjacent string literals
+	// alternatively `bus.stl` can be copied to the test directory
+	// by cmake (configure_file() for a configuration time copy or add_custom_command() for a build time copy)
 	auto data(asl::readSurface(INPUT_DATA_DIR "bus.stl", 5));
 //	auto data(asl::readSurface("xx.vtp", .01));
 	
