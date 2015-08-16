@@ -30,14 +30,16 @@ add_executable(testMatrixOfElements testMatrixOfElements.cc)
 target_link_libraries(testMatrixOfElements asl aslacl aslcommon)
 add_test(NAME testMatrixOfElements COMMAND testMatrixOfElements)
 
-add_executable(testPerformance testPerformance.cc)
-target_link_libraries(testPerformance aslacl)
-add_test(NAME testPerformance COMMAND testPerformance)
-set_tests_properties(testPerformance PROPERTIES LABELS Performance)
+# This test needs to be updated.
+# add_executable(testPerformance testPerformance.cc)
+# target_link_libraries(testPerformance aslacl)
+# add_test(NAME testPerformance COMMAND testPerformance)
+# set_tests_properties(testPerformance PROPERTIES LABELS Performance)
 
 add_executable(testKernel testKernel.cc)
 target_link_libraries(testKernel aslacl)
 add_test(NAME testKernel COMMAND testKernel)
+set_tests_properties(testKernel PROPERTIES LABELS DoublePrecision)
 
 add_executable(testOperators testOperators.cc)
 target_link_libraries(testOperators aslacl)
