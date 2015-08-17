@@ -24,7 +24,6 @@
 #include "aclHardware.h"
 #include "../aslUtilities.h"
 #include "Kernels/aclKernel.h"
-#include "../utilities/aslParametersManager.h"
 #include <fstream>
 
 
@@ -40,10 +39,10 @@ namespace acl
 
 	// order of elements in TYPE and TYPE_SIZE
 	// has to correspond to the order of elements of TypeID
-	// dot't change strings to "cl_..."
+	// don't change strings to "cl_..."!!!
 	const vector<string> TYPE({"int", "uint", "float", "double", "long"});
 	const vector<unsigned char> TYPE_SIZE({sizeof(cl_int), sizeof(cl_uint), sizeof(cl_float), sizeof(cl_double), sizeof(cl_long)});
-	const vector<TypeID> TYPE_SELECT({TYPE_INT, 	TYPE_INT, TYPE_INT, TYPE_LONG, TYPE_LONG});
+	const vector<TypeID> TYPE_SELECT({TYPE_INT, TYPE_INT, TYPE_INT, TYPE_LONG, TYPE_LONG});
 
 	Hardware hardware;
 
