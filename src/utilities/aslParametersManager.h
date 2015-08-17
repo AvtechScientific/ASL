@@ -191,6 +191,4 @@ namespace asl
 	}
 	
 } //namespace asl
-
-
 #endif // ASLPARAMETERSMANAGER_H
