@@ -39,7 +39,9 @@ _ASL: Advanced Simulation Library™, an open source multiphysics simulation sof
 
 ## Media files
 
-Some examples require input files (like .vti or .stl) that can be found in `input_data`.
+Some examples and tests require input files (like .vti or .stl) that can be found in `input_data`. All media files are released under the terms of AGPLv3 with specification of its origin and author; some of them were modified.
 
-1. All .stl files were originally obtained from [GrabCAD](https://grabcad.com/) and are subject to their [Terms of Service](https://grabcad.com/terms); some of them were modified.
-2. brain.vti was generated using  [BrainWeb](http://brainweb.bic.mni.mcgill.ca/brainweb/).
+1. brain.vti was generated using [BrainWeb](http://brainweb.bic.mni.mcgill.ca/brainweb/).
+2. [locomotive.stl](https://grabcad.com/library/santafe-locomotive) - [Mark Hedron](https://grabcad.com/mark.hedron).
+3. [bus.stl](https://grabcad.com/library/tourist-bus) - [Mohd Fazzlil Tuah](https://grabcad.com/fazzlil.737-1).
+4. [axial-compressor.stl](https://grabcad.com/library/axial-compressor) - [Shashank Mishra](https://grabcad.com/shashankmishra).
