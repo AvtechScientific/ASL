@@ -23,6 +23,7 @@
 
 /**
 	\example testVTK_IO.cc
+	Required input file: [bus.stl](http://asl.org.il/input_data/bus.stl)
  */
 
 #include "writers/aslVTKFormatWriters.h"

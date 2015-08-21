@@ -23,6 +23,7 @@
 
 /**
 	\example locomotive_laminar.cc
+	Required input file: [locomotive.stl](http://asl.org.il/input_data/locomotive.stl)
  */
 
 #include <math/aslTemplates.h>

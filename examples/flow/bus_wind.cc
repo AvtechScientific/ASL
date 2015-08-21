@@ -23,6 +23,7 @@
 
 /**
 	\example bus_wind.cc
+	Required input file: [bus.stl](http://asl.org.il/input_data/bus.stl)
  */
 
 #include <utilities/aslParametersManager.h>
@@ -62,7 +63,7 @@ int main(int argc, char* argv[])
 	
 	Param nuNum(nu.v()*dt.v()/dx.v()/dx.v());
 	
-	std::cout << "Data initialization... ";
+	std::cout << "Data initialization... " << flush;
 
 
 	auto object(asl::readSurface(input.v(), dx.v(), 1.5,.25,0.,1.,3.,1.));
@@ -74,7 +75,7 @@ int main(int argc, char* argv[])
 	
 	std::cout << "Finished" << endl;
 	
-	std::cout << "Numerics initialization... ";
+	std::cout << "Numerics initialization... " << flush;
 
 	asl::SPLBGK lbgk(new asl::LBGK(block, 
 				               acl::generateVEConstant(FlT(nu.v())),  
@@ -100,7 +101,7 @@ int main(int argc, char* argv[])
 	
 
 	std::cout << "Finished" << endl;
-	std::cout << "Computing...";
+	std::cout << "Computing..." << endl;
 
 	asl::WriterVTKXML writer("bus_wind");
 	writer.addScalars("bus", *object);
