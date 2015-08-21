@@ -23,6 +23,7 @@
 
 /**
 	\example locomotive_stability.cc
+	Required input file: [locomotive.stl](http://asl.org.il/input_data/locomotive.stl)
  */
 
 #include <math/aslVectors.h>
@@ -86,7 +87,7 @@ int main(int argc, char* argv[])
 	
 	Param nuNum(nu.v()*dt.v()/dx.v()/dx.v());
 	
-	std::cout << "Data initialization... ";
+	std::cout << "Data initialization... " << flush;
 
 	auto locomotive(asl::readSurface(input.v(), dx.v(), .5, 1., 0., 1., 2., 4.));
 	
@@ -97,7 +98,7 @@ int main(int argc, char* argv[])
 	
 	std::cout << "Finished" << endl;
 	
-	std::cout << "Numerics initialization... ";
+	std::cout << "Numerics initialization... " << flush;
 
 	asl::SPLBGK lbgk(new asl::LBGK(block, 
 				               acl::generateVEConstant(FlT(nu.v())),  

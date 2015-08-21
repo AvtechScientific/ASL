@@ -23,6 +23,7 @@
 
 /**
 	\example compressor.cc
+	Required input file: [axial-compressor.stl](http://asl.org.il/input_data/axial-compressor.stl)
  */
 
 #include <utilities/aslParametersManager.h>
@@ -63,6 +64,7 @@ int main(int argc, char* argv[])
 	// hardware parameters(platform/device) through command line/parameters file
 	asl::ApplicationParametersManager appParamsManager("compressor",
 	                                                   "1.0");
+	asl::Parameter<string> input("input", "path to the compressor geometry input file");
 	appParamsManager.load(argc, argv);
 
 	Param dx(0.5);
@@ -79,10 +81,10 @@ int main(int argc, char* argv[])
 	// Angular velocity in one iteration
 	Param wNum(w.v()*dt.v());
 
-	std::cout << "Compressor: Data initialization...";
+	std::cout << "Data initialization..." << flush;
 
 
-	auto compressorMap(asl::readSurface("axial-compressor.stl", bl));
+	auto compressorMap(asl::readSurface(input.v(), bl));
 	
 	asl::Block block(compressorMap->getInternalBlock());
 
@@ -92,7 +94,7 @@ int main(int argc, char* argv[])
 	
 	std::cout << "Finished" << endl;
 	
-	std::cout << "Compressor: Numerics initialization...";
+	std::cout << "Numerics initialization..." << flush;
 
 	asl::SPLBGK lbgk(new asl::LBGK(block,
 	                               acl::generateVEConstant(FlT(nuNum.v())),
@@ -124,7 +126,7 @@ int main(int argc, char* argv[])
 
 
 	std::cout << "Finished" << endl;
-	std::cout << "Computing...";
+	std::cout << "Computing..." << endl;
 	asl::Timer timer;
 
 	asl::WriterVTKXML writer("compressor");
