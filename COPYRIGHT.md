@@ -35,13 +35,4 @@ _ASL: Advanced Simulation Library™, an open source multiphysics simulation sof
 [^1]: Additionally any sub-routines that were used may be specified.  
 [^2]: Version number or commit hash (in the latter case write: Commit 794e49160c089c18a3b455e48bab6ad7c28bb685)  
 [^3]: Release or commit date.  
-[^4]: The URL should be an active hyperlink wherever technically possible.  
-
-## Media files
-
-Some examples and tests require input files (like .vti or .stl) that can be found in `input_data`. All media files are released with specification of its origin, author and licensing terms; some of them were modified.
-
-1. brain.vti - [Avtech Scientific](http://avtechscientific.com), generated using [BrainWeb](http://brainweb.bic.mni.mcgill.ca/brainweb/).
-2. [locomotive.stl](https://grabcad.com/library/santafe-locomotive) - [Mark Hedron](https://grabcad.com/mark.hedron), AGPLv3.
-3. [bus.stl](https://grabcad.com/library/tourist-bus) - [Mohd Fazzlil Tuah](https://grabcad.com/fazzlil.737-1), AGPLv3.
-4. [axial-compressor.stl](https://grabcad.com/library/axial-compressor) - [Shashank Mishra](https://grabcad.com/shashankmishra), AGPLv3.
+[^4]: The URL should be an active hyperlink wherever technically possible.

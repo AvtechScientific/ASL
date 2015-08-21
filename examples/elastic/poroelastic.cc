@@ -23,6 +23,7 @@
 
 /**
 	\example poroelastic.cc
+	Required input file: [brain.vti](http://asl.org.il/input_data/brain.vti)
  */
 
 #include <aslDataInc.h>
@@ -64,7 +65,7 @@ int main(int argc, char* argv[])
 	
 	appParamsManager.load(argc, argv);
 		
-	std::cout << "Data initialization... ";
+	std::cout << "Data initialization... " << flush;
 
 	asl::SPDataWithGhostNodesACLData map0(asl::read(input.v(), 0));
 //	asl::Block block(size.v(), dx.v());
@@ -99,7 +100,7 @@ int main(int argc, char* argv[])
 
 	std::cout << "Finished" << endl;
 	
-	std::cout << "Numerics initialization... ";
+	std::cout << "Numerics initialization... " << flush;
 
 	auto elasticity(make_shared<asl::FDPoroElasticity>(displacement,
 	                                                   pressure,
