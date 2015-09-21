@@ -92,6 +92,13 @@ namespace asl
 	vtkSmartPointer<vtkDataArray> castVTKDataArray(acl::Element source,
 	                                               const std::string &name = "");
 
+	void updateVTKDataArray(acl::Element source,
+	                        vtkSmartPointer<vtkDataArray> vtkData);
+
+	void updateVTKDataArray(acl::Element source,
+	                        const std::string &name,
+	                        vtkSmartPointer<vtkImageData> vtkData);
+
 	vtkSmartPointer<vtkImageData> castVTKData(const Block & b);	
 
 	vtkSmartPointer<vtkImageData> castVTKData(double *d,
@@ -158,12 +165,12 @@ namespace asl
 	template <typename T> AVec<T> castVTKVector(AVec<T> a, T fill = 0);
 
 
-	template <typename T> void combineArrays(T* d1,
+/*	template <typename T> void combineArrays(T* d1,
 	                                         T* d2,
 	                                         T* d3,
 	                                         unsigned int size,
 	                                         T* dTarget,
-	                                         unsigned int nComponents = 3);
+	                                         unsigned int nComponents = 3);*/
 	/// @}
 	
 }  //namespace acl
