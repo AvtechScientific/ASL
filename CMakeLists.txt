@@ -71,7 +71,7 @@ endif()
 if (WITH_TESTS)
 	# Test labels:
 	# DoublePrecision - tests that use double precision (will fail if device does not support it)
-	# IO - Input/Output tests (may require input files)
+	# IO - Input/Output tests (disabled for now)
 	# Performance - performance tests
 	#
 	# Run them e.g.: `ctest [-C Release|Debug] -L Performance`
