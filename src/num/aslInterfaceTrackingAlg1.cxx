@@ -22,8 +22,8 @@
 
 
 #include "aslInterfaceTrackingAlg1.h"
-#include <math/aslTemplates.h>
-#include <data/aslDataWithGhostNodes.h>
+#include "math/aslTemplates.h"
+#include "data/aslDataWithGhostNodes.h"
 #include "acl/acl.h"
 #include "acl/Kernels/aclKernel.h"
 #include "acl/Kernels/aclKernelConfigurationTemplates.h"
@@ -31,11 +31,11 @@
 #include "acl/aclGenerators.h"
 #include "acl/aclMath/aclVectorOfElements.h"
 #include "acl/aclMath/aclBarycentric.h"
+#include "math/aslTemplates.h"
+#include "math/aslTemplateVE.h"
+#include "math/aslTemplatesExtras.h"
+#include "math/aslDistanceFunction.h"
 #include <algorithm>
-#include <math/aslTemplates.h>
-#include <math/aslTemplateVE.h>
-#include <math/aslTemplatesExtras.h>
-#include <math/aslDistanceFunction.h>
 
 namespace asl
 {
