@@ -28,14 +28,14 @@
 
 
 #include "aslVectors.h"
-#include <math.h>
+#include <cmath>
 
 
 namespace asl {
 
 
 /*
-  ///  The function makese possible an output to a stream
+  ///  The function makes possible an output to a stream
   template <int I,typename T> inline std::ostream& operator<<(std::ostream &f,const Vec<I,T> &a) {
     for (int i(0);i<I-1;++i)f<<a[i]<<' ';  return f<<a[I-1];
   }
@@ -113,4 +113,3 @@ namespace asl {
 }
 
 #endif
-
