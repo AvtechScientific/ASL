@@ -28,7 +28,7 @@
 
 
 #include "../aslUtilities.h"
-#include <math.h>
+#include <cmath>
 
 
 namespace asl
@@ -407,4 +407,3 @@ namespace asl
 } // asl
 
 #endif //ASLVECTORSDYNAMICLENGTH_H
-
