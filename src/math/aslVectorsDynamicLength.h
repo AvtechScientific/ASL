@@ -28,7 +28,7 @@
 
 
 #include "../aslUtilities.h"
-#include <math.h>
+#include <cmath>
 
 
 namespace asl

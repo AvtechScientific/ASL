@@ -31,7 +31,7 @@
 // Remove the file after switching to OpenCL 2.1
 #include "acl/cl.hpp"
 #include "acl/aclStdIncludes.h"
-#include <math.h>
+#include <cmath>
 #include <iostream>
 #include <sstream>
 #include <iomanip>

@@ -522,7 +522,7 @@ namespace acl
 
 	template <typename T> void copy(MemBlock & source, MemBlock & destination)
 	{
-		if (source.size() == destination.getSize())
+		if (source.getSize() == destination.getSize())
 		{
 			if (source.getQueue().get() == destination.getQueue().get())
 			{
