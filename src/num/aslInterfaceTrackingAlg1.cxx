@@ -60,7 +60,7 @@ namespace asl
 		unsigned int nv(vectorTemplate->vectors.size());
 		unsigned int nd(nD(*vectorTemplate));
 
-		TemplateVE velocityT[nd];
+		vector<TemplateVE> velocityT(nd);
 		for(unsigned int i(0); i < nd; ++i)
 		{
 			velocityT[i].init(*velocity, *vectorTemplate, i);
@@ -80,4 +80,3 @@ namespace asl
 	}
 		
 } // asl
-
