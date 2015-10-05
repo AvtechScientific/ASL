@@ -32,7 +32,7 @@ namespace acl
 {
 
 	/// class for compatibility with std::shared_ptr enssure correct unmapping \ingroup LDI
-	/// \todoIgal: maybe pass a MemBlock to the constructor instead of a buffer and a queue?
+	/// \todo: maybe pass a MemBlock to the constructor instead of a buffer and a queue?
 	template <typename T> class VectorUnmapper
 	{
 			shared_ptr<cl::Buffer> buffer;

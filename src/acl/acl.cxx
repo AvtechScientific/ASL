@@ -526,7 +526,7 @@ namespace acl
 		{
 			if (source.getQueue().get() == destination.getQueue().get())
 			{
-				// \todoIgal swap buffers???
+				// \todo swap buffers???
 			}
 			else
 			{

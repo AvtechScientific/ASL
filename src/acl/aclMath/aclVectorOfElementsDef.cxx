@@ -141,7 +141,7 @@ namespace acl
 		return ve;
 	}		
 
-	/// \todoIgal change name to: compatible()?
+	/// \todo change name to: compatible()?
 	bool VectorOfElements::checkCompatibility() const
 	{
 		unsigned int s((*this)[0]->getSize());
@@ -158,7 +158,7 @@ namespace acl
 	}
 
 
-	/// \todoIgal change name to: compatibleSizes()?
+	/// \todo change name to: compatibleSizes()?
 	bool VectorOfElements::checkSizesCompatibility(unsigned int n) const
 	{
 		bool isCompatible(true);
