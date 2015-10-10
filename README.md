@@ -22,13 +22,13 @@ Professional consulting, training and integration services are provided by [Avte
 ### Installation
 
 1. Install [cmake](http://cmake.org) (>=3.0.2, BSD License) and the required libraries:
-	- [OpenCL](https://www.khronos.org/opencl) (>=1.2, OpenCL Specification License)
+	- [OpenCL](https://www.khronos.org/opencl) (>=1.2, OpenCL Specification License); [open](https://www.khronos.org/opencl/resources/opencl-open-source-opencl-implementations) or [closed source](https://www.khronos.org/opencl/resources/opencl-commercial-implementations) implementation, see [deployment information](https://github.com/AvtechScientific/ASL/wiki/Deployment)
 	- [boost](http://www.boost.org) (>=1.55, Boost Software License)
 	- [VTK](http://vtk.org) (>=6.1, BSD License)
 	- [optional](https://github.com/AvtechScientific/ASL/blob/master/cmake/ASLBuildOptions.cmake#L3): Matlab support with [matio](https://sourceforge.net/projects/matio) (>=1.5.2, BSD License)
 	- [optional](https://github.com/AvtechScientific/ASL/blob/master/cmake/ASLBuildOptions.cmake#L4): API documentation with [doxygen](http://doxygen.org) (preferably with [graphviz](http://www.graphviz.org))
 2. Download and extract the [ASL source code archive](https://github.com/AvtechScientific/ASL/releases/latest).
-3. Create a build directory: `mkdir build-asl; cd build-asl`
+3. Create a build directory: `mkdir build-asl && cd build-asl`
 4. Use [cmake generator](http://www.cmake.org/cmake/help/v3.2/manual/cmake-generators.7.html) to produce Makefiles: `cmake -G "Unix Makefiles" ../ASL` or project files for your IDE (Visual Studio, Xcode, Eclipse, etc.): `cmake -G "Visual Studio 10" ../ASL`
 5. Run make (as root if installing into default destination `/usr/local`): `make install`
 
