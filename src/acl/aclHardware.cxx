@@ -159,6 +159,12 @@ namespace acl
 	}
 
 
+	string getDriverVersion(const CommandQueue & queue)
+	{
+		return getDevice(queue).getInfo<CL_DRIVER_VERSION>();
+	}
+
+
 	cl_uint getNComputeUnits(const CommandQueue & queue)
 	{
 		return getDevice(queue).getInfo<CL_DEVICE_MAX_COMPUTE_UNITS>();
