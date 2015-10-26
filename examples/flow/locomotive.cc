@@ -23,6 +23,7 @@
 
 /**
 	\example locomotive.cc
+	Example: Aerodynamics of a locomotive in a tunnel
 	Required input file: [locomotive.stl](http://asl.org.il/input_data/locomotive.stl)
  */
 

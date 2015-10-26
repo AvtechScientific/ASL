@@ -22,7 +22,8 @@
 
 
 /**
-	\example multicomponent_flow.cc 	 
+	\example multicomponent_flow.cc
+	Example: Multicomponent flow	 
  */
 
 #include <utilities/aslParametersManager.h>
