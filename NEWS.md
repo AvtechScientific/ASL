@@ -3,6 +3,7 @@
 ## 0.1.7
 
 - bug fixes
+- fixing portability issues
 
 ## 0.1.6
 
