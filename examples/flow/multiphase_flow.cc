@@ -23,8 +23,9 @@
 
 /**
 	\example multiphase_flow.cc
+	Example: Multiphase flow
 	not finished yet!!!!!
- */
+*/
 
 #include <utilities/aslParametersManager.h>
 #include <math/aslTemplates.h>
@@ -231,23 +232,20 @@ int main(int argc, char *argv[])
 		if (!(i%200))
 		{
 			timer.stop();
-			cout << i << "/2000; expected left time: " <<  timer.getLeftTime(double(i)/2000.)  << endl;
+			cout << i << "/2000; time left (estimated): " <<  timer.estimatedRemainder(double(i)/2000.)  << endl;
 			executeAll(bcV);
 			writer.write();
-			timer.resume();
+			timer.start();
 		}
 	}
 	timer.stop();
 	
-	std::cout << "Finished" << endl;	
+	cout << "Finished" << endl;	
 
-	cout << "time=" << timer.getTime() << "; clockTime="
-		 <<  timer.getClockTime() <<  "; load=" 
-		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
-
-	std::cout << "Output...";
-	std::cout << "Finished" << endl;	
-	std::cout << "Ok" << endl;
+	cout << "Computation statistic:" << endl;
+	cout << "Real Time = " << timer.realTime() << "; Processor Time = "
+		 << timer.processorTime() << "; Processor Load = "
+		 << timer.processorLoad() * 100 << "%" << endl;
 
 	return 0;
 }

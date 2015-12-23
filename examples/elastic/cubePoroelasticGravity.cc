@@ -23,7 +23,7 @@
 
 /**
 	\example cubePoroelasticGravity.cc
- */
+*/
 
 #include <aslDataInc.h>
 #include <acl/aclGenerators.h>
@@ -116,10 +116,10 @@ int main(int argc, char* argv[])
 	timerBC.reset();
 	for (unsigned int i(0); i < tsim.v(); ++i)
 	{
-		timerBulk.resume();
+		timerBulk.start();
 		elasticity->execute();
 		timerBulk.stop();
-		timerBC.resume();
+		timerBC.start();
 		executeAll(bc);
 		timerBC.stop();		
 		if (!(i % tout.v()))
@@ -130,17 +130,15 @@ int main(int argc, char* argv[])
 	}
 	timer.stop();
 	
-	std::cout << "Finished" << endl;	
+	cout << "Finished" << endl;	
 
-	cout << "time=" << timer.getTime() << "; clockTime="
-		 <<  timer.getClockTime() <<  "; load=" 
-		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
-	cout << "timeBulk=" << timerBulk.getTime() << 
-		    "; timeBC=" << timerBC.getTime() << endl;
+	cout << "Computation statistic:" << endl;
+	cout << "Real Time = " << timer.realTime() << "; Processor Time = "
+		 << timer.processorTime() << "; Processor Load = "
+		 << timer.processorLoad() * 100 << "%" << endl;
 
-	std::cout << "Output...";
-	std::cout << "Finished" << endl;	
-	std::cout << "Ok" << endl;
+	cout << "timeBulk=" << timerBulk.realTime() << 
+		"; timeBC=" << timerBC.realTime() << endl;
 
 	return 0;
 }

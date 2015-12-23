@@ -23,6 +23,7 @@
 
 /**
 	\example bus_wind.cc
+	Example: Bus in wind
 	Required input file: [bus.stl](http://asl.org.il/input_data/bus.stl)
  */
 
@@ -121,10 +122,10 @@ int main(int argc, char* argv[])
 	timer2.reset();
 	for (unsigned int i(1); i < 101; ++i)
 	{
-		timer1.resume();
+		timer1.start();
 		lbgk->execute();
 		timer1.stop();
-		timer2.resume();
+		timer2.start();
 		executeAll(bc);
 		timer2.stop();
 		if (!(i%1000))
@@ -137,16 +138,14 @@ int main(int argc, char* argv[])
 	}
 	timer.stop();
 	
-	std::cout << "Finished" << endl;	
+	cout << "Finished" << endl;	
 
-	cout << "time=" << timer.getTime() << "; clockTime="
-		 <<  timer.getClockTime() <<  "; load=" 
-		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
-	cout << "time1=" << timer1.getTime() << "; time2=" << timer2.getTime() << endl;
+	cout << "Computation statistic:" << endl;
+	cout << "Real Time = " << timer.realTime() << "; Processor Time = "
+		 << timer.processorTime() << "; Processor Load = "
+		 << timer.processorLoad() * 100 << "%" << endl;
 
-	std::cout << "Output...";
-	std::cout << "Finished" << endl;	
-	std::cout << "Ok" << endl;
+	cout << "time1 = " << timer1.realTime() << "; time2 = " << timer2.realTime() << endl;
 
 	return 0;
 }

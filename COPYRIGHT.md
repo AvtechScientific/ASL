@@ -24,13 +24,13 @@ The reference to ASL may be in an acknowledgment section, in a phrase such as th
 
 ```
 "This work benefited from the use of the Advanced Simulation Library™ (ASL),
- an open source multiphysics simulation software package developed
+ an open source hardware accelerated multiphysics simulation software developed
  by Avtech Scientific and available at <http://asl.org.il>."
 ```
 
 To cite ASL in publications please adopt the following:
 
-_ASL: Advanced Simulation Library™, an open source multiphysics simulation software package._[^1] Version 0.1.5.[^2] 2015-08-01.[^3] <http://asl.org.il>.[^4] Avtech Scientific. Modiin Illit, Israel.
+_ASL: Advanced Simulation Library™, an open source hardware accelerated multiphysics simulation software._[^1] Version 0.1.5.[^2] 2015-08-01.[^3] <http://asl.org.il>.[^4] Avtech Scientific. Modiin Illit, Israel.
 
 [^1]: Additionally any sub-routines that were used may be specified.  
 [^2]: Version number or commit hash (in the latter case write: Commit 794e49160c089c18a3b455e48bab6ad7c28bb685)  

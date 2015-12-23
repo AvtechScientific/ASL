@@ -23,7 +23,8 @@
 
 /**
 	\example flow2.cc
- */
+	Example: Flow2
+*/
 
 #include <utilities/aslParametersManager.h>
 #include <aslDataInc.h>
@@ -177,15 +178,13 @@ int main(int argc, char* argv[])
 	}
 	timer.stop();
 	
-	std::cout << "Finished" << endl;	
+	
+	cout << "Finished" << endl;	
 
-	cout << "time=" << timer.getTime() << "; clockTime="
-		 <<  timer.getClockTime() <<  "; load=" 
-		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
-
-	std::cout << "Output...";
-	std::cout << "Finished" << endl;	
-	std::cout << "Ok" << endl;
+	cout << "Computation statistic:" << endl;
+	cout << "Real Time = " << timer.realTime() << "; Processor Time = "
+		 << timer.processorTime() << "; Processor Load = "
+		 << timer.processorLoad() * 100 << "%" << endl;
 
 	return 0;
 }

@@ -24,47 +24,40 @@
 #ifndef ASLTIMER_H
 #define ASLTIMER_H
 
-#include <sys/time.h>
+#include <chrono>
+#include <thread>
 
 namespace asl{
+using namespace std::chrono;
 
 	/// \ingroup Utilities
 	class Timer {
 		private:
-			clock_t _c;
-			double _t;
-			inline double tod(){
-				timeval tim;
-				gettimeofday(&tim,NULL);
-				return tim.tv_sec+(tim.tv_usec/1000000.0);
-			}
+			high_resolution_clock::time_point realTimeMark;
+			duration<double> realTimeElapsed;
+
+			clock_t processorTimeMark;
+			double processorTimeElapsed;
 		public:
-			inline Timer():_c(0),_t(0){};
-			inline void start(){_c=-clock();_t=-tod();}
-			inline void resume(){_c-=clock();_t-=tod();}
-			inline void stop(){_c+=clock();_t+=tod();}
-			inline const double getTime() const{return _t;}
-			inline const double getClockTime() const{return (float)_c/CLOCKS_PER_SEC;}
-			inline const double getProcessorLoad() const{return getClockTime()/getTime();}
-			inline void reset(){_c=0; _t=0;}
-			inline const double getExpectedTime(double fractTime){return _t/fractTime;}
-			inline const double getLeftTime(double fractTime){return (1.-fractTime)*getExpectedTime(fractTime);}
+			inline Timer() : processorTimeElapsed(0), realTimeElapsed(0) {};
+			inline void start() {processorTimeMark = clock(); realTimeMark = high_resolution_clock::now();}
+			inline void stop() {processorTimeElapsed += (double)(clock() - processorTimeMark); realTimeElapsed += duration_cast<duration<double>>(high_resolution_clock::now() - realTimeMark);}
+			inline const double realTime() const{return realTimeElapsed.count();}
+			inline const double processorTime() const{return (double)processorTimeElapsed/CLOCKS_PER_SEC;}
+			inline const double processorLoad() const{return processorTime()/realTime();}
+			inline void reset() {processorTimeElapsed = 0; realTimeElapsed = duration<double>(0);}
+			/// Returns estimated duration of the current task based on its current \p completeness [0..1]
+			inline const double estimatedDuration(double completeness) {return realTimeElapsed.count()/completeness;}
+			/// Returns estimated time till finishing current task based on its current \p completeness [0..1]
+			inline const double estimatedRemainder(double completeness) {return (1. - completeness) * estimatedDuration(completeness);}
 	};
 
-	// waits \p dt seconds, uses loop
-	inline void delay(double dt)
+	/// Blocks execution of the calling thread for the time \p span (in milliseconds)
+	inline void sleep(unsigned int span)
 	{
-		timeval t;
-		gettimeofday(&t,NULL);
-		double t0(t.tv_sec+(t.tv_usec/1000000.0));
-		double tc(t0);
-		while (t0+dt>tc)
-		{
-			gettimeofday(&t,NULL);
-			tc=t.tv_sec+(t.tv_usec/1000000.0);			
-		}
-	 }
+		std::this_thread::sleep_for(std::chrono::milliseconds(span));
+	}
 
 }  //namespace acl
 
-#endif // aslGeneratorS_H
+#endif // ASLTIMER_H

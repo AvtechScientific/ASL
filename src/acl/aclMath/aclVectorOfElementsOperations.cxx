@@ -219,7 +219,7 @@ namespace acl
 	}
 
 
-	/// \todoIgal do they have to be on the same device?
+	/// \todo do they have to be on the same device?
 	void swapBuffers(const VectorOfElementsData & a, const VectorOfElementsData & b)
 	{ 
 		if (a.size() == 0)
@@ -262,7 +262,7 @@ namespace acl
 	VectorOfElements  operator-=(const VectorOfElements & a, const VectorOfElements & b)
 	{ 
 		VectorOfElements c(a.size());
-		/// \todoIgal on same device? and all the rest of operators...
+		/// \todo on same device? and all the rest of operators...
 		if (a.size() == b.size())
 		{
 			using namespace elementOperators;			
