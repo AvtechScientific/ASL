@@ -23,7 +23,8 @@
 
 /**
 	\example flowKDPGrowth.cc
- */
+	Example: flowKDPGrowth
+*/
 
 #include <utilities/aslParametersManager.h>
 #include <math/aslTemplates.h>
@@ -315,12 +316,12 @@ int main(int argc, char* argv[])
 	for (unsigned int i(0); i <= 8001  ; ++i)
 	{
 		lbgk->execute();
-		timerBC.resume();
+		timerBC.start();
 		executeAll(bcV);
 		executeAll(bc);
 		timerBC.stop();
 		nmDif->execute();
-		timerBC.resume();
+		timerBC.start();
 		executeAll(bcDif);
 		timerBC.stop();
 		
@@ -332,16 +333,13 @@ int main(int argc, char* argv[])
 	}
 	timer.stop();
 	
-	std::cout << "Finished" << endl;	
+	
+	cout << "Finished" << endl;	
 
-	cout << "time=" << timer.getTime() << "; clockTime="
-		 <<  timer.getClockTime() <<  "; load=" 
-		 <<  timer.getProcessorLoad() * 100 << "%; timeBC = " 
-		 <<  timerBC.getTime() << endl;
-
-	std::cout << "Output...";
-	std::cout << "Finished" << endl;	
-	std::cout << "Ok" << endl;
+	cout << "Computation statistic:" << endl;
+	cout << "Real Time = " << timer.realTime() << "; Processor Time = "
+		 << timer.processorTime() << "; Processor Load = "
+		 << timer.processorLoad() * 100 << "%" << endl;
 
 	return 0;
 }

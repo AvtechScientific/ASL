@@ -23,8 +23,8 @@
 
 /**
 	\example pitot_tube_ice.cc
-    Icing process in the Pitot tube
- */
+	Example: Icing process in the Pitot tube
+*/
 
 #include <utilities/aslParametersManager.h>
 #include <math/aslTemplates.h>
@@ -226,23 +226,20 @@ int main(int argc, char *argv[])
 		if(!(i%800))
 		{
 			timer.stop();
-			cout << i << "/8000; expected left time: " <<  timer.getLeftTime(double(i)/8000.)  << endl;
+			cout << i << "/8000; time left (estimated): " <<  timer.estimatedRemainder(double(i)/8000.)  << endl;
 			executeAll(bcV);
 			writer.write();
-			timer.resume();
+			timer.start();
 		}
 	}
 	timer.stop();
 	
-	std::cout << "Finished" << endl;	
+	cout << "Finished" << endl;	
 
-	cout << "time=" << timer.getTime() << "; clockTime="
-		 <<  timer.getClockTime() <<  "; load=" 
-		 <<  timer.getProcessorLoad() * 100 << "%" << endl;
-
-	std::cout << "Output...";
-	std::cout << "Finished" << endl;	
-	std::cout << "Ok" << endl;
+	cout << "Computation statistic:" << endl;
+	cout << "Real Time = " << timer.realTime() << "; Processor Time = "
+		 << timer.processorTime() << "; Processor Load = "
+		 << timer.processorLoad() * 100 << "%" << endl;
 
 	return 0;
 }

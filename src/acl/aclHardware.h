@@ -42,7 +42,7 @@ namespace acl
 	extern const std::vector<std::string> TYPE;
 	extern const std::vector<unsigned char> TYPE_SIZE;
 	/// contains trasnlation of types necessery for use in the function select
-	/* expression in the condition field should have this type*/ 
+	/* expression in the condition field should have this type */ 
 	extern const std::vector<TypeID> TYPE_SELECT;
 
 	/// Returns vendor name.
@@ -55,6 +55,9 @@ namespace acl
 
 	/** Returns the OpenCL version supported by the device */
 	std::string getDeviceVersion(const CommandQueue & queue);
+
+	/** Returns the OpenCL driver version */
+	std::string getDriverVersion(const CommandQueue & queue);
 
 	/// Returns device type.
 	/// \ingroup HardwareInformation

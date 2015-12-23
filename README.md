@@ -4,7 +4,7 @@ For more information, please visit <http://asl.org.il>.
 
 # ASL
 
-__Advanced Simulation Library (ASL)__ is a free and open source multiphysics simulation software package. Its computational engine is based, among others, on the [Lattice Boltzmann Methods](http://en.wikipedia.org/wiki/Lattice_Boltzmann_methods) and is written in [OpenCL](http://en.wikipedia.org/wiki/OpenCL) which enable [extraordinarily efficient deployment](http://asl.org.il/benchmarks) on a variety of massively parallel architectures, ranging from inexpensive FPGAs, DSPs and GPUs up to heterogeneous clusters and supercomputers. The engine is hidden entirely behind C++ classes, so that no OpenCL knowledge is required from application programmers. ASL can be utilized to model various coupled physical and chemical phenomena and employed in a multitude of fields: computational fluid dynamics, virtual sensing, industrial process data validation and reconciliation, image-guided surgery, computer-aided engineering, high-performance scientific computing, crystallography, etc..
+__Advanced Simulation Library (ASL)__ is a free and open source hardware accelerated multiphysics simulation software. Its computational engine is based, among others, on the [Lattice Boltzmann Methods](http://en.wikipedia.org/wiki/Lattice_Boltzmann_methods) and is written in [OpenCL](http://en.wikipedia.org/wiki/OpenCL) which enable [extraordinarily efficient deployment](http://asl.org.il/benchmarks) on a variety of massively parallel architectures, ranging from inexpensive FPGAs, DSPs and GPUs up to heterogeneous clusters and supercomputers. The engine is hidden entirely behind [simple C++ classes](http://asl.org.il/doc/Developer-Guide/locomotive_8cc-example.html), so that no OpenCL knowledge is required from application programmers. Mesh-free, immersed boundary approach allows to [move from CAD directly to simulation](http://asl.org.il/documentation/#running-an-example) drastically reducing pre-processing efforts and amount of potential errors. ASL can be utilized to model various coupled physical and chemical phenomena and employed in a multitude of fields: computational fluid dynamics, virtual sensing, industrial process data validation and reconciliation, image-guided surgery, computer-aided engineering, design space exploration, crystallography, etc..
 
 
 ## License
@@ -22,13 +22,13 @@ Professional consulting, training and integration services are provided by [Avte
 ### Installation
 
 1. Install [cmake](http://cmake.org) (>=3.0.2, BSD License) and the required libraries:
-	- [OpenCL](https://www.khronos.org/opencl) (>=1.2, OpenCL Specification License)
+	- [OpenCL](https://www.khronos.org/opencl) (>=1.2, OpenCL Specification License); [open](https://www.khronos.org/opencl/resources/opencl-open-source-opencl-implementations) or [closed source](https://www.khronos.org/opencl/resources/opencl-commercial-implementations) implementation, see [deployment information](https://github.com/AvtechScientific/ASL/wiki/Deployment)
 	- [boost](http://www.boost.org) (>=1.55, Boost Software License)
 	- [VTK](http://vtk.org) (>=6.1, BSD License)
 	- [optional](https://github.com/AvtechScientific/ASL/blob/master/cmake/ASLBuildOptions.cmake#L3): Matlab support with [matio](https://sourceforge.net/projects/matio) (>=1.5.2, BSD License)
 	- [optional](https://github.com/AvtechScientific/ASL/blob/master/cmake/ASLBuildOptions.cmake#L4): API documentation with [doxygen](http://doxygen.org) (preferably with [graphviz](http://www.graphviz.org))
 2. Download and extract the [ASL source code archive](https://github.com/AvtechScientific/ASL/releases/latest).
-3. Create a build directory: `mkdir build-asl; cd build-asl`
+3. Create a build directory: `mkdir build-asl && cd build-asl`
 4. Use [cmake generator](http://www.cmake.org/cmake/help/v3.2/manual/cmake-generators.7.html) to produce Makefiles: `cmake -G "Unix Makefiles" ../ASL` or project files for your IDE (Visual Studio, Xcode, Eclipse, etc.): `cmake -G "Visual Studio 10" ../ASL`
 5. Run make (as root if installing into default destination `/usr/local`): `make install`
 
