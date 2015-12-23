@@ -230,9 +230,9 @@ int main(int argc, char* argv[])
 	cout << "Finished" << endl;	
 
 	cout << "Computation statistic:" << endl;
-	cout << "time = " << timer.getTime() << "; clockTime = "
-		 << timer.getClockTime() << "; load = "
-		 << timer.getProcessorLoad() * 100 << "%" << endl;
+	cout << "Real Time = " << timer.realTime() << "; Processor Time = "
+		 << timer.processorTime() << "; Processor Load = "
+		 << timer.processorLoad() * 100 << "%" << endl;
 
 	return 0;
 }
