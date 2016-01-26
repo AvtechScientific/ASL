@@ -332,7 +332,7 @@ namespace asl
 
 		try
 		{
-			ifstream ifs(paramFile);
+			std::ifstream ifs(paramFile);
 			if (!ifs.good())
 				errorMessage("Can not open parameters file: " + paramFile);
 
@@ -357,7 +357,7 @@ namespace asl
 
 	void ParametersManager::writeParametersFile(const std::string fileName)
 	{
-		ofstream fo(fileName);
+		std::ofstream fo(fileName);
 		if (!fo.good())
 			errorMessage("ParametersManager::writeParametersFile() - can not open file: " + fileName);
 
@@ -463,7 +463,7 @@ namespace asl
 				}
 				else
 				{
-					ifstream ifs(p.string());
+					std::ifstream ifs(p.string());
 					if (ifs.good())
 					{
 						parsed_options parsed = parse_config_file(ifs, allOptions, true);
