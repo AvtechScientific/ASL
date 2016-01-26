@@ -1,9 +1,13 @@
 # News and ChangeLog
 
+
 ## 0.1.7
 
 - bug fixes
 - fixing portability issues
+
+Contributors: Bartłomiej Piotrowski
+
 
 ## 0.1.6
 
