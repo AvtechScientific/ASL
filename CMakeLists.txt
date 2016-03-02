@@ -52,7 +52,11 @@ include(ASLBuildFunctions)
 find_package(OpenCL 1.1 REQUIRED)
 # ToDo: check - system component might be not needed any longer on new versions of Boost
 find_package(Boost 1.55 REQUIRED COMPONENTS program_options filesystem system)
-find_package(VTK 6.1 COMPONENTS vtkRenderingCore vtkImagingCore vtkFiltersCore vtkIOCore vtkIOLegacy vtkIOXML vtkIOMINC vtkCommonCore vtkViewsCore vtkftgl vtksys vtkDICOMParser vtkexpat vtkzlib NO_MODULE)
+# ToDo: remove support for VTK 6.1 at some point in future
+find_package(VTK 6.1 QUIET COMPONENTS vtkRenderingCore vtkImagingCore vtkFiltersCore vtkIOCore vtkIOLegacy vtkIOXML vtkIOMINC vtkCommonCore vtkViewsCore vtkftgl vtksys vtkDICOMParser vtkexpat vtkzlib NO_MODULE)
+if(NOT VTK_FOUND)
+	find_package(VTK 7.0 REQUIRED COMPONENTS vtkRenderingCore vtkImagingCore vtkFiltersCore vtkIOCore vtkIOLegacy vtkIOXML vtkIOMINC vtkCommonCore vtkViewsCore vtksys vtkDICOMParser vtkexpat vtkzlib NO_MODULE)
+endif()
 include(${VTK_USE_FILE})
 
 include_directories(SYSTEM ${OpenCL_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
@@ -89,7 +93,7 @@ set(CPACK_PACKAGE_VERSION_PATCH ${ASL_VERSION_PATCH})
 set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
 set(CPACK_RESOURCE_FILE_README "${PROJECT_SOURCE_DIR}/README.md")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Advanced Simulation Library is a free and open source hardware accelerated multiphysics simulation software.")
-set(CPACK_PACKAGE_DESCRIPTION "Advanced Simulation Library (ASL) is a free and open source hardware accelerated multiphysics simulation software. Its computational engine is based, among others, on the Lattice Boltzmann Methods and is written in OpenCL which enable extraordinarily efficient deployment on a variety of massively parallel architectures, ranging from inexpensive FPGAs, DSPs and GPUs up to heterogeneous clusters and supercomputers. The engine is hidden entirely behind C++ classes, so that no OpenCL knowledge is required from application programmers. Automatic mesh generation drastically reduces pre-processing efforts and amount of potential errors. ASL can be utilized to model various coupled physical and chemical phenomena and employed in a multitude of fields: computational fluid dynamics, virtual sensing, industrial process data validation and reconciliation, image-guided surgery, computer-aided engineering, design space exploration, crystallography, etc..")
+set(CPACK_PACKAGE_DESCRIPTION "Advanced Simulation Library (ASL) is a free and open source hardware accelerated multiphysics simulation software. Its computational engine is written in OpenCL which enables extraordinarily efficient deployment on a variety of massively parallel architectures, ranging from inexpensive FPGAs, DSPs and GPUs up to heterogeneous clusters and supercomputers. The engine is hidden entirely behind simple C++ classes, so that no OpenCL knowledge is required from application programmers. Mesh-free, immersed boundary approach allows to move from CAD directly to simulation drastically reducing pre-processing efforts and amount of potential errors. ASL can be utilized to model various coupled physical and chemical phenomena and employed in a multitude of fields: computational fluid dynamics, virtual sensing, industrial process data validation and reconciliation, image-guided surgery, computer-aided engineering, design space exploration, crystallography, etc..")
 set(CPACK_PACKAGE_VENDOR "Avtech Scientific")
 set(CPACK_PACKAGE_CONTACT "http://avtechscientific.com/contact")
 

@@ -281,7 +281,7 @@ namespace asl
 
 		unsigned int k(0);
 		for(unsigned int i(1); i<n; ++i)
-			for(unsigned int j(1); i<=i; ++j)
+			for(unsigned int j(1); j<=i; ++j)
 			{
 				v[k]=a.getElement(i,j);
 				++k;
