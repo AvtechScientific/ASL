@@ -6,7 +6,7 @@
 - bug fixes
 - fixing portability issues
 
-Contributors: Bartłomiej Piotrowski
+Contributors: Bartłomiej Piotrowski, Evgeniy Alekseev.
 
 
 ## 0.1.6

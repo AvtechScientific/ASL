@@ -62,7 +62,7 @@ bool testKernelUnoptimized()
 	for(unsigned int i(0); i<nCycles; ++i)
 		k.compute();
 	timer.stop();
-	std::cout<<"Unoptimized: "<<timer.getTime()<<endl;
+	std::cout<<"Unoptimized: "<<timer.realTime()<<endl;
 
 	return true;		
 }
@@ -93,7 +93,7 @@ bool testKernelUnoptimizedPlus()
 	for(unsigned int i(0); i<nCycles; ++i)
 		k.compute();
 	timer.stop();
-	std::cout<<"UnoptimizedPlus: "<<timer.getTime()<<endl;
+	std::cout<<"UnoptimizedPlus: "<<timer.realTime()<<endl;
 
 	return true;		
 }
@@ -123,7 +123,7 @@ bool testKernelOptimized()
 	for(unsigned int i(0); i<nCycles; ++i)
 		k.compute();
 	timer.stop();
-	std::cout<<"Optimized: "<<timer.getTime()<<endl;
+	std::cout<<"Optimized: "<<timer.realTime()<<endl;
 
 	return true;		
 }
