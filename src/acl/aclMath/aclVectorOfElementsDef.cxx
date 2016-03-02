@@ -20,19 +20,16 @@
  *
  */
 
-
+#include <algorithm>
 #include "aclVectorOfElementsDef.h"
 #include "aclVectorOfElementsOperations.h"
-#include <aclUtilities.h>
-#include <acl.h>
-#include <DataTypes/aclConstant.h>
-#include <../aslUtilities.h>
-#include <algorithm>
-#include <Kernels/aclKernel.h>
-
-#include <acl/DataTypes/aclArray.h>
-#include"../aclHardware.h"
-
+#include "aclUtilities.h"
+#include "acl.h"
+#include "DataTypes/aclConstant.h"
+#include "../aslUtilities.h"
+#include "Kernels/aclKernel.h"
+#include "acl/DataTypes/aclArray.h"
+#include "../aclHardware.h"
 #include "aclTypesList.h"
 
 using asl::errorMessage;
