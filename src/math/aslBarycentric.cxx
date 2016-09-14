@@ -45,7 +45,7 @@ namespace asl
 	{
 
 		if(p.size()-1 != p[0].getSize())
-			errorMessage("asl::Barycentric::init: number of points does not corresponds to the dimentionality");
+			errorMessage("asl::Barycentric::init: number of points does not corresponds to the dimensionality");
 			
 		corners=p;
 
@@ -64,7 +64,7 @@ namespace asl
 	AVec<> Barycentric::getCordinates(const AVec<> & p)
 	{
 		if(t.getNRow() != p.getSize())
-			errorMessage("asl::Barycentric::interpolate: point dimensionality does not corresponds to the triangle dimentionality");
+			errorMessage("asl::Barycentric::interpolate: point dimensionality does not corresponds to the triangle dimensionality");
 		return tInv * (p - corners[0]);
 	}
 
@@ -72,7 +72,7 @@ namespace asl
 	                                          const AVec<> & f)
 	{
 		if(p.getSize()+1 != f.getSize())
-			errorMessage("Barycentric::interpolate: number of funciton values does not corresponds to the dimentionality");
+			errorMessage("Barycentric::interpolate: number of funciton values does not corresponds to the dimensionality");
 
 		AVec<> fm(subAVec(f, 1, p.getSize()) - AVec<>(p.getSize(), f[0]));
 		return f[0] + fm * getCordinates(p); 
@@ -91,7 +91,7 @@ namespace asl
 	AVec<> Barycentric::gradient(const AVec<> & f)
 	{
 		if(t.getNRow()+1 != f.getSize())
-			errorMessage("Barycentric::gradient: number of funciton values does not corresponds to the dimentionality");
+			errorMessage("Barycentric::gradient: number of funciton values does not corresponds to the dimensionality");
 		unsigned int nd(f.getSize()-1);
 		AVec<> fm(subAVec(f, 1, nd) - AVec<>(nd,f[0]));
 		return fm*tInv; 

@@ -53,7 +53,7 @@
 #include "aclMath/aclVectorOfElementsDef.h"
 #include "aclMath/aclMatrixOfElements.h"
 
-#include<string>
+#include <string>
 
 using namespace std;
 using namespace asl;

@@ -47,7 +47,7 @@ namespace acl
 		acl::TypeID type(getElementType(p[0]));
 
 		if (p.size()-1 != p[0].size())
-			errorMessage("Barycentric::init: number of points does not corresponds to the dimentionality");
+			errorMessage("Barycentric::init: number of points does not corresponds to the dimensionality");
 			
 		corners.resize(p.size());
 		for (unsigned int i(0); i < p.size(); ++i)
@@ -72,7 +72,7 @@ namespace acl
 	VectorOfElements Barycentric::getCordinates(const VectorOfElements & p)
 	{
 		if(t.getNRows() != p.size())
-			errorMessage("Barycentric::interpolate: point dimensionality does not corresponds to the triangle dimentionality");
+			errorMessage("Barycentric::interpolate: point dimensionality does not corresponds to the triangle dimensionality");
 		return tInv * (p - corners[0]);
 	}
 
@@ -80,7 +80,7 @@ namespace acl
 	                                          const VectorOfElements & f)
 	{
 		if(p.size()+1 != f.size())
-			errorMessage("Barycentric::interpolate: number of funciton values does not corresponds to the dimentionality");
+			errorMessage("Barycentric::interpolate: number of funciton values does not corresponds to the dimensionality");
 
 		VectorOfElements fm(subVE(f, 1, p.size()) - catN(subVE(f, 0), p.size()));
 		return subVE(f,0) + fm * getCordinates(p); 
@@ -100,7 +100,7 @@ namespace acl
 	VectorOfElements Barycentric::gradient(const VectorOfElements & f)
 	{
 		if(t.getNRows()+1 != f.size())
-			errorMessage("Barycentric::gradient: number of funciton values does not corresponds to the dimentionality");
+			errorMessage("Barycentric::gradient: number of funciton values does not corresponds to the dimensionality");
 		unsigned int nd(f.size()-1);
 		VectorOfElements fm(subVE(f, 1, nd) - catN(subVE(f, 0), nd));
 		return fm*tInv; 
