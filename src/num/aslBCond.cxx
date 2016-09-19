@@ -95,7 +95,7 @@ namespace asl
 	{
 		unsigned int numD(nD(bl));
 		if(numD != 2 && numD != 3)
-			errorMessage("BCondWithMap : the map has wrong dimensionality");	
+			errorMessage("BCondWithMap : the map has wrong dimensionality");
 
 	}	
 
@@ -110,7 +110,7 @@ namespace asl
 	{
 		unsigned int numD(nD(bl));
 		if(numD != 2 && numD != 3)
-			errorMessage("BCondWithMap : the map has wrong dimensionality");	
+			errorMessage("BCondWithMap : the map has wrong dimensionality");
 	}	
 		
 	BCondWithMap::BCondWithMap(SPAbstractDataWithGhostNodes m, 
@@ -126,9 +126,9 @@ namespace asl
 		unsigned int numD(nD(bl));
 		unsigned int numDcd(nD(computationalDomain->getBlock()));
 		if(numD != numDcd)
-			errorMessage("BCondWithMap : the map and computationalDomain has different dimensionality");	
+			errorMessage("BCondWithMap : the map and computationalDomain has different dimensionality");
 		if(numD != 2 && numD != 3)
-			errorMessage("BCondWithMap : the map has wrong dimensionality");	
+			errorMessage("BCondWithMap : the map has wrong dimensionality");
 
 	}				
 
@@ -144,7 +144,7 @@ namespace asl
 	{
 		unsigned int numD(nD(bl));
 		if(numD != 2 && numD != 3)
-			errorMessage("BCondWithMap : the map has wrong dimensionality");	
+			errorMessage("BCondWithMap : the map has wrong dimensionality");
 	}				
 
 	BCondWithMap::BCondWithMap(SPDistanceFunction m, 
@@ -160,7 +160,7 @@ namespace asl
 	{
 		unsigned int numD(nD(bl));
 		if(numD != 2 && numD != 3)
-			errorMessage("BCondWithMap : the map has wrong dimensionality");	
+			errorMessage("BCondWithMap : the map has wrong dimensionality");
 	}				
 		
 		

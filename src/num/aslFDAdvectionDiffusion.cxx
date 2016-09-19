@@ -132,7 +132,7 @@ namespace asl
 				if(compressibilityCorrectionFlag)
 				{
 					(*kernel) << (cnew /= (1. - div(velocityT)));
-					// improovment of stability
+					// improvment of stability
 					if(nd == 3)
 					{
 						auto vl(acl::cat(subVE(velocityT[0].values,0), 
