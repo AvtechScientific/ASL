@@ -1,0 +1,54 @@
+For more information, please visit [[http://asl.org.il]].
+
+* ASL
+
+*Advanced Simulation Library (ASL)* is a free and open source hardware accelerated multiphysics simulation platform (and an extensible general purpose tool for solving Partial Differential Equations). Its computational engine is written in [[http://en.wikipedia.org/wiki/OpenCL][OpenCL]] and utilizes matrix-free solution techniques which enable [[http://asl.org.il/benchmarks][extraordinarily high performance, memory efficiency and deployability]] on a variety of massively parallel architectures, ranging from inexpensive FPGAs, DSPs and GPUs up to heterogeneous clusters and supercomputers. The engine is hidden entirely behind [[http://asl.org.il/doc/Developer-Guide/locomotive_8cc-example.html][simple C++ classes]], so that no OpenCL knowledge is required from application programmers. Mesh-free, immersed boundary approach allows to [[http://asl.org.il/documentation/#running-an-example][move from CAD directly to simulation]] drastically reducing pre-processing efforts and amount of potential errors. ASL can be used to model various coupled physical and chemical phenomena and employed in a multitude of fields: computational fluid dynamics, virtual sensing, industrial process data validation and reconciliation, image-guided surgery, computer-aided engineering, design space exploration, crystallography, etc..
+
+** License
+
+ASL is distributed under the free GNU Affero General Public License (AGPLv3) with an optional [[http://asl.org.il/licensing][commercial license]].
+
+** Support
+
+Professional consulting, training and integration services are provided by [[http://avtechscientific.com][Avtech Scientific]], whose team created and continues to extend the library. The company offers [[http://avtechscientific.com/services][innovative R&D solutions]] and is involved in diverse academic and industrial [[http://avtechscientific.com/projects][collaborative projects]] dealing with complex multidisciplinary problems.
+
+** Quick Start
+
+*** Installation
+
+1. Install [[http://cmake.org][cmake]] (>=3.0.2, BSD License) and the required libraries:
+   -  [[https://www.khronos.org/opencl][OpenCL]] (>=1.2, OpenCL Specification License); [[https://www.khronos.org/opencl/resources/opencl-open-source-opencl-implementations][open]] or [[https://www.khronos.org/opencl/resources/opencl-commercial-implementations][closed source]] implementation, see [[https://github.com/AvtechScientific/ASL/wiki/Deployment][deployment information]]
+   -  [[http://www.boost.org][boost]] (>=1.55, Boost Software License)
+   -  [[http://vtk.org][VTK]] (>=6.1, BSD License)
+   -  [[https://github.com/AvtechScientific/ASL/blob/master/cmake/ASLBuildOptions.cmake#L24][optional]]: Matlab support with [[https://sourceforge.net/projects/matio][matio]] (>=1.5.2, BSD License)
+   -  [[https://github.com/AvtechScientific/ASL/blob/master/cmake/ASLBuildOptions.cmake#L25][optional]]: API documentation with [[http://doxygen.org][doxygen]] (preferably with [[http://www.graphviz.org][graphviz]])
+
+2. Download and extract the [[https://github.com/AvtechScientific/ASL/releases/latest][ASL source code archive]].
+3. Create a build directory: =mkdir build-asl && cd build-asl=
+4. Use [[http://www.cmake.org/cmake/help/v3.2/manual/cmake-generators.7.html][cmake generator]] to produce Makefiles: =cmake -G "Unix Makefiles" ../ASL= or project files for your IDE (Visual Studio, Xcode, Eclipse, etc.): =cmake -G "Visual Studio 10" ../ASL=
+5. Run make (as root if installing into default destination =/usr/local=): =make install=
+
+*** Running an example
+
+1. Go to examples: =cd examples/flow/locomotive=
+2. Download geometry file [[http://asl.org.il/input_data/locomotive.stl][locomotive.stl]] from the [[http://asl.org.il/input_data][ASL input data page]].
+3. Run: =./asl-locomotive --input locomotive.stl=\\
+   Optionally: change parameters =./asl-locomotive --input locomotive.stl --dx 1 --dt 2= or write all of them into a file for later editing/reuse - =./asl-locomotive -g bigGrid.ini=. List all available options - =./asl-locomotive -h=.
+4. Post-processing: see [[https://github.com/AvtechScientific/ASL/wiki/User-Guide#post-processing][step by step example]] and [[http://asl.org.il/input_data/locomotive.pvsm][locomotive.pvsm]] - the ParaView state file.
+
+*** Writing your own code using ASL
+
+1. Take a look on [[http://asl.org.il/doc/Developer-Guide/examples.html][examples]] and the [[http://asl.org.il/doc/Developer-Guide/][API documentation]], start with [[http://asl.org.il/doc/Developer-Guide/locomotive_8cc-example.html][examples/flow/locomotive.cc]]
+2. ASL installation supplies =ASL.pc= and =ASLConfig.cmake= files. To build your program using:
+
+-  =pkg-config=: =c++ `pkg-config --cflags --libs ASL` -std=c++11 -o flow flow.cc=
+-  =cmake=: write a basic =CMakeLists.txt= file:
+
+#+BEGIN_SRC cmake
+    project(locomotive)
+    cmake_minimum_required(VERSION 3.0.2 FATAL_ERROR)
+    find_package(ASL 0.1.6 CONFIG REQUIRED)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    add_executable(locomotive locomotive.cc)
+    target_link_libraries(locomotive PRIVATE ASL::aslnum ASL::aslvtk ASL::asl)
+#+END_SRC
