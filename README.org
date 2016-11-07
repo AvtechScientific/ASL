@@ -18,7 +18,7 @@ Professional consulting, training and integration services are provided by [[htt
 
 1. Install [[http://cmake.org][cmake]] (>=3.0.2, BSD License) and the required libraries:
    -  [[https://www.khronos.org/opencl][OpenCL]] (>=1.2, OpenCL Specification License); [[https://www.khronos.org/opencl/resources/opencl-open-source-opencl-implementations][open]] or [[https://www.khronos.org/opencl/resources/opencl-commercial-implementations][closed source]] implementation, see [[https://github.com/AvtechScientific/ASL/wiki/Deployment][deployment information]]
-   -  [[http://www.boost.org][boost]] (>=1.55, Boost Software License)
+   -  [[http://www.boost.org][boost]] (>=1.53, Boost Software License)
    -  [[http://vtk.org][VTK]] (>=6.1, BSD License)
    -  [[https://github.com/AvtechScientific/ASL/blob/master/cmake/ASLBuildOptions.cmake#L24][optional]]: Matlab support with [[https://sourceforge.net/projects/matio][matio]] (>=1.5.2, BSD License)
    -  [[https://github.com/AvtechScientific/ASL/blob/master/cmake/ASLBuildOptions.cmake#L25][optional]]: API documentation with [[http://doxygen.org][doxygen]] (preferably with [[http://www.graphviz.org][graphviz]])
