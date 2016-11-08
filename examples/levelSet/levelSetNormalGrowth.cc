@@ -47,15 +47,15 @@ int main(int argc, char* argv[])
 	asl::ApplicationParametersManager appParamsManager("levelSetNormalGrowth",
 	                                                   "1.0");
 
-	asl::Parameter<asl::AVec<int>> size("size", "size");
-	asl::Parameter<FlT> dx("dx", "dx");
-	asl::Parameter<FlT> dt("dt", "dt");
-	asl::Parameter<FlT> superS("superS", "super satuation");
-	asl::Parameter<FlT> radius("radius", "initial radius");
+	asl::Parameter<asl::AVec<int>> size(asl::makeAVec<int>(100, 100, 100), "size", "size");
+	asl::Parameter<FlT> dx(1.0, "dx", "dx");
+	asl::Parameter<FlT> dt(1.0, "dt", "dt");
+	asl::Parameter<FlT> superS(0.2, "superS", "super saturation");
+	asl::Parameter<FlT> radius(10.5, "radius", "initial radius");
 	
 
-	asl::Parameter<cl_uint> nIterations("nIterations", "Number of iterations");
-	asl::Parameter<cl_uint> nItOut("nItOut", "Number of iterations for output");
+	asl::Parameter<cl_uint> nIterations(100, "nIterations", "Number of iterations");
+	asl::Parameter<cl_uint> nItOut(10, "nItOut", "Number of iterations for output");
 
 	appParamsManager.load(argc, argv);
 	

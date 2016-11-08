@@ -51,17 +51,17 @@ typedef asl::UValue<FlT> Param;
 int main(int argc, char* argv[])
 {
 	asl::ApplicationParametersManager appParamsManager("poroelastic", "1.0");
-	asl::Parameter<asl::AVec<int> > size("size", "size 3D");
-	asl::Parameter<cl_float> dx("dx", "dx");
-	asl::Parameter<cl_float> dt("dt", "dt");
-	asl::Parameter<cl_float> bulkModulus("bulk_modulus", "bulk modulus");
-	asl::Parameter<cl_float> shearModulus("shear_modulus", "shear modulus");
-	asl::Parameter<cl_float> hydraulicConductivity("hydraulic_conductivity", "hydraulic conductivity");
-	asl::Parameter<cl_float> rho("rho", "density");
-	asl::Parameter<asl::AVec<FlT> > g("g", "gravity vector");
+	asl::Parameter<asl::AVec<int> > size(asl::makeAVec<int>(50, 50, 50), "size", "3D size");
+	asl::Parameter<cl_float> dx(4e-3, "dx", "dx");
+	asl::Parameter<cl_float> dt(0.0001, "dt", "dt");
+	asl::Parameter<cl_float> bulkModulus(1000.0, "bulk_modulus", "bulk modulus");
+	asl::Parameter<cl_float> shearModulus(30.0, "shear_modulus", "shear modulus");
+	asl::Parameter<cl_float> hydraulicConductivity(1e-10, "hydraulic_conductivity", "hydraulic conductivity");
+	asl::Parameter<cl_float> rho(1e3, "rho", "density");
+	asl::Parameter<asl::AVec<FlT> > g(asl::makeAVec<FlT>(-9.8, 0.0, 0.0), "g", "gravity vector");
 	asl::Parameter<string> input("input", "path to the brain geometry input file");
-	asl::Parameter<unsigned int> tsim("num_iterations", "number of iterations");
-	asl::Parameter<unsigned int> tout("num_it_out", "number of iterations between outputs");
+	asl::Parameter<unsigned int> tsim(20000, "num_iterations", "number of iterations");
+	asl::Parameter<unsigned int> tout(500, "num_it_out", "number of iterations between outputs");
 	
 	appParamsManager.load(argc, argv);
 		

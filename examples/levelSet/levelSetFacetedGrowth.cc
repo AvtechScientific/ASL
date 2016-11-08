@@ -47,20 +47,20 @@ int main(int argc, char* argv[])
 	asl::ApplicationParametersManager appParamsManager("levelSetFacetedGrowth",
 	                                                   "1.0");
 
-	asl::Parameter<asl::AVec<int>> size("size", "size");
-	asl::Parameter<FlT> dx("dx", "dx");
-	asl::Parameter<FlT> dt("dt", "dt");
-	asl::Parameter<FlT> superS("superS", "Super saturation");
-	asl::Parameter<FlT> radius("radius", "Initial radius");
-	asl::Parameter<FlT> betaSt("beta_step", "Kinetic coefficient for step");
-	asl::Parameter<FlT> betaDisl("beta_dislocation", "Kinetic coefficient for dislocation");
-	asl::Parameter<FlT> betaRough("beta_rough", "Kinetic coefficient for rough region");
+	asl::Parameter<asl::AVec<int>> size(asl::makeAVec<int>(100, 100, 100), "size", "size");
+	asl::Parameter<FlT> dx(1.0, "dx", "dx");
+	asl::Parameter<FlT> dt(1.0, "dt", "dt");
+	asl::Parameter<FlT> superS(0.2, "superS", "Super saturation");
+	asl::Parameter<FlT> radius(10.5, "radius", "Initial radius");
+	asl::Parameter<FlT> betaSt(0.5, "beta_step", "Kinetic coefficient for step");
+	asl::Parameter<FlT> betaDisl(0.0, "beta_dislocation", "Kinetic coefficient for dislocation");
+	asl::Parameter<FlT> betaRough(0.1, "beta_rough", "Kinetic coefficient for rough region");
 
 	asl::Parameter<map<string, asl::AVec<FlT>>> cr_directions_p("cr_direction_*",
 	                                                            "Crystallographic directions");
 	
-	asl::Parameter<cl_uint> nIterations("nIterations", "Number of iterations");
-	asl::Parameter<cl_uint> nItOut("nItOut", "Number of iterations for output");
+	asl::Parameter<cl_uint> nIterations(100, "nIterations", "Number of iterations");
+	asl::Parameter<cl_uint> nItOut(10, "nItOut", "Number of iterations for output");
 
 	appParamsManager.load(argc, argv);
 
