@@ -44,16 +44,16 @@ typedef asl::UValue<FlT> Param;
 int main(int argc, char* argv[])
 {
 	asl::ApplicationParametersManager appParamsManager("jumpingBox", "1.0");
-	asl::Parameter<asl::AVec<int> > size("size", "size 3D");
-	asl::Parameter<cl_float> dx("dx", "dx");
-	asl::Parameter<cl_float> dt("dt", "dt");
-	asl::Parameter<cl_float> bulkModulus("bulk_modulus", "bulk modulus");
-	asl::Parameter<cl_float> shearModulus("shear_modulus", "shear modulus");
-	asl::Parameter<cl_float> rho("rho", "density");
-	asl::Parameter<asl::AVec<FlT> > g("g", "gravity vector");
+	asl::Parameter<asl::AVec<int> > size(asl::makeAVec<int>(50, 50, 50), "size", "3D size");
+	asl::Parameter<cl_float> dx(1e-3, "dx", "dx");
+	asl::Parameter<cl_float> dt(1e-5, "dt", "dt");
+	asl::Parameter<cl_float> bulkModulus(2.5e6, "bulk_modulus", "bulk modulus");
+	asl::Parameter<cl_float> shearModulus(1e6, "shear_modulus", "shear modulus");
+	asl::Parameter<cl_float> rho(900, "rho", "density");
+	asl::Parameter<asl::AVec<FlT> > g(asl::makeAVec<FlT>(-9.8, 0.0, 0.0), "g", "gravity vector");
 
-	asl::Parameter<unsigned int> tsim("num_iterations", "number of iterations");
-	asl::Parameter<unsigned int> tout("num_it_out", "number of iterations between outputs");
+	asl::Parameter<unsigned int> tsim(2000, "num_iterations", "number of iterations");
+	asl::Parameter<unsigned int> tout(100, "num_it_out", "number of iterations between outputs");
 	
 	appParamsManager.load(argc, argv);
 
@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
 	Param shearModulusNum(shearModulus.v()/rho.v()/dx.v()/dx.v());
 
 	asl::AVec<FlT> gNum(g.v()/dx.v());
-		
+
 	std::cout << "Data initialization... ";
 
 	asl::Block block(size.v(), dx.v());

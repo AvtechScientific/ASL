@@ -23,6 +23,7 @@
 
 /**
 	\example levelSetFacetedGrowth.cc
+	Required input file: default parameters - parameters_levelSetFacetedGrowth.ini
 */
 
 #include <aslDataInc.h>
