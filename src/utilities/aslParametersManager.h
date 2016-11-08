@@ -55,6 +55,8 @@ namespace asl
 			  notation of the Boost::Units library).
 			  Since no default value is specified, the parameter is required
 			  to be specified in the parameters file or command line.
+			  Use "" to provide a vector asl::AVec<T> through command line,
+			  e.g.: --size "30 20 50"
 			*/
 			Parameter(const char* key_,
 			          const char* description_,
