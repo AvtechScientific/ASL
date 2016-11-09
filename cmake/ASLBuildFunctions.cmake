@@ -59,9 +59,10 @@ function(INSTALL_SUBLIB _SUBLIB _SUBLIB_PUBLIC_HEADERS)
 endfunction(INSTALL_SUBLIB)
 
 
-# Installs examples: binary and the corresponding source code (preserving source tree structure)
+# Installs examples: binary, the corresponding source code and optionally input data (preserving source tree structure)
 # puts `asl-` preffix before binaries in order to avoid name collisions
 # creates a separate directory in the build tree to make experimenting easier
+# accepts optional additional parameters - path(s) to required input files, like parameters, geometry files, etc..
 function(INSTALL_EXAMPLE _TARGET _SOURCE)
 	# Add `asl-` preffix in order to avoid name collisions
 	set_property(TARGET ${_TARGET} PROPERTY OUTPUT_NAME "asl-${_TARGET}")
@@ -74,4 +75,9 @@ function(INSTALL_EXAMPLE _TARGET _SOURCE)
 	# Extract directories of the relative path
 	get_filename_component(directories ${relative_path} DIRECTORY)
 	install(FILES ${_SOURCE} DESTINATION ${CMAKE_INSTALL_DOCDIR}/${directories})
+
+	# Install optional input file(s)
+	foreach(input_file ${ARGN})
+	  install(FILES ${input_file} DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/input/${directories})
+	endforeach()
 endfunction(INSTALL_EXAMPLE)

@@ -33,4 +33,4 @@ INSTALL_EXAMPLE(levelSetNormalGrowth levelSetNormalGrowth.cc)
 
 add_executable(levelSetFacetedGrowth levelSetFacetedGrowth.cc)
 target_link_libraries(levelSetFacetedGrowth aslnum aslvtk asl)
-INSTALL_EXAMPLE(levelSetFacetedGrowth levelSetFacetedGrowth.cc)
+INSTALL_EXAMPLE(levelSetFacetedGrowth levelSetFacetedGrowth.cc parameters_levelSetFacetedGrowth.ini)
