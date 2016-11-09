@@ -30,9 +30,9 @@ The reference to ASL may be in an acknowledgment section, in a phrase such as th
 
 To cite ASL in publications please adopt the following:
 
-/ASL: Advanced Simulation Library™, an open source hardware accelerated multiphysics simulation platform/.[1] Version 0.1.5.[2] 2015-08-01.[3] [[http://asl.org.il]].[4] Avtech Scientific. Modiin Illit, Israel.
+/ASL: Advanced Simulation Library™, an open source hardware accelerated multiphysics simulation platform/.[fn:1] Version 0.1.5.[fn:2] 2015-08-01.[fn:3] [[http://asl.org.il]].[fn:4] Avtech Scientific. Modiin Illit, Israel.
 
-[1] Additionally any sub-routines that were used may be specified.
-[2] Version number or commit hash (in the latter case write: Commit 794e4916)
-[3] Release or commit date.
-[4] The URL should be an active hyperlink wherever technically possible.
+[fn:1] Additionally any sub-routines that were used may be specified.
+[fn:2] Version number or commit hash (in the latter case write: Commit 794e4916).
+[fn:3] Release or commit date.
+[fn:4] The URL should be an active hyperlink wherever technically possible.
