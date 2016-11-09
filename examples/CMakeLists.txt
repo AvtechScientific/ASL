@@ -1,6 +1,6 @@
 #
 # Advanced Simulation Library <http://asl.org.il>
-# 
+#
 # Copyright 2015 Avtech Scientific <http://avtechscientific.com>
 #
 #
@@ -26,6 +26,3 @@ add_subdirectory(levelSet)
 add_subdirectory(jumpingObjects)
 add_subdirectory(heatTransfer)
 add_subdirectory(massTransferSM)
-
-# Disable this for now, until we decide to distribute the input data along with ASL
-# install(DIRECTORY ${CMAKE_SOURCE_DIR}/input_data DESTINATION ${CMAKE_INSTALL_DOCDIR})
