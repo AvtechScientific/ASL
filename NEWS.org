@@ -1,6 +1,11 @@
 * News and ChangeLog
 
-** 0.1.7 <2016-11-09>
+
+** 0.1.7
+
+[2016-11-09]
+
+Contributors: Bartłomiej Piotrowski, Evgeniy Alekseev, Orion Poplawski.
 
 - providing more accurate project description in README
 - adding missing default parameters for some examples
@@ -8,15 +13,19 @@
 - bug fixes
 - fixing portability issues
 
-Contributors: Bartłomiej Piotrowski, Evgeniy Alekseev, Orion Poplawski.
 
-** 0.1.6 <2015-08-24>
+** 0.1.6
+
+[2015-08-24]
 
 - fixing linkage issues
 - fixing testing issues
 - fixing an installation bug
 
-** 0.1.5 <2015-08-01>
+
+** 0.1.5
+
+[2015-08-01]
 
 - supplying cl.hpp, since not provided by OpenCL 2.0 (causes harmless "deprecated" warnings)
 - bug fixes
