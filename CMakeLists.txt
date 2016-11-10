@@ -29,7 +29,7 @@ cmake_minimum_required(VERSION 3.0.2 FATAL_ERROR)
 # Set version number
 set(ASL_VERSION_MAJOR 0)
 set(ASL_VERSION_MINOR 1)
-set(ASL_VERSION_PATCH 7)
+set(ASL_VERSION_PATCH 8-dev)
 
 set(ASL_VERSION ${ASL_VERSION_MAJOR}.${ASL_VERSION_MINOR}.${ASL_VERSION_PATCH})
 
@@ -79,7 +79,7 @@ if (WITH_TESTS)
 	# Performance - performance tests
 	#
 	# Run them e.g.: `ctest [-C Release|Debug] -L Performance`
-	# Exclude some of them: `ctest -LE DoublePrecision -LE Performance`
+	# Exclude some of them: `ctest -LE 'DoublePrecision|Performance'`
 	enable_testing()
 	add_subdirectory(test)
 endif()
@@ -93,7 +93,7 @@ set(CPACK_PACKAGE_VERSION_PATCH ${ASL_VERSION_PATCH})
 set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
 set(CPACK_RESOURCE_FILE_README "${PROJECT_SOURCE_DIR}/README.org")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Advanced Simulation Library is a free and open source hardware accelerated multiphysics simulation platform.")
-set(CPACK_PACKAGE_DESCRIPTION "Advanced Simulation Library (ASL) is a free and open source hardware accelerated multiphysics simulation platform (and an extensible general purpose tool for solving Partial Differential Equations). Its computational engine is written in OpenCL and utilizes matrix-free solution techniques which enable extraordinarily high performance, memory efficiency and deployability on a variety of massively parallel architectures, ranging from inexpensive FPGAs, DSPs and GPUs up to heterogeneous clusters and supercomputers. The engine is hidden entirely behind simple C++ classes, so that no OpenCL knowledge is required from application programmers. Mesh-free, immersed boundary approach allows to move from CAD directly to simulation drastically reducing pre-processing efforts and amount of potential errors. ASL can be used to model various coupled physical and chemical phenomena and employed in a multitude of fields: computational fluid dynamics, virtual sensing, industrial process data validation and reconciliation, image-guided surgery, computer-aided engineering, design space exploration, crystallography, etc..")
+set(CPACK_PACKAGE_DESCRIPTION "Advanced Simulation Library (ASL) is a free and open source hardware accelerated multiphysics simulation platform (and an extensible general purpose tool for solving Partial Differential Equations). Its computational engine is written in OpenCL and utilizes matrix-free solution techniques which enable extraordinarily high performance, memory efficiency and deployability on a variety of massively parallel architectures, ranging from inexpensive FPGAs, DSPs and GPUs up to heterogeneous clusters and supercomputers. The engine is hidden entirely behind simple C++ classes, so that no OpenCL knowledge is required from application programmers. Mesh-free, immersed boundary approach allows one to move from CAD directly to simulation drastically reducing pre-processing efforts and amount of potential errors. ASL can be used to model various coupled physical and chemical phenomena and employed in a multitude of fields: computational fluid dynamics, virtual sensing, industrial process data validation and reconciliation, image-guided surgery, computer-aided engineering, design space exploration, crystallography, etc..")
 set(CPACK_PACKAGE_VENDOR "Avtech Scientific")
 set(CPACK_PACKAGE_CONTACT "http://avtechscientific.com/contact")
 
