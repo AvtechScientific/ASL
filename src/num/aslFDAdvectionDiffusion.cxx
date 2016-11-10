@@ -202,7 +202,7 @@ namespace asl
 	void FDAdvectionDiffusion::setDistributionFunction(Field f)
 	{
 		if(f->getEContainer().size() != vectorTemplate->vectors.size())
-			errorMessage("FDAdvectionDiffusion::setDistributionFunction: the distrubution function has wrong number of components");
+			errorMessage("FDAdvectionDiffusion::setDistributionFunction: the distribution function has wrong number of components");
 		distributionFunction=f;
 	}
 

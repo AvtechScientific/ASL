@@ -72,7 +72,7 @@ namespace asl
 	                                          const AVec<> & f)
 	{
 		if(p.getSize()+1 != f.getSize())
-			errorMessage("Barycentric::interpolate: number of funciton values does not corresponds to the dimensionality");
+			errorMessage("Barycentric::interpolate: number of function values does not corresponds to the dimensionality");
 
 		AVec<> fm(subAVec(f, 1, p.getSize()) - AVec<>(p.getSize(), f[0]));
 		return f[0] + fm * getCordinates(p); 
@@ -91,7 +91,7 @@ namespace asl
 	AVec<> Barycentric::gradient(const AVec<> & f)
 	{
 		if(t.getNRow()+1 != f.getSize())
-			errorMessage("Barycentric::gradient: number of funciton values does not corresponds to the dimensionality");
+			errorMessage("Barycentric::gradient: number of function values does not corresponds to the dimensionality");
 		unsigned int nd(f.getSize()-1);
 		AVec<> fm(subAVec(f, 1, nd) - AVec<>(nd,f[0]));
 		return fm*tInv; 
