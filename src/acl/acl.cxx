@@ -412,7 +412,7 @@ namespace acl
 					s="nan(uint(1))";
 					break;
 				default:
-					errorMessage("nan: the input variable has an uncorrect type");
+					errorMessage("nan: the input variable has an incorrect type");
 			}
 			return Element(new OperatorGeneric(s));
 		}

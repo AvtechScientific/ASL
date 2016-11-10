@@ -80,7 +80,7 @@ namespace acl
 	                                          const VectorOfElements & f)
 	{
 		if(p.size()+1 != f.size())
-			errorMessage("Barycentric::interpolate: number of funciton values does not corresponds to the dimensionality");
+			errorMessage("Barycentric::interpolate: number of function values does not corresponds to the dimensionality");
 
 		VectorOfElements fm(subVE(f, 1, p.size()) - catN(subVE(f, 0), p.size()));
 		return subVE(f,0) + fm * getCordinates(p); 
@@ -100,7 +100,7 @@ namespace acl
 	VectorOfElements Barycentric::gradient(const VectorOfElements & f)
 	{
 		if(t.getNRows()+1 != f.size())
-			errorMessage("Barycentric::gradient: number of funciton values does not corresponds to the dimensionality");
+			errorMessage("Barycentric::gradient: number of function values does not corresponds to the dimensionality");
 		unsigned int nd(f.size()-1);
 		VectorOfElements fm(subVE(f, 1, nd) - catN(subVE(f, 0), nd));
 		return fm*tInv; 
