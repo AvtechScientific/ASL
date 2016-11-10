@@ -138,26 +138,26 @@ namespace asl
 	TemplateVE operator+ (const TemplateVE &a, const TemplateVE &b)
 	{
 		if (a.vectorTemplate != b.vectorTemplate)
-			errorMessage ("Two TemplateVE corespond to different templates");
+			errorMessage ("Two TemplateVE correspond to different templates");
 		return TemplateVE (a.values+b.values,*a.vectorTemplate);
 	}
 	TemplateVE operator- (const TemplateVE &a, const TemplateVE &b)	
 	{
 		if (a.vectorTemplate != b.vectorTemplate)
-			errorMessage ("Two TemplateVE corespond to different templates");
+			errorMessage ("Two TemplateVE correspond to different templates");
 		return TemplateVE (a.values-b.values,*a.vectorTemplate);
 	}
 	TemplateVE operator* (const TemplateVE &a, const TemplateVE &b)	
 	{
 		if (a.vectorTemplate != b.vectorTemplate)
-			errorMessage ("Two TemplateVE corespond to different templates");		
+			errorMessage ("Two TemplateVE correspond to different templates");
 		return TemplateVE (productOfElements (a.values,b.values),*a.vectorTemplate);
 	}
 
 	TemplateVE operator/ (const TemplateVE &a, const TemplateVE &b)
 	{
 		if (a.vectorTemplate != b.vectorTemplate)
-			errorMessage ("Two TemplateVE corespond to different templates");		
+			errorMessage ("Two TemplateVE correspond to different templates");
 		return TemplateVE (divisionOfElements (a.values,b.values),*a.vectorTemplate);
 	}
 		           
