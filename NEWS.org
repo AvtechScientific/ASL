@@ -1,5 +1,13 @@
 * News and ChangeLog
 
+** 0.1.8
+
+[]
+
+- fixing some spelling mistakes
+
+Contributors: Ghislain Antony Vaillant.
+
 
 ** 0.1.7
 
