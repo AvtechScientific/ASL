@@ -2,8 +2,7 @@
 
 ** 0.1.8
 
-[]
-
+- adding man page for the asl-hardware utility
 - fixing some spelling mistakes
 
 Contributors: Ghislain Antony Vaillant.
