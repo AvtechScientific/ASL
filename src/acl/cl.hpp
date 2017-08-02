@@ -16,6 +16,11 @@
  * The above copyright notice and this permission notice shall be included
  * in all copies or substantial portions of the Materials.
  *
+ * MODIFICATIONS TO THIS FILE MAY MEAN IT NO LONGER ACCURATELY REFLECTS
+ * KHRONOS STANDARDS. THE UNMODIFIED, NORMATIVE VERSIONS OF KHRONOS
+ * SPECIFICATIONS AND HEADER INFORMATION ARE LOCATED AT
+ *    https://www.khronos.org/registry/
+ *
  * THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -37,8 +42,8 @@
  *       Bruce Merry, February 2013.
  *       Tom Deakin and Simon McIntosh-Smith, July 2013
  *   
- *   \version 1.2.7
- *   \date January 2015
+ *   \version 1.2.9
+ *   \date December 2015
  *
  *   Optional extension support
  *
@@ -47,6 +52,105 @@
  *				#define USE_CL_DEVICE_FISSION
  */
 
+/*! \mainpage
+ * \section intro Introduction
+ * For many large applications C++ is the language of choice and so it seems
+ * reasonable to define C++ bindings for OpenCL.
+ *
+ *
+ * The interface is contained with a single C++ header file \em cl.hpp and all
+ * definitions are contained within the namespace \em cl. There is no additional
+ * requirement to include \em cl.h and to use either the C++ or original C
+ * bindings it is enough to simply include \em cl.hpp.
+ *
+ * The bindings themselves are lightweight and correspond closely to the
+ * underlying C API. Using the C++ bindings introduces no additional execution
+ * overhead.
+ *
+ * For detail documentation on the bindings see:
+ *
+ * The OpenCL C++ Wrapper API 1.2 (revision 09)
+ *  http://www.khronos.org/registry/cl/specs/opencl-cplusplus-1.2.pdf
+ *
+ * \section example Example
+ *
+ * The following example shows a general use case for the C++
+ * bindings, including support for the optional exception feature and
+ * also the supplied vector and string classes, see following sections for
+ * decriptions of these features.
+ *
+ * \code
+ * #define __CL_ENABLE_EXCEPTIONS
+ * 
+ * #if defined(__APPLE__) || defined(__MACOSX)
+ * #include <OpenCL/cl.hpp>
+ * #else
+ * #include <CL/cl.hpp>
+ * #endif
+ * #include <cstdio>
+ * #include <cstdlib>
+ * #include <iostream>
+ * 
+ *  const char * helloStr  = "__kernel void "
+ *                           "hello(void) "
+ *                           "{ "
+ *                           "  "
+ *                           "} ";
+ * 
+ *  int
+ *  main(void)
+ *  {
+ *     cl_int err = CL_SUCCESS;
+ *     try {
+ *
+ *       std::vector<cl::Platform> platforms;
+ *       cl::Platform::get(&platforms);
+ *       if (platforms.size() == 0) {
+ *           std::cout << "Platform size 0\n";
+ *           return -1;
+ *       }
+ *
+ *       cl_context_properties properties[] = 
+ *          { CL_CONTEXT_PLATFORM, (cl_context_properties)(platforms[0])(), 0};
+ *       cl::Context context(CL_DEVICE_TYPE_CPU, properties); 
+ * 
+ *       std::vector<cl::Device> devices = context.getInfo<CL_CONTEXT_DEVICES>();
+ * 
+ *       cl::Program::Sources source(1,
+ *           std::make_pair(helloStr,strlen(helloStr)));
+ *       cl::Program program_ = cl::Program(context, source);
+ *       program_.build(devices);
+ * 
+ *       cl::Kernel kernel(program_, "hello", &err);
+ * 
+ *       cl::Event event;
+ *       cl::CommandQueue queue(context, devices[0], 0, &err);
+ *       queue.enqueueNDRangeKernel(
+ *           kernel, 
+ *           cl::NullRange, 
+ *           cl::NDRange(4,4),
+ *           cl::NullRange,
+ *           NULL,
+ *           &event); 
+ * 
+ *       event.wait();
+ *     }
+ *     catch (cl::Error err) {
+ *        std::cerr 
+ *           << "ERROR: "
+ *           << err.what()
+ *           << "("
+ *           << err.err()
+ *           << ")"
+ *           << std::endl;
+ *     }
+ * 
+ *    return EXIT_SUCCESS;
+ *  }
+ * 
+ * \endcode
+ *
+ */
 #ifndef CL_HPP_
 #define CL_HPP_
 
@@ -386,7 +490,7 @@ typedef std::string STRING_CLASS;
  *  re-define the string class to match the std::string
  *  interface by defining STRING_CLASS
  */
-class CL_EXT_PREFIX__VERSION_1_1_DEPRECATED string CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED
+class CL_EXT_PREFIX__VERSION_1_1_DEPRECATED string
 {
 private:
     ::size_t size_;
@@ -552,7 +656,7 @@ public:
      *  or "" if empty/unset.
      */
     const char * c_str(void) const { return (str_) ? str_ : "";}
-};
+} CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED;
 typedef cl::string STRING_CLASS;
 #endif // #elif !defined(__USE_DEV_STRING) 
 
@@ -1111,6 +1215,22 @@ inline cl_int getInfoHelper(Func f, cl_uint name, VECTOR_CLASS<char *>* param, i
 template <typename Func>
 inline cl_int getInfoHelper(Func f, cl_uint name, STRING_CLASS* param, long)
 {
+#if defined(__NO_STD_VECTOR) || defined(__NO_STD_STRING)
+    ::size_t required;
+    cl_int err = f(name, 0, NULL, &required);
+    if (err != CL_SUCCESS) {
+        return err;
+    }
+
+    char* value = (char*)alloca(required);
+    err = f(name, required, value, NULL);
+    if (err != CL_SUCCESS) {
+        return err;
+    }
+
+    *param = value;
+    return CL_SUCCESS;
+#else 
     ::size_t required;
     cl_int err = f(name, 0, NULL, &required);
     if (err != CL_SUCCESS) {
@@ -1119,15 +1239,21 @@ inline cl_int getInfoHelper(Func f, cl_uint name, STRING_CLASS* param, long)
 
     // std::string has a constant data member
     // a char vector does not
-    VECTOR_CLASS<char> value(required);
-    err = f(name, required, value.data(), NULL);
-    if (err != CL_SUCCESS) {
-        return err;
+    if (required > 0) {
+        VECTOR_CLASS<char> value(required);
+        err = f(name, required, value.data(), NULL);
+        if (err != CL_SUCCESS) {
+            return err;
+        }
+        if (param) {
+            param->assign(begin(value), prev(end(value)));
+        }
     }
-    if (param) {
-        param->assign(value.begin(), value.end());
+    else if (param) {
+        param->assign("");
     }
     return CL_SUCCESS;
+#endif
 }
 
 // Specialized GetInfoHelper for cl::size_t params
@@ -1270,9 +1396,9 @@ inline cl_int getInfoHelper(Func f, cl_uint name, T* param, int, typename T::cl_
     \
     F(cl_sampler_info, CL_SAMPLER_REFERENCE_COUNT, cl_uint) \
     F(cl_sampler_info, CL_SAMPLER_CONTEXT, cl::Context) \
-    F(cl_sampler_info, CL_SAMPLER_NORMALIZED_COORDS, cl_addressing_mode) \
-    F(cl_sampler_info, CL_SAMPLER_ADDRESSING_MODE, cl_filter_mode) \
-    F(cl_sampler_info, CL_SAMPLER_FILTER_MODE, cl_bool) \
+    F(cl_sampler_info, CL_SAMPLER_NORMALIZED_COORDS, cl_bool) \
+    F(cl_sampler_info, CL_SAMPLER_ADDRESSING_MODE, cl_addressing_mode) \
+    F(cl_sampler_info, CL_SAMPLER_FILTER_MODE, cl_filter_mode) \
     \
     F(cl_program_info, CL_PROGRAM_REFERENCE_COUNT, cl_uint) \
     F(cl_program_info, CL_PROGRAM_CONTEXT, cl::Context) \
@@ -1342,6 +1468,7 @@ inline cl_int getInfoHelper(Func f, cl_uint name, T* param, int, typename T::cl_
     F(cl_kernel_arg_info, CL_KERNEL_ARG_ACCESS_QUALIFIER, cl_kernel_arg_access_qualifier) \
     F(cl_kernel_arg_info, CL_KERNEL_ARG_TYPE_NAME, STRING_CLASS) \
     F(cl_kernel_arg_info, CL_KERNEL_ARG_NAME, STRING_CLASS) \
+    F(cl_kernel_arg_info, CL_KERNEL_ARG_TYPE_QUALIFIER, cl_kernel_arg_type_qualifier) \
     \
     F(cl_device_info, CL_DEVICE_PARENT_DEVICE, cl_device_id) \
     F(cl_device_info, CL_DEVICE_PARTITION_PROPERTIES, VECTOR_CLASS<cl_device_partition_property>) \
@@ -2632,31 +2759,41 @@ public:
         VECTOR_CLASS<ImageFormat>* formats) const
     {
         cl_uint numEntries;
+
+        if (!formats) {
+            return CL_SUCCESS;
+        }
+
         cl_int err = ::clGetSupportedImageFormats(
-           object_, 
-           flags,
-           type, 
-           0, 
-           NULL, 
-           &numEntries);
+            object_,
+            flags,
+            type,
+            0,
+            NULL,
+            &numEntries);
         if (err != CL_SUCCESS) {
             return detail::errHandler(err, __GET_SUPPORTED_IMAGE_FORMATS_ERR);
         }
 
-        ImageFormat* value = (ImageFormat*)
-            alloca(numEntries * sizeof(ImageFormat));
-        err = ::clGetSupportedImageFormats(
-            object_, 
-            flags, 
-            type, 
-            numEntries,
-            (cl_image_format*) value, 
-            NULL);
-        if (err != CL_SUCCESS) {
-            return detail::errHandler(err, __GET_SUPPORTED_IMAGE_FORMATS_ERR);
-        }
+        if (numEntries > 0) {
+            ImageFormat* value = (ImageFormat*)
+                alloca(numEntries * sizeof(ImageFormat));
+            err = ::clGetSupportedImageFormats(
+                object_,
+                flags,
+                type,
+                numEntries,
+                (cl_image_format*)value,
+                NULL);
+            if (err != CL_SUCCESS) {
+                return detail::errHandler(err, __GET_SUPPORTED_IMAGE_FORMATS_ERR);
+            }
 
-        formats->assign(&value[0], &value[numEntries]);
+            formats->assign(&value[0], &value[numEntries]);
+        }
+        else {
+            formats->clear();
+        }
         return CL_SUCCESS;
     }
 };
@@ -5682,7 +5819,7 @@ public:
         ::size_t buffer_slice_pitch,
         ::size_t host_row_pitch,
         ::size_t host_slice_pitch,
-        void *ptr,
+        const void *ptr,
         const VECTOR_CLASS<Event>* events = NULL,
         Event* event = NULL) const
     {
@@ -5819,7 +5956,7 @@ public:
         const size_t<3>& region,
         ::size_t row_pitch,
         ::size_t slice_pitch,
-        void* ptr,
+        const void* ptr,
         const VECTOR_CLASS<Event>* events = NULL,
         Event* event = NULL) const
     {
@@ -6114,7 +6251,7 @@ public:
      */
     cl_int enqueueMarkerWithWaitList(
         const VECTOR_CLASS<Event> *events = 0,
-        Event *event = 0)
+        Event *event = 0) const
     {
         cl_event tmp;
         cl_int err = detail::errHandler(
@@ -6144,7 +6281,7 @@ public:
      */
     cl_int enqueueBarrierWithWaitList(
         const VECTOR_CLASS<Event> *events = 0,
-        Event *event = 0)
+        Event *event = 0) const
     {
         cl_event tmp;
         cl_int err = detail::errHandler(
@@ -6170,7 +6307,7 @@ public:
         cl_mem_migration_flags flags,
         const VECTOR_CLASS<Event>* events = NULL,
         Event* event = NULL
-        )
+        ) const
     {
         cl_event tmp;
         
@@ -6839,7 +6976,7 @@ inline cl_int enqueueWriteBufferRect(
     ::size_t buffer_slice_pitch,
     ::size_t host_row_pitch,
     ::size_t host_slice_pitch,
-    void *ptr,
+    const void *ptr,
     const VECTOR_CLASS<Event>* events = NULL,
     Event* event = NULL)
 {
@@ -6937,7 +7074,7 @@ inline cl_int enqueueWriteImage(
     const size_t<3>& region,
     ::size_t row_pitch,
     ::size_t slice_pitch,
-    void* ptr,
+    const void* ptr,
     const VECTOR_CLASS<Event>* events = NULL,
     Event* event = NULL)
 {
@@ -7276,6 +7413,7 @@ template <
    typename T20,   typename T21,   typename T22,   typename T23,
    typename T24,   typename T25,   typename T26,   typename T27,
    typename T28,   typename T29,   typename T30,   typename T31
+
 >
 class KernelFunctorGlobal
 {
@@ -7329,6 +7467,7 @@ public:
         T29 t29 = NullType(),
         T30 t30 = NullType(),
         T31 t31 = NullType()
+
         )
     {
         Event event;
@@ -7364,6 +7503,7 @@ public:
         SetArg<29, T29>::set(kernel_, t29);
         SetArg<30, T30>::set(kernel_, t30);
         SetArg<31, T31>::set(kernel_, t31);
+
         
         args.queue_.enqueueNDRangeKernel(
             kernel_,
@@ -12654,6 +12794,7 @@ template <
    typename T27 = detail::NullType,   typename T28 = detail::NullType,
    typename T29 = detail::NullType,   typename T30 = detail::NullType,
    typename T31 = detail::NullType
+
 >
 struct make_kernel :
     public detail::functionImplementation_<
@@ -12665,6 +12806,7 @@ struct make_kernel :
                T20,   T21,   T22,   T23,
                T24,   T25,   T26,   T27,
                T28,   T29,   T30,   T31
+
     >
 {
 public:
@@ -12677,6 +12819,7 @@ public:
                T20,   T21,   T22,   T23,
                T24,   T25,   T26,   T27,
                T28,   T29,   T30,   T31
+
     > FunctorType;
 
     make_kernel(
@@ -12692,6 +12835,7 @@ public:
                        T20,   T21,   T22,   T23,
                        T24,   T25,   T26,   T27,
                        T28,   T29,   T30,   T31
+
            >(
             FunctorType(program, name, err)) 
     {}
@@ -12707,6 +12851,7 @@ public:
                        T20,   T21,   T22,   T23,
                        T24,   T25,   T26,   T27,
                        T28,   T29,   T30,   T31
+
            >(
             FunctorType(kernel)) 
     {}    
