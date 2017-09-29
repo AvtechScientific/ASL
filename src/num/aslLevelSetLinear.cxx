@@ -183,7 +183,8 @@ namespace asl
 		                     //DistFNormalization::scaleFactor);
 		kk << (newDistance = select(newDistance/DistFNormalization::scaleFactor,
 		                          newDistance/(1. - newDistance),
-		                          newDistance*subVE(distanceTVE->values, 0) < 0));
+		                          newDistance*subVE(distanceTVE->values, 0) < 0,
+		                          type));
 		
 //		kk << assignmentSafe (distanceFieldInternalData->getSubContainer(),  
 //	               		                         select( newDistance, 
