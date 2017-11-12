@@ -57,7 +57,11 @@ namespace acl
 
 	template <typename T> std::string Constant<T>::str(const KernelConfiguration & kernelConfig) const
 	{
-		return valueStr;
+   #ifdef __llvm__
+		return (typeid(T) == typeid(float) || typeid(T) == typeid(double)) ? "(float)"+valueStr : valueStr;
+   #else
+      return valueStr;
+   #endif
 	}
 
 
