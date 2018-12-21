@@ -82,6 +82,7 @@ if (WITH_TESTS)
 	# Exclude some of them: `ctest -LE 'DoublePrecision|Performance'`
 	enable_testing()
 	add_subdirectory(test)
+	include(CTest)
 endif()
 
 # Packaging
