@@ -47,12 +47,10 @@ include(ASLBuildFunctions)
 find_package(OpenCL 1.1 REQUIRED)
 # ToDo: check - system component might be not needed any longer on new versions of Boost
 find_package(Boost 1.53 REQUIRED COMPONENTS program_options filesystem system)
-# ToDo: remove support for VTK 6.1 at some point in future
-find_package(VTK 6.1 QUIET COMPONENTS vtkRenderingCore vtkImagingCore vtkFiltersCore vtkIOCore vtkIOGeometry vtkIOLegacy vtkIOXML vtkIOMINC vtkCommonCore vtkViewsCore vtkftgl vtksys vtkDICOMParser vtkexpat vtkzlib NO_MODULE)
-if(NOT VTK_FOUND)
-	find_package(VTK REQUIRED COMPONENTS vtkRenderingCore vtkImagingCore vtkFiltersCore vtkIOCore vtkIOGeometry vtkIOLegacy vtkIOXML vtkIOMINC vtkCommonCore vtkViewsCore vtksys vtkDICOMParser vtkexpat vtkzlib NO_MODULE)
-endif()
-include(${VTK_USE_FILE})
+find_package(VTK 7.1 REQUIRED
+  COMPONENTS vtkRenderingCore vtkImagingCore vtkFiltersCore vtkFiltersHybrid vtkIOCore
+             vtkIOGeometry vtkIOLegacy vtkIOXML vtkIOMINC vtkCommonCore vtkViewsCore
+	     vtksys vtkDICOMParser vtkexpat vtkzlib NO_MODULE)
 
 include_directories(SYSTEM ${OpenCL_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
